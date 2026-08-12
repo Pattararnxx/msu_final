@@ -1,10 +1,20 @@
 .shell {
-  display: flex;
-  align-items: stretch;
+  --chatbot-width: min(403px, 100vw);
+  --chatbot-transition: 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  width: 100%;
   min-height: 100dvh;
 }
 
 .content {
-  flex: 1;
+  width: 100%;
   min-width: 0;
+  transition: padding-right var(--chatbot-transition);
+}
+
+/* Keep the fixed panel from covering the page on desktop. */
+@media (min-width: 641px) {
+  .opened .content {
+    padding-right: var(--chatbot-width);
+  }
 }
