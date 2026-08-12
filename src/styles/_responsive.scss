@@ -1,0 +1,18 @@
+// Shared breakpoint mixin — max-width based, mobile-first content authored
+// as the default with `@include respond($key)` overriding downward.
+@mixin respond($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 480px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    // Matches the navbar's existing 1100px desktop breakpoint.
+    @media (max-width: 1100px) {
+      @content;
+    }
+  }
+}
