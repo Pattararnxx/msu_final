@@ -1,0 +1,184 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px min(8%, 24px);
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.headerLeft {
+  max-width: 480px;
+}
+
+/* Uses the same brand token as navbar's hover state — see navbar.module.css */
+.tag {
+  color: var(--mantine-color-brand-6);
+  font-weight: 700;
+  font-size: var(--mantine-font-size-sm);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--mantine-color-black);
+}
+
+.description {
+  max-width: 420px;
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.6;
+  color: var(--mantine-color-gray-6);
+}
+
+.mapWrap {
+  position: relative;
+  border-radius: var(--mantine-radius-md);
+  overflow: hidden;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: 520px;
+  border: 0;
+}
+
+.mapFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 520px;
+  padding: 16px;
+  text-align: center;
+  color: var(--mantine-color-gray-6);
+  background: var(--mantine-color-gray-1);
+}
+
+/* Positions the button + its hidden panel together so hovering either one
+   keeps the panel open (mouse can travel from button into panel). */
+.infoTrigger {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.infoButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: var(--mantine-font-size-sm);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 200ms ease;
+}
+
+.infoTrigger:hover .infoButton,
+.infoTrigger:focus-within .infoButton {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+.infoPanel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 340px;
+  padding: 20px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-white);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.infoTrigger:hover .infoPanel,
+.infoTrigger:focus-within .infoPanel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cardRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Icon only, no circle backdrop — softer brand-4 tint keeps it from
+   competing with the bold label text next to it. */
+.cardIcon {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--mantine-color-brand-4);
+}
+
+.cardLabel {
+  margin-bottom: 2px;
+  font-weight: 700;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-black);
+}
+
+.cardValue {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-gray-6);
+}
+
+@media (max-width: 780px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .map {
+    height: 320px;
+  }
+}
+
+/* Touch devices have no reliable hover — show the panel as a static block
+   under the map instead of hiding contact info behind an unusable hover. */
+@media (hover: none) {
+  .infoTrigger {
+    position: static;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .infoButton {
+    display: none;
+  }
+
+  .infoPanel {
+    position: static;
+    width: 100%;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}

@@ -12,6 +12,7 @@
     "@ai-sdk/deepseek": "^3.0.28",
     "@mantine/core": "^9.5.1",
     "@mantine/hooks": "^9.5.1",
+    "@vis.gl/react-google-maps": "^1.9.0",
     "ai": "^7.0.62",
     "next": "16.3.0",
     "react": "19.2.8",
