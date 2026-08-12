@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "createdAt": "2026-08-12T06:36:18.591Z",
+  "updatedAt": "2026-08-12T06:36:18.591Z",
+  "project": {
+    "name": "msu",
+    "root": ".",
+    "existingRepo": true,
+    "packageManager": "npm",
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript"
+    ],
+    "packageDescription": "",
+    "routes": [],
+    "constraints": []
+  },
+  "product": {
+    "purpose": "",
+    "audience": "",
+    "primaryJobs": [],
+    "voice": [],
+    "antiReferences": []
+  },
+  "designSystem": {
+    "sourceOfTruth": "inspect-existing-repo-first",
+    "tokens": [],
+    "components": [],
+    "fonts": [],
+    "assets": [],
+    "references": []
+  },
+  "inputPolicy": {
+    "supported": [
+      "prompt",
+      "screenshot",
+      "figma",
+      "url",
+      "existing-repo"
+    ],
+    "sourcePriority": [
+      "existing repository conventions",
+      "connected Figma MCP context",
+      "captured web element data",
+      "screenshot evidence",
+      "prompt inference"
+    ]
+  },
+  "routing": {
+    "ownsAgentRuntime": false,
+    "ownsBrowserRuntime": false,
+    "designIntelligence": {
+      "preferred": [
+        "UI/UX Pro Max, for design-system direction, when installed",
+        "Impeccable, for critique and anti-slop refinement, when installed",
+        "existing frontend design skill in the host",
+        "existing repository design system"
+      ],
+      "discovery": "use project-local capabilities first; init may install named skills with explicit confirmation"
+    },
+    "mcp": {
+      "playwright": {
+        "role": "primary-for-web-and-pick",
+        "required": true
+      },
+      "chromeDevTools": {
+        "role": "optional",
+        "required": false
+      },
+      "figma": {
+        "role": "conditional-on-figma-input",
+        "required": false
+      }
+    }
+  },
+  "visualQa": {
+    "maxIterations": 3,
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "tablet",
+        "width": 1024,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "axes": [
+      "identity",
+      "composition-and-hierarchy",
+      "typography",
+      "color-and-contrast",
+      "spacing-and-density",
+      "responsive-behavior",
+      "interaction-states",
+      "accessibility"
+    ],
+    "evidenceRequired": [
+      "rendered page or screenshot",
+      "written finding",
+      "change and result after reload"
+    ]
+  }
+}

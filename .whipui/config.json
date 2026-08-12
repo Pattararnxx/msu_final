@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "router": {
+    "thin": true,
+    "ownsAgentRuntime": false,
+    "ownsBrowserRuntime": false,
+    "ownsEditorRuntime": false,
+    "ownsMcpServer": false
+  },
+  "setup": {
+    "scope": "project-local",
+    "interactiveInstallOnInit": true,
+    "nonInteractiveInstall": "use --yes explicitly",
+    "neverWritesGlobalConfig": true
+  },
+  "inputs": [
+    "prompt",
+    "screenshot",
+    "figma",
+    "url",
+    "existing-repo"
+  ],
+  "tools": {
+    "playwrightMcp": {
+      "role": "primary-for-url-and-pick-from-web",
+      "required": true
+    },
+    "chromeDevTools": {
+      "role": "optional",
+      "required": false
+    },
+    "figmaMcp": {
+      "role": "conditional-on-figma-input",
+      "required": false
+    }
+  },
+  "designIntelligence": {
+    "preferred": [
+      "ui-ux-pro-max",
+      "impeccable",
+      "existing-frontend-design-skill",
+      "existing-repository-design-system"
+    ],
+    "roles": {
+      "ui-ux-pro-max": "design-system-and-visual-direction",
+      "impeccable": "visual-critique-refinement-and-anti-slop"
+    },
+    "discoverAtRuntime": true,
+    "installAutomatically": "only-after-explicit-init-confirmation"
+  },
+  "visualQa": {
+    "maxIterations": 3,
+    "viewports": [
+      {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "name": "tablet",
+        "width": 1024,
+        "height": 900
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "axes": [
+      "identity",
+      "composition-and-hierarchy",
+      "typography",
+      "color-and-contrast",
+      "spacing-and-density",
+      "responsive-behavior",
+      "interaction-states",
+      "accessibility"
+    ]
+  }
+}

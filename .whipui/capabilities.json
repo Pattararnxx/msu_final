@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-12T06:36:35.125Z",
+  "projectRoot": ".",
+  "ai": "all",
+  "hosts": [
+    "codex",
+    "vscode",
+    "claude"
+  ],
+  "capabilities": [
+    {
+      "id": "ui-ux-pro-max",
+      "kind": "skill",
+      "role": "design-system-and-visual-direction",
+      "hosts": [
+        "codex",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": true,
+      "installPackage": "ui-ux-pro-max-cli",
+      "docs": "https://ui-ux-pro-max-skill.com/docs/cli-reference/",
+      "status": "installed",
+      "scope": "project",
+      "locations": [
+        {
+          "scope": "project",
+          "host": null
+        }
+      ],
+      "ready": true
+    },
+    {
+      "id": "impeccable",
+      "kind": "skill",
+      "role": "visual-critique-refinement-and-anti-slop",
+      "hosts": [
+        "codex",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": true,
+      "installPackage": "impeccable",
+      "docs": "https://github.com/pbakaus/impeccable",
+      "status": "installed",
+      "scope": "project",
+      "locations": [
+        {
+          "scope": "project",
+          "host": null
+        }
+      ],
+      "ready": true
+    },
+    {
+      "id": "playwright-mcp",
+      "kind": "mcp",
+      "role": "primary-web-capture-and-visual-qa",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": true,
+      "installable": true,
+      "installPackage": "@playwright/mcp",
+      "docs": "https://github.com/microsoft/playwright-mcp",
+      "status": "configured",
+      "scope": "project",
+      "locations": [
+        {
+          "scope": "project",
+          "host": "claude",
+          "path": ".mcp.json"
+        },
+        {
+          "scope": "project",
+          "host": "codex",
+          "path": ".codex/config.toml"
+        },
+        {
+          "scope": "project",
+          "host": "vscode",
+          "path": ".vscode/mcp.json"
+        },
+        {
+          "scope": "global",
+          "host": "codex",
+          "path": null
+        },
+        {
+          "scope": "global",
+          "host": "claude",
+          "path": null
+        }
+      ],
+      "ready": true
+    },
+    {
+      "id": "chrome-devtools-mcp",
+      "kind": "mcp",
+      "role": "optional-runtime-inspection",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": null,
+      "status": "missing",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    },
+    {
+      "id": "figma-mcp",
+      "kind": "mcp",
+      "role": "conditional-figma-design-context",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": null,
+      "status": "missing",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    },
+    {
+      "id": "firecrawl-mcp",
+      "kind": "mcp",
+      "role": "optional-content-crawl",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": "https://github.com/firecrawl/firecrawl-mcp",
+      "status": "missing",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    },
+    {
+      "id": "fudge",
+      "kind": "adapter",
+      "role": "reference-discovery-and-style-context",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": null,
+      "status": "not-detected",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    },
+    {
+      "id": "agentation",
+      "kind": "adapter",
+      "role": "in-app-visual-annotation",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": null,
+      "status": "not-detected",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    },
+    {
+      "id": "onui",
+      "kind": "adapter",
+      "role": "visual-annotation-and-ui-inspection",
+      "hosts": [
+        "codex",
+        "vscode",
+        "claude"
+      ],
+      "active": true,
+      "required": false,
+      "installable": false,
+      "installPackage": null,
+      "docs": null,
+      "status": "not-detected",
+      "scope": null,
+      "locations": [],
+      "ready": false
+    }
+  ],
+  "requiredMissing": [],
+  "installableMissing": []
+}

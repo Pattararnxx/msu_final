@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "status": "pending-agent-analysis",
+  "createdAt": "2026-08-12T06:36:18.591Z",
+  "updatedAt": "2026-08-12T06:36:18.591Z",
+  "intent": "adapt",
+  "projectDna": "`.whipui/project-dna.json`",
+  "sources": {
+    "prompt": null,
+    "screenshot": null,
+    "figma": null,
+    "url": null,
+    "existingRepo": {
+      "kind": "existing-repo",
+      "root": ".",
+      "inspected": false
+    }
+  },
+  "identity": {
+    "oneThingToRemember": "",
+    "productType": "",
+    "audience": "",
+    "artDirection": "",
+    "keywords": [],
+    "antiReferences": []
+  },
+  "composition": {
+    "symmetry": "",
+    "density": "",
+    "dominantAxis": "",
+    "contentWidth": "",
+    "grid": "",
+    "whitespace": "",
+    "focalPoint": ""
+  },
+  "typography": {
+    "display": {
+      "category": "",
+      "family": "",
+      "scale": "",
+      "weight": "",
+      "leading": ""
+    },
+    "body": {
+      "category": "",
+      "family": "",
+      "scale": "",
+      "weight": "",
+      "leading": ""
+    },
+    "casing": "",
+    "contrast": ""
+  },
+  "color": {
+    "background": "",
+    "surface": "",
+    "foreground": "",
+    "muted": "",
+    "accent": "",
+    "semantic": {},
+    "usageRules": []
+  },
+  "spacing": {
+    "rhythm": "",
+    "baseUnit": "",
+    "sectionGap": "",
+    "layoutPadding": "",
+    "radius": "",
+    "shadow": ""
+  },
+  "imagery": {
+    "treatment": "",
+    "subject": "",
+    "crop": "",
+    "texture": "",
+    "rules": []
+  },
+  "motion": {
+    "personality": "",
+    "duration": "",
+    "easing": "",
+    "rules": []
+  },
+  "responsive": {
+    "strategy": "",
+    "preserved": [],
+    "allowedToChange": [],
+    "breakpoints": []
+  },
+  "webCapture": {
+    "status": "not-requested",
+    "sourceUrl": "",
+    "capturePath": "",
+    "fields": [
+      "outerHTML",
+      "computedStyles",
+      "boundingBox",
+      "screenshot",
+      "interactionStates"
+    ]
+  },
+  "components": [],
+  "uxRules": [],
+  "antiSlopChecks": [
+    "No default purple-gradient-on-white treatment unless the source asks for it.",
+    "No invented component variants when an existing project component can be reused.",
+    "No decorative effect without a job: hierarchy, feedback, wayfinding, or brand character.",
+    "No desktop-only implementation when the brief or source implies mobile use.",
+    "No silent substitution of the source character with a generic dashboard or landing-page pattern."
+  ],
+  "openQuestions": [
+    "What is the single memorable visual idea?",
+    "Which visual traits are identity and which are accidental details of the reference?",
+    "What must remain true at mobile widths?"
+  ],
+  "analysis": {
+    "owner": "agent",
+    "status": "pending",
+    "notes": "Inspect the input sources and existing repo, then replace placeholders with concrete decisions."
+  },
+  "visualQa": {
+    "status": "pending",
+    "axes": [
+      "identity",
+      "composition-and-hierarchy",
+      "typography",
+      "color-and-contrast",
+      "spacing-and-density",
+      "responsive-behavior",
+      "interaction-states",
+      "accessibility"
+    ],
+    "findings": [],
+    "iterations": 0
+  }
+}
