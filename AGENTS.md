@@ -41,3 +41,24 @@ Avoid generic AI-slop output: default purple gradients, arbitrary glass cards,
 excessive rounded containers, invented variants, and decorative motion without
 a product, hierarchy, wayfinding, or brand reason.
 <!-- WhipUI:END -->
+
+## Icons (Phosphor icon set)
+
+Icons live in `public/icon/`, one folder per weight:
+
+- `regular/` → `/icon/regular/<name>.svg` (default, no suffix)
+- `thin/` → `/icon/thin/<name>-thin.svg`
+- `light/` → `/icon/light/<name>-light.svg`
+- `bold/` → `/icon/bold/<name>-bold.svg`
+- `fill/` → `/icon/fill/<name>-fill.svg`
+- `duotone/` → `/icon/duotone/<name>-duotone.svg`
+
+Usage notes:
+- Pick an icon by name first, then choose a weight. Filenames are lowercase
+  kebab-case (e.g. `house`, `magnifying-glass`, `arrow-right`).
+- SVGs are 256×256 with `fill="currentColor"` — color inherits from the
+  surrounding CSS; do not hard-code a fill color.
+- Reference via the public path (e.g. `<img src="/icon/regular/house.svg">`
+  or use it in CSS as a background) — served from `public/`, no import needed.
+- Default to `regular` unless the design calls for a lighter/darker weight.
+
