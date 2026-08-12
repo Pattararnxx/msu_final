@@ -1,5 +1,3 @@
-
-
 <!-- WhipUI:BEGIN -->
 ## WhipUI frontend design router
 
