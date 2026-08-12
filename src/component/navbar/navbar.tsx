@@ -15,6 +15,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Icon from "@/component/icon/icon";
 import FloatingCardDropdown from "@/component/floating-card-dropdown/floating-card-dropdown";
+import { useChatbot } from "@/component/chatbot/chatbot-context";
 import styles from "./navbar.module.css";
 
 interface NavSubLink {
@@ -106,6 +107,7 @@ function MobileLink({ link }: { link: NavLink }) {
 export default function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
+  const { opened: chatbotOpened, toggle: toggleChatbot } = useChatbot();
 
   return (
     <Box component="header" className={styles.navbar}>
@@ -122,7 +124,12 @@ export default function Navbar() {
         </Group>
 
         <Group wrap="nowrap" gap="sm">
-          <Button component={Link} href="#" radius={128} visibleFrom="lg">
+          <Button
+            radius={128}
+            visibleFrom="lg"
+            onClick={toggleChatbot}
+            aria-expanded={chatbotOpened}
+          >
             ดาวน์โหลด
           </Button>
           <Burger
@@ -149,7 +156,14 @@ export default function Navbar() {
             <MobileLink key={link.label} link={link} />
           ))}
           <Group justify="center" grow py="xl" px="md">
-            <Button component={Link} href="#" radius={128} onClick={closeDrawer}>
+            <Button
+              radius={128}
+              aria-expanded={chatbotOpened}
+              onClick={() => {
+                closeDrawer();
+                toggleChatbot();
+              }}
+            >
               ดาวน์โหลด
             </Button>
           </Group>

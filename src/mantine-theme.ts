@@ -23,13 +23,16 @@ export const theme = createTheme({
   fontFamily:
     "var(--font-noto-sans-thai), var(--font-geist-sans), Arial, Helvetica, sans-serif",
   defaultRadius: "md",
-  // Reuses the navbar's existing 1100px desktop breakpoint (design
-  // fingerprint) instead of Mantine's default 1200px "lg".
+  // "lg" (desktop nav vs. mobile hamburger) lowered from the original
+  // 1100px to 780px — headroom equal to the chatbot panel's 320px width,
+  // so opening the panel and shrinking the navbar's available space
+  // doesn't flip it into mobile mode; it only activates for genuinely
+  // narrow viewports.
   breakpoints: {
     xs: "36em",
     sm: "48em",
     md: "62em",
-    lg: "68.75em",
+    lg: "48.75em",
     xl: "88em",
   },
 });
