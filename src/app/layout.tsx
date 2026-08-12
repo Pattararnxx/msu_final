@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "@mantine/core/styles.css";
 import "@/styles/_color.scss";
-import "./globals.css";
-import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from "@mantine/core";
+import "./globals.scss";
+import { ChatbotProvider } from "@/component/chatbot/chatbot-context";
+
+import {
+  // ColorSchemeScript,
+  MantineProvider,
+  mantineHtmlProps,
+} from "@mantine/core";
+
 import { theme } from "@/mantine-theme";
 
 const geistSans = Geist({
@@ -33,11 +40,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable}`}
       {...mantineHtmlProps}
     >
-      <head>
+      {/* <head>
         <ColorSchemeScript />
-      </head>
+      </head> */}
+
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <ChatbotProvider>{children}</ChatbotProvider>
+        </MantineProvider>
       </body>
     </html>
   );
