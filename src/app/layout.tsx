@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 
 import { theme } from "@/mantine-theme";
+import StoreProvider from "@/lib/redux/store-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
