@@ -1,0 +1,38 @@
+.root {
+  width: 100%;
+}
+
+/* Default variant already adds a bottom border per item — just add the
+   matching top border on the first row so the list is fully bracketed,
+   like the reference design. */
+.item {
+  width: 100%;
+}
+
+.item:first-of-type {
+  border-top: 1px solid var(--mantine-color-gray-3);
+}
+
+.control {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.label {
+  padding: 0;
+  font-weight: 700;
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-black);
+}
+
+.chevron {
+  color: var(--mantine-color-black);
+}
+
+.panel {
+  color: var(--mantine-color-dimmed);
+}
+
+.content {
+  padding: 0 0 20px;
+}
