@@ -46,7 +46,6 @@
      uses the darkest step of the same scale instead — see _color.scss. */
   @mixin hover {
     color: var(--primary-1000);
-    background-color: var(--mantine-color-brand-0);
   }
 }
 
@@ -54,8 +53,7 @@
    the Drawer's position/size props in navbar.tsx) so the page underneath
    stays visible below the panel instead of being fully covered. */
 .drawerContent {
-  background: var(--black-1000);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+  height: fit-content;
 }
 
 .drawerHeader {
