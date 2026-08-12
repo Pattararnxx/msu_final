@@ -1,24 +1,28 @@
 import { createTheme, type MantineColorsTuple } from "@mantine/core";
 
-// Ramp built around the existing brand accent (#6a5ae0 / hover #5847d1) that
-// the navbar already shipped with — kept as the exact shade-5/6 values so no
-// existing surface changes color, only the components rendering it do.
+// Mirrors the yellow "primary" scale from src/styles/_color.scss (kept in
+// sync manually — that file is the source of truth) so every Mantine
+// component that defaults to primaryColor — Button fill, focus rings, etc.
+// — renders the site's actual brand yellow instead of Mantine's own hue.
 const brand: MantineColorsTuple = [
-  "#f4f3fc",
-  "#e5e2f8",
-  "#cbc6f1",
-  "#a9a1e8",
-  "#8478de",
-  "#6a5ae0",
-  "#5847d1",
-  "#311ebd",
-  "#29199e",
-  "#21147f",
+  "#FFFBE0", // primary-50
+  "#FFF7B8", // primary-100
+  "#FFF18A", // primary-200
+  "#FFEB63", // primary-300
+  "#FFE74D", // primary-400
+  "#FFE23D", // primary-500 — base shade (== --yellow / --primary-500)
+  "#F5D52F", // primary-600
+  "#E6C521", // primary-700
+  "#C9A900", // primary-800
+  "#9F8500", // primary-900
 ];
 
 export const theme = createTheme({
   primaryColor: "brand",
   primaryShade: 5,
+  // Yellow is too light for Mantine's default white button text to stay
+  // readable — autoContrast picks black/white per shade automatically.
+  autoContrast: true,
   colors: { brand },
   fontFamily:
     "var(--font-noto-sans-thai), var(--font-geist-sans), Arial, Helvetica, sans-serif",

@@ -1,0 +1,25 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="80" height="80" rx="8" fill="white"/>
+  <!-- Decorative placeholder pattern — not a scannable code -->
+  <rect x="6" y="6" width="20" height="20" rx="3" fill="none" stroke="#282828" stroke-width="4"/>
+  <rect x="13" y="13" width="6" height="6" fill="#282828"/>
+  <rect x="54" y="6" width="20" height="20" rx="3" fill="none" stroke="#282828" stroke-width="4"/>
+  <rect x="61" y="13" width="6" height="6" fill="#282828"/>
+  <rect x="6" y="54" width="20" height="20" rx="3" fill="none" stroke="#282828" stroke-width="4"/>
+  <rect x="13" y="61" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="6" width="6" height="6" fill="#282828"/>
+  <rect x="44" y="6" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="16" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="34" width="6" height="6" fill="#282828"/>
+  <rect x="44" y="34" width="6" height="6" fill="#282828"/>
+  <rect x="54" y="34" width="6" height="6" fill="#282828"/>
+  <rect x="64" y="34" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="44" width="6" height="6" fill="#282828"/>
+  <rect x="54" y="44" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="54" width="6" height="6" fill="#282828"/>
+  <rect x="44" y="54" width="6" height="6" fill="#282828"/>
+  <rect x="64" y="54" width="6" height="6" fill="#282828"/>
+  <rect x="34" y="64" width="6" height="6" fill="#282828"/>
+  <rect x="54" y="64" width="6" height="6" fill="#282828"/>
+  <rect x="64" y="64" width="6" height="6" fill="#282828"/>
+</svg>

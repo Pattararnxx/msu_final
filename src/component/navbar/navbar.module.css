@@ -42,48 +42,103 @@
     color 150ms ease,
     background-color 150ms ease;
 
+  /* brand-5 (the base yellow) is too light to read as text on white, so this
+     uses the darkest step of the same scale instead — see _color.scss. */
   @mixin hover {
-    color: var(--mantine-color-brand-5);
+    color: var(--primary-1000);
     background-color: var(--mantine-color-brand-0);
   }
 }
 
-/* Mobile drawer */
+/* Mobile drawer — dark theme, top-anchored, sized to its own content (see
+   the Drawer's position/size props in navbar.tsx) so the page underneath
+   stays visible below the panel instead of being fully covered. */
+.drawerContent {
+  background: var(--black-1000);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+}
+
+.drawerHeader {
+  padding: 20px 24px;
+  background: var(--black-1000);
+}
+
+.drawerTitle {
+  display: flex;
+  align-items: center;
+}
+
+.drawerBrand {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black-0);
+  letter-spacing: -0.2px;
+  text-decoration: none;
+}
+
+.drawerClose {
+  color: var(--black-0);
+  background: var(--black-800);
+
+  @mixin hover {
+    background: var(--black-700);
+  }
+}
+
+.drawerBody {
+  padding: 4px 24px 24px;
+  background: var(--black-1000);
+}
+
 .mobileLink {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 14px 4px;
+  padding: 14px 2px;
   border: none;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
   background: none;
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--mantine-color-black);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black-0);
   text-align: left;
   text-decoration: none;
   cursor: pointer;
+  transition: color 150ms ease;
+
+  @mixin hover {
+    color: var(--primary-500);
+  }
+}
+
+.mobileLinkActive {
+  color: var(--primary-500);
+}
+
+.mobileLinkCaret {
+  display: flex;
+  color: var(--black-400);
 }
 
 .mobileSubList {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 8px 0 12px 12px;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
+  padding: 4px 0 12px 12px;
 }
 
 .mobileSubLink {
   display: flex;
-  padding: 8px 4px;
+  padding: 10px 8px;
   border-radius: var(--mantine-radius-md);
+  color: var(--black-300);
+  font-size: 16px;
   text-decoration: none;
-  color: inherit;
 
   @mixin hover {
-    background-color: var(--mantine-color-brand-0);
+    color: var(--black-0);
+    background-color: var(--black-900);
   }
 }
 

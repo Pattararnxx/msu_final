@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "analyzed",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-12T00:00:00.000Z",
+  "updatedAt": "2026-08-12T09:00:00.000Z",
   "intent": "adapt",
   "projectDna": "`.whipui/project-dna.json`",
   "sources": {
@@ -102,7 +102,52 @@
       "interactionStates"
     ]
   },
-  "components": ["src/component/navbar/navbar.tsx", "src/component/navbar/navbar.module.css"],
+  "components": [
+    "src/component/navbar/navbar.tsx",
+    "src/component/navbar/navbar.module.css",
+    "src/component/chatbot/chatbot.tsx",
+    "src/component/chatbot/chatbot-welcome.tsx",
+    "src/component/chatbot/chatbot-message.tsx",
+    "src/component/chatbot/chatbot-loading.tsx",
+    "src/component/chatbot/chatbot-error.tsx",
+    "src/component/chatbot/chatbot-composer.tsx",
+    "src/component/chatbot/chatbot.module.css"
+  ],
+  "chatbotSurface": {
+    "mode": "operate",
+    "oneThingToRemember": "A calm, readable property assistant: warm neutral canvas, dark text, and yellow reserved for action and provenance cues.",
+    "artDirection": "content-first utility panel, flat surfaces, modest 12-16px radii, no gradients or decorative glass",
+    "color": {
+      "source": "src/styles/_color.scss",
+      "canvas": "--b-50",
+      "surface": "--p-0",
+      "foreground": "--b-900",
+      "secondaryText": "--b-700",
+      "accent": "--p-500",
+      "accentSoft": "--p-100",
+      "accentDeep": "--p-800",
+      "usageRules": [
+        "Yellow is reserved for primary send action, assistant identity, status, and list markers.",
+        "Secondary copy uses --b-700 or darker so it remains readable on --p-0 and --b-50.",
+        "Assistant and user turns use surface and yellow-tinted contrast instead of color-only role cues."
+      ]
+    },
+    "typography": {
+      "family": "inherits var(--font-noto-sans-thai), var(--font-geist-sans)",
+      "body": "preserve existing Mantine sm (14px) and xs (12px) sizing; use weight and spacing for hierarchy",
+      "leading": "1.5-1.7 for message text"
+    },
+    "composition": {
+      "panelWidth": "min(380px, 100vw)",
+      "header": "identity, context, status, reset, close",
+      "body": "neutral scroll canvas with grouped turns, source row, and recovery states",
+      "composer": "visible label, autosizing input, 44px send target, keyboard hint"
+    },
+    "responsive": {
+      "mobile": "panel becomes full width below 640px; message text keeps the existing 14px size",
+      "safeArea": "composer reserves bottom safe-area inset"
+    }
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",

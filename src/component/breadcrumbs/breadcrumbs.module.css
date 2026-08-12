@@ -1,0 +1,27 @@
+.breadcrumbs {
+  flex-wrap: wrap;
+}
+
+.link {
+  color: var(--black-500);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.current {
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--black);
+    text-decoration: underline;
+  }
+}
+
+.breadcrumbs :global(.mantine-Breadcrumbs-separator) {
+  color: var(--black-300);
+}

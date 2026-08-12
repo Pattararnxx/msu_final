@@ -1,0 +1,28 @@
+<svg width="480" height="320" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="320" fill="url(#sky)"/>
+  <circle cx="410" cy="60" r="26" fill="#EDEBFB"/>
+  <rect x="0" y="230" width="480" height="90" fill="#E4E1F7"/>
+
+  <!-- distant tree -->
+  <rect x="60" y="200" width="8" height="34" fill="#B7ADE8"/>
+  <circle cx="64" cy="192" r="22" fill="#C9C1EE"/>
+
+  <!-- house -->
+  <rect x="170" y="176" width="150" height="80" fill="#FFFFFF" stroke="#8478DE" stroke-width="3"/>
+  <path d="M160 180L245 122L330 180" stroke="#6A5AE0" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" fill="#8478DE"/>
+  <rect x="228" y="206" width="34" height="50" fill="#6A5AE0"/>
+  <rect x="186" y="196" width="26" height="26" fill="#EDEBFB" stroke="#8478DE" stroke-width="3"/>
+  <rect x="278" y="196" width="26" height="26" fill="#EDEBFB" stroke="#8478DE" stroke-width="3"/>
+
+  <!-- second smaller house -->
+  <rect x="335" y="206" width="70" height="50" fill="#FFFFFF" stroke="#B7ADE8" stroke-width="3"/>
+  <path d="M328 208L370 178L412 208" stroke="#B7ADE8" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" fill="#C9C1EE"/>
+  <rect x="360" y="228" width="20" height="28" fill="#B7ADE8"/>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F3FC"/>
+      <stop offset="1" stop-color="#E5E2F8"/>
+    </linearGradient>
+  </defs>
+</svg>

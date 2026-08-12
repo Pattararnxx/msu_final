@@ -1,56 +1,44 @@
-import Accordion from "@/component/accordion/accordion";
-import ContactMap from "@/component/contact-map/contact-map";
+"use client";
 
-// Sandbox route for trying components in isolation.
-const ACCORDION_ITEMS = [
-  {
-    value: "details",
-    label: "รายละเอียดสินค้า",
-    content: "รายละเอียดสินค้า — placeholder content",
-  },
-  {
-    value: "size",
-    label: "ขนาดสินค้า",
-    content: "ขนาดสินค้า — placeholder content",
-  },
-];
+import { Button, Stack, Text } from "@mantine/core";
+import SidebarShell from "@/component/sidebar/sidebar-shell";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { toggle } from "@/lib/redux/features/sidebar-slice";
 
-// Placeholder copy/contact details — swap for real content when it's ready.
-const CONTACT = {
-  tag: "ติดต่อเรา",
-  title: "ค้นหาเราได้ที่กรุงเทพฯ พร้อมให้คำปรึกษาและช่วยเหลือคุณอย่างรวดเร็ว",
-  description:
-    "Better เป็นทีมที่ให้บริการโซลูชันครบวงจรและปฏิบัติได้จริงสำหรับธุรกิจในประเทศไทย",
-  center: { lat: 13.7466, lng: 100.5347 }, // Siam Paragon, Bangkok — placeholder
-  contact: {
-    address: "123 ถ.สุขุมวิท แขวงคลองตัน เขตคลองเตย กรุงเทพฯ 10110",
-    phones: ["02-123-4567", "081-234-5678"],
-    emails: ["contact@example.com", "support@example.com"],
-  },
-};
+// Just an example of "any component can be the sidebar content" — swap this
+// for whatever the caller actually needs (a filter form, a detail view, ...).
+function ExampleSidebarContent() {
+  return (
+    <Stack gap={12}>
+      <Text size="sm" c="dimmed">
+        เนื้อหานี้ถูกส่งเข้ามาทาง prop <code>sidebarContent</code> ของ
+        SidebarShell — เปลี่ยนเป็น component ไหนก็ได้โดยไม่ต้องแก้ Sidebar เอง
+      </Text>
+      <Text size="sm" c="dimmed">
+        สถานะเปิด/ปิดทั้งหมดถูกควบคุมผ่าน Redux (sidebar slice)
+      </Text>
+    </Stack>
+  );
+}
+
+function TestPageContent() {
+  const dispatch = useAppDispatch();
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => dispatch(toggle())}>เปิด/ปิด Sidebar</Button>
+    </div>
+  );
+}
 
 const TestPage = () => {
   return (
-    <>
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 600,
-          margin: "40px auto",
-          padding: "0 16px",
-        }}
-      >
-        <Accordion items={ACCORDION_ITEMS} />
-      </div>
-
-      <ContactMap
-        tag={CONTACT.tag}
-        title={CONTACT.title}
-        description={CONTACT.description}
-        center={CONTACT.center}
-        contact={CONTACT.contact}
-      />
-    </>
+    <SidebarShell
+      sidebarTitle="ตัวอย่าง Sidebar"
+      sidebarContent={<ExampleSidebarContent />}
+    >
+      <TestPageContent />
+    </SidebarShell>
   );
 };
 
