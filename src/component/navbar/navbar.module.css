@@ -1,20 +1,15 @@
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  width: 100%;
   background: var(--mantine-color-white);
   border-bottom: 1px solid var(--mantine-color-gray-2);
+  padding: 0.5rem 1.5rem;
 }
 
 .inner {
-  height: 72px;
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
 }
 
-@media (min-width: 1100px) {
+/* Matches the theme's lowered "lg" breakpoint (780px) — see mantine-theme.ts */
+@media (min-width: 780px) {
   .inner {
     padding: 0 40px;
   }
@@ -43,7 +38,9 @@
   font-weight: 500;
   font-size: var(--mantine-font-size-sm);
   white-space: nowrap;
-  transition: color 150ms ease, background-color 150ms ease;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
 
   @mixin hover {
     color: var(--mantine-color-brand-5);

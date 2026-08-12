@@ -50,13 +50,15 @@ export default function FloatingCardDropdown({
         </Link>
       </HoverCard.Target>
 
-      <HoverCard.Dropdown className={styles.dropdown} p={8}>
-        {items.map((item) => (
+      <HoverCard.Dropdown className={styles.dropdown} p={0}>
+        {items.map((item, index) => (
+          // <div key={index}>Hello</div>
           <UnstyledButton
             component={Link}
             href={item.href}
             key={item.label}
             className={styles.subLink}
+            // p={0}
           >
             {item.label}
           </UnstyledButton>
