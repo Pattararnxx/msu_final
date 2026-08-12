@@ -152,7 +152,6 @@ export default function Navbar() {
         opened={drawerOpened}
         onClose={closeDrawer}
         position="top"
-        size="auto"
         title={
           <Link href="/" className={styles.drawerBrand} onClick={closeDrawer}>
             Better

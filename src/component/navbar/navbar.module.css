@@ -53,7 +53,13 @@
 /* Mobile drawer — dark theme, top-anchored, sized to its own content (see
    the Drawer's position/size props in navbar.tsx) so the page underneath
    stays visible below the panel instead of being fully covered. */
+/* Mantine's `size` prop can't express "auto" — passing size="auto" just
+   looks up a nonexistent --drawer-size-auto var, which silently falls back
+   to height: calc(100% - offset*2), i.e. the full screen. Forcing height
+   here instead (this class is unlayered, Mantine's own is `@layer mantine`,
+   so this wins outright) is what actually makes it hug its content. */
 .drawerContent {
+  height: auto;
   background: var(--black-1000);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
 }
