@@ -32,11 +32,121 @@
 
 .body {
   flex: 1;
+  /* Without this the ScrollArea grows past the panel instead of scrolling,
+     because a flex item's default min-height is its content height. */
+  min-height: 0;
   padding: 16px;
 }
 
+.suggestion {
+  padding: 8px 10px;
+  border: 1px solid var(--mantine-color-gray-2);
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-gray-7);
+  text-align: left;
+  transition: background-color 150ms ease, border-color 150ms ease;
+
+  @mixin hover {
+    border-color: var(--mantine-color-brand-3);
+    background-color: var(--mantine-color-brand-0);
+  }
+}
+
+.userTurn {
+  align-self: flex-end;
+  max-width: 85%;
+  margin-left: auto;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-brand-0);
+  color: var(--mantine-color-black);
+}
+
+.assistantTurn {
+  max-width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--mantine-color-gray-2);
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-black);
+}
+
+/* Answers arrive as plain text with newlines from the model, so preserve them
+   rather than collapsing every reply into one run-on paragraph. */
+.turnText {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Each source line renders as its own block so blank lines in the model's
+   answer stay as paragraph breaks rather than collapsing. */
+.turnLine {
+  display: block;
+}
+
+/* A blank source line renders as an empty span; give it the paragraph gap
+   instead of letting it collapse to nothing. */
+.turnLine:empty {
+  height: 8px;
+}
+
+.toolCalls {
+  margin-bottom: 6px;
+}
+
+/* Shows which data tools produced the answer — the visible proof that a number
+   came from the dataset rather than from the model. */
+.toolChip {
+  padding: 1px 6px;
+  border-radius: var(--mantine-radius-sm);
+  background-color: var(--mantine-color-gray-1);
+  color: var(--mantine-color-gray-7);
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.pending {
+  padding: 4px 2px;
+}
+
+.error {
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-sm);
+  background-color: var(--mantine-color-red-0);
+  color: var(--mantine-color-red-7);
+}
+
+.composer {
+  flex-shrink: 0;
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--mantine-color-gray-2);
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mantine-radius-sm);
+  /* Matches the navbar's accent pair: shade 5 at rest, shade 6 on hover. */
+  background-color: var(--mantine-color-brand-5);
+  color: var(--mantine-color-white);
+  transition: background-color 150ms ease, opacity 150ms ease;
+
+  @mixin hover {
+    background-color: var(--mantine-color-brand-6);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .closeButton {
+  .closeButton,
+  .suggestion,
+  .sendButton {
     transition: none;
   }
 }
