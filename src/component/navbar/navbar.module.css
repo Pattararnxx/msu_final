@@ -100,8 +100,9 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  min-width: 200px;
-  padding: 8px;
+  min-width: 220px;
+  padding: 8px 0;
+  overflow: hidden;
   background: var(--navbar-surface);
   border: 1px solid var(--navbar-border);
   border-radius: 12px;
@@ -111,12 +112,13 @@
 
 .dropdownItem a {
   display: block;
-  padding: 10px 12px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 14px 20px;
   font-size: 14px;
   font-weight: 500;
   color: var(--navbar-text-muted);
   white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .actions {
@@ -168,7 +170,7 @@
 
   .dropdownItem a:hover {
     color: var(--navbar-accent);
-    background: color-mix(in srgb, var(--navbar-accent) 8%, transparent);
+    background: color-mix(in srgb, var(--navbar-accent) 12%, transparent);
   }
 
   .downloadButton:hover {
@@ -183,10 +185,16 @@
 
 .navLink:focus-visible,
 .downloadButton:focus-visible,
-.menuToggle:focus-visible,
-.dropdownItem a:focus-visible {
+.menuToggle:focus-visible {
   outline: 2px solid var(--navbar-accent);
   outline-offset: 2px;
+}
+
+.dropdownItem a:focus-visible {
+  /* Inset — the dropdown clips overflow to keep the full-bleed hover fill
+     inside its rounded corners, which would otherwise cut off an outset ring. */
+  outline: 2px solid var(--navbar-accent);
+  outline-offset: -2px;
 }
 
 /* Mobile panel */
