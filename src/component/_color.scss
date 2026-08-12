@@ -1,0 +1,75 @@
+:root {
+  /* =========================
+     Brand Colors
+     ========================= */
+  --white: #FCFCFB;  /* 60% */
+  --black: #282828;  /* 30% */
+  --yellow: #FFE23D; /* 10% */
+
+
+  /* =========================
+     Primary - Yellow
+     ========================= */
+  --primary-50: #FFFBE0;
+  --primary-100: #FFF7B8;
+  --primary-200: #FFF18A;
+  --primary-300: #FFEB63;
+  --primary-400: #FFE74D;
+  --primary-500: #FFE23D;
+  --primary-600: #F5D52F;
+  --primary-700: #E6C521;
+  --primary-800: #C9A900;
+  --primary-900: #9F8500;
+  --primary-1000: #6B5900;
+
+
+  /* =========================
+     Black
+     ========================= */
+  --black-0: #FCFCFB;
+  --black-50: #F5F5F4;
+  --black-100: #E8E8E7;
+  --black-200: #D4D4D3;
+  --black-300: #B5B5B4;
+  --black-400: #969695;
+  --black-500: #777776;
+  --black-600: #5D5D5C;
+  --black-700: #484848;
+  --black-800: #383838;
+  --black-900: #282828;
+  --black-1000: #181818;
+
+
+  /* =========================
+     Primary Alias
+     ========================= */
+  --p-0: var(--white);
+  --p-50: var(--primary-50);
+  --p-100: var(--primary-100);
+  --p-200: var(--primary-200);
+  --p-300: var(--primary-300);
+  --p-400: var(--primary-400);
+  --p-500: var(--primary-500);
+  --p-600: var(--primary-600);
+  --p-700: var(--primary-700);
+  --p-800: var(--primary-800);
+  --p-900: var(--primary-900);
+  --p-1000: var(--primary-1000);
+
+
+  /* =========================
+     Black Alias
+     ========================= */
+  --b-0: var(--white);
+  --b-50: var(--black-50);
+  --b-100: var(--black-100);
+  --b-200: var(--black-200);
+  --b-300: var(--black-300);
+  --b-400: var(--black-400);
+  --b-500: var(--black-500);
+  --b-600: var(--black-600);
+  --b-700: var(--black-700);
+  --b-800: var(--black-800);
+  --b-900: var(--black-900);
+  --b-1000: var(--black-1000);
+}
