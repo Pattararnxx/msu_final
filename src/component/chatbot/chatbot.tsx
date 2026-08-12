@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Box, ScrollArea, Stack } from "@mantine/core";
+import { useChatbot } from "./chatbot-context";
 import { useChatSession } from "./use-chat-session";
 import ChatbotComposer from "./chatbot-composer";
 import ChatbotError from "./chatbot-error";
@@ -16,6 +17,7 @@ import styles from "./chatbot.module.css";
 // ChatbotShell and is separated from it by a plain 1px border, matching
 // the navbar's existing divider convention.
 export default function Chatbot() {
+  const { consumePendingQuestion } = useChatbot();
   const { turns, pending, error, send } = useChatSession();
   const [draft, setDraft] = useState("");
   const [lastSubmitted, setLastSubmitted] = useState("");
@@ -41,6 +43,15 @@ export default function Chatbot() {
     void send(normalized);
     setDraft("");
   };
+
+  // A question asked from outside the panel (e.g. the home page's "ถาม AI"
+  // search mode) is queued via askQuestion() and opens this panel; on mount
+  // we pick it up and fire it as the first turn.
+  useEffect(() => {
+    const question = consumePendingQuestion();
+    if (question) submit(question);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box component="aside" className={styles.chatbot} aria-label="ผู้ช่วยค้นหาข้อมูลอสังหาริมทรัพย์">

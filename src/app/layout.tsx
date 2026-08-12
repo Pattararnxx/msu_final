@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import "@/styles/_color.scss";
 import "./globals.scss";
 import { ChatbotProvider } from "@/component/chatbot/chatbot-context";
+import ChatbotShell from "@/component/chatbot-shell/chatbot-shell";
 
 import {
   // ColorSchemeScript,
@@ -46,7 +47,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
       <body>
         <MantineProvider theme={theme}>
-          <ChatbotProvider>{children}</ChatbotProvider>
+          <ChatbotProvider>
+            <ChatbotShell>{children}</ChatbotShell>
+          </ChatbotProvider>
         </MantineProvider>
       </body>
     </html>
