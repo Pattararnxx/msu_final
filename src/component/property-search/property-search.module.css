@@ -1,0 +1,20 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+@media (min-width: 1100px) {
+  .search {
+    max-width: 360px;
+  }
+}
+
+.field {
+  flex: 1;
+}
+
+.input {
+  height: 40px;
+}
