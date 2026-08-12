@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Box, ScrollArea, Stack } from "@mantine/core";
+import Icon from "@/component/icon/icon";
+import { useChatbot } from "./chatbot-context";
 import { useChatSession } from "./use-chat-session";
 import ChatbotComposer from "./chatbot-composer";
 import ChatbotError from "./chatbot-error";
@@ -10,12 +12,10 @@ import ChatbotMessage from "./chatbot-message";
 import ChatbotWelcome from "./chatbot-welcome";
 import styles from "./chatbot.module.css";
 
-// The panel itself — only ever mounted (never just hidden) while `opened`
-// is true, so it's a real insertion into the page's layout flow, not an
-// overlay: it sits as a flex sibling on the right of the main content in
-// ChatbotShell and is separated from it by a plain 1px border, matching
-// the navbar's existing divider convention.
-export default function Chatbot() {
+// The panel is kept mounted for the short close transition, then removed by
+// ChatbotShell. Its fixed right-edge placement is controlled by module styles.
+export default function Chatbot({ visible }: { visible: boolean }) {
+  const { close } = useChatbot();
   const { turns, pending, error, send } = useChatSession();
   const [draft, setDraft] = useState("");
   const [lastSubmitted, setLastSubmitted] = useState("");
@@ -43,7 +43,27 @@ export default function Chatbot() {
   };
 
   return (
-    <Box component="aside" className={styles.chatbot} aria-label="ผู้ช่วยค้นหาข้อมูลอสังหาริมทรัพย์">
+    <Box
+      component="aside"
+      className={`${styles.chatbot} ${visible ? styles.visible : ""}`}
+      aria-label="ผู้ช่วยค้นหาข้อมูลอสังหาริมทรัพย์"
+      aria-hidden={!visible}
+    >
+      <div className={styles.header}>
+        <span className={styles.headerTitle}>ผู้ช่วยค้นหาอสังหาริมทรัพย์</span>
+        <button
+          type="button"
+          className={styles.closeButton}
+          aria-label="ปิดแชทบอท"
+          onClick={(event) => {
+            event.currentTarget.blur();
+            close();
+          }}
+        >
+          <Icon src="/icon/regular/x.svg" size={18} />
+        </button>
+      </div>
+
       <ScrollArea className={styles.body} viewportRef={viewportRef}>
         <Stack gap={16} className={styles.bodyContent}>
           {turns.length === 0 && (
