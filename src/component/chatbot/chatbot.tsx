@@ -3,7 +3,7 @@
 import { Box, Group, ScrollArea, Text, UnstyledButton } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import { useChatbot } from "./chatbot-context";
-import styles from "./chatbot.module.css";
+import styles from "./chatbot.module.scss";
 
 // The panel itself — only ever mounted (never just hidden) while `opened`
 // is true, so it's a real insertion into the page's layout flow, not an

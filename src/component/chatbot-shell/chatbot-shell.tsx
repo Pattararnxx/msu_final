@@ -2,7 +2,7 @@
 
 import Chatbot from "@/component/chatbot/chatbot";
 import { useChatbot } from "@/component/chatbot/chatbot-context";
-import styles from "./chatbot-shell.module.css";
+import styles from "./chatbot-shell.module.scss";
 
 // Lays the page out as a flex row so the chatbot panel is a real sibling of
 // the main content (navbar included) — inserted/removed from the layout

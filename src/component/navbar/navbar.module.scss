@@ -1,18 +1,11 @@
 .navbar {
   background: var(--mantine-color-white);
   border-bottom: 1px solid var(--mantine-color-gray-2);
-  padding: 0.5rem 1.5rem;
+  padding: 1rem min(8%, 1.5rem);
 }
 
 .inner {
   margin: 0 auto;
-}
-
-/* Matches the theme's lowered "lg" breakpoint (780px) — see mantine-theme.ts */
-@media (min-width: 780px) {
-  .inner {
-    padding: 0 40px;
-  }
 }
 
 /* Brand — placeholder only, real logo intentionally left out */
@@ -36,16 +29,21 @@
   text-decoration: none;
   color: var(--mantine-color-black);
   font-weight: 500;
-  font-size: var(--mantine-font-size-sm);
+  font-size: var(--mantine-font-size-md);
   white-space: nowrap;
   transition:
     color 150ms ease,
     background-color 150ms ease;
-
-  @mixin hover {
-    color: var(--mantine-color-brand-5);
-    background-color: var(--mantine-color-brand-0);
+  @media (hover: hover) {
+    &:hover {
+      color: var(--primary-1000);
+    }
   }
+  // @media (hover: none) {
+  //   &:active {
+  //     color: var(--primary-500);
+  //   }
+  // }
 }
 
 /* Mobile drawer */
@@ -82,8 +80,27 @@
   text-decoration: none;
   color: inherit;
 
-  @mixin hover {
-    background-color: var(--mantine-color-brand-0);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--mantine-color-brand-0);
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      background-color: var(--mantine-color-brand-0);
+    }
+  }
+}
+
+/* Download CTA — swapped from the Mantine "brand" purple to the primary
+   yellow token so the CTA stands out from the rest of the navbar; text uses
+   black-900 since yellow is too light for white to stay readable. */
+.downloadButton {
+  background-color: var(--primary-500);
+  color: var(--black-900);
+
+  &:hover {
+    background-color: var(--primary-600);
   }
 }
 

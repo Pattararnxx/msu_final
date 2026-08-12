@@ -24,9 +24,17 @@
   color: var(--mantine-color-gray-6);
   transition: background-color 150ms ease, color 150ms ease;
 
-  @mixin hover {
-    color: var(--mantine-color-black);
-    background-color: var(--mantine-color-brand-0);
+  @media (hover: hover) {
+    &:hover {
+      color: var(--mantine-color-black);
+      background-color: var(--mantine-color-brand-0);
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      color: var(--mantine-color-black);
+      background-color: var(--mantine-color-brand-0);
+    }
   }
 }
 

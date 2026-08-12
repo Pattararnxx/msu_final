@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Box, Center, HoverCard, UnstyledButton } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import styles from "./floating-card-dropdown.module.css";
+import styles from "./floating-card-dropdown.module.scss";
 
 export interface FloatingCardDropdownItem {
   label: string;

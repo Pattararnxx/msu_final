@@ -16,7 +16,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Icon from "@/component/icon/icon";
 import FloatingCardDropdown from "@/component/floating-card-dropdown/floating-card-dropdown";
 import { useChatbot } from "@/component/chatbot/chatbot-context";
-import styles from "./navbar.module.css";
+import styles from "./navbar.module.scss";
 
 interface NavSubLink {
   label: string;
@@ -86,15 +86,16 @@ function MobileLink({ link }: { link: NavLink }) {
         aria-expanded={opened}
       >
         {link.label}
-        <Icon
-          src="/icon/regular/caret-down.svg"
-          size={14}
-        />
+        <Icon src="/icon/regular/caret-down.svg" size={14} />
       </UnstyledButton>
       <Collapse expanded={opened}>
         <div className={styles.mobileSubList}>
           {link.items.map((item) => (
-            <Link href={item.href} key={item.label} className={styles.mobileSubLink}>
+            <Link
+              href={item.href}
+              key={item.label}
+              className={styles.mobileSubLink}
+            >
               {item.label}
             </Link>
           ))}
@@ -111,7 +112,12 @@ export default function Navbar() {
 
   return (
     <Box component="header" className={styles.navbar}>
-      <Group justify="space-between" h="100%" wrap="nowrap" className={styles.inner}>
+      <Group
+        justify="space-between"
+        h="100%"
+        wrap="nowrap"
+        className={styles.inner}
+      >
         {/* Logo intentionally left out — placeholder mark until brand assets are ready */}
         <Link href="/" className={styles.brand}>
           Better
@@ -124,11 +130,13 @@ export default function Navbar() {
         </Group>
 
         <Group wrap="nowrap" gap="sm">
+          {/* เปลี่ยนสีปุ่มดาวน์โหลดเป็นสีเหลือง (primary-500) แทนสี brand เดิม ดู .downloadButton ใน navbar.module.scss */}
           <Button
             radius={128}
             visibleFrom="lg"
             onClick={toggleChatbot}
             aria-expanded={chatbotOpened}
+            className={styles.downloadButton}
           >
             ดาวน์โหลด
           </Button>
@@ -156,6 +164,7 @@ export default function Navbar() {
             <MobileLink key={link.label} link={link} />
           ))}
           <Group justify="center" grow py="xl" px="md">
+            {/* ปุ่มดาวน์โหลดในเมนูมือถือ — ใช้สีเหลืองเดียวกับปุ่มบน desktop */}
             <Button
               radius={128}
               aria-expanded={chatbotOpened}
@@ -163,6 +172,7 @@ export default function Navbar() {
                 closeDrawer();
                 toggleChatbot();
               }}
+              className={styles.downloadButton}
             >
               ดาวน์โหลด
             </Button>

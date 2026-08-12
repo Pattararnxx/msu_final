@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import styles from "./icon.module.css";
+import styles from "./icon.module.scss";
 
 interface IconProps {
   src: string;

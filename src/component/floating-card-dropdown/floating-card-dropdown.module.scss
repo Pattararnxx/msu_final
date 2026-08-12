@@ -12,7 +12,14 @@
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
 
-  @mixin hover {
-    background-color: var(--mantine-color-brand-0);
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--mantine-color-brand-0);
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      background-color: var(--mantine-color-brand-0);
+    }
   }
 }
