@@ -42,6 +42,15 @@ export default function Chatbot({ visible }: { visible: boolean }) {
     setDraft("");
   };
 
+  // A question asked from outside the panel (e.g. the home page's "ถาม AI"
+  // search mode) is queued via askQuestion() and opens this panel; on mount
+  // we pick it up and fire it as the first turn.
+  useEffect(() => {
+    const question = consumePendingQuestion();
+    if (question) submit(question);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box
       component="aside"
