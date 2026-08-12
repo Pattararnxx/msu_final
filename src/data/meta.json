@@ -1,0 +1,5 @@
+{
+  "asOf": "2026-07",
+  "source": "msu-mock-property-dataset/v1",
+  "generatedFrom": "scripts/generate-data.ts"
+}

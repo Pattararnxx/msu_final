@@ -1,0 +1,242 @@
+[
+  {
+    "id": "bkk-asoke",
+    "provinceId": "bangkok",
+    "nameTh": "อโศก–สุขุมวิท",
+    "nameEn": "Asoke-Sukhumvit",
+    "lat": 13.7375,
+    "lng": 100.5602,
+    "hasMassTransit": true,
+    "blurbTh": "ศูนย์กลางธุรกิจและคอนโดไฮเอนด์ จุดตัด BTS อโศก และ MRT สุขุมวิท"
+  },
+  {
+    "id": "bkk-sathorn",
+    "provinceId": "bangkok",
+    "nameTh": "สาทร–สีลม",
+    "nameEn": "Sathorn-Silom",
+    "lat": 13.722,
+    "lng": 100.529,
+    "hasMassTransit": true,
+    "blurbTh": "ย่านสำนักงานและสถานทูต ราคาต่อตารางเมตรสูงสุดในกรุงเทพ"
+  },
+  {
+    "id": "bkk-ari",
+    "provinceId": "bangkok",
+    "nameTh": "อารีย์–พหลโยธิน",
+    "nameEn": "Ari-Phahonyothin",
+    "lat": 13.7797,
+    "lng": 100.5449,
+    "hasMassTransit": true,
+    "blurbTh": "ย่านคาเฟ่และออฟฟิศรุ่นใหม่ ดีมานด์เช่าสูงจากคนทำงาน"
+  },
+  {
+    "id": "bkk-ladprao",
+    "provinceId": "bangkok",
+    "nameTh": "ลาดพร้าว–จตุจักร",
+    "nameEn": "Ladprao-Chatuchak",
+    "lat": 13.816,
+    "lng": 100.561,
+    "hasMassTransit": true,
+    "blurbTh": "จุดเชื่อม MRT และสายสีเหลือง ที่อยู่อาศัยระดับกลางหนาแน่น"
+  },
+  {
+    "id": "bkk-bangna",
+    "provinceId": "bangkok",
+    "nameTh": "บางนา",
+    "nameEn": "Bangna",
+    "lat": 13.668,
+    "lng": 100.604,
+    "hasMassTransit": true,
+    "blurbTh": "ทางออกสู่ภาคตะวันออก บ้านจัดสรรและคอนโดราคาเข้าถึงได้"
+  },
+  {
+    "id": "bkk-minburi",
+    "provinceId": "bangkok",
+    "nameTh": "มีนบุรี",
+    "nameEn": "Minburi",
+    "lat": 13.814,
+    "lng": 100.732,
+    "hasMassTransit": true,
+    "blurbTh": "ชานเมืองตะวันออก ราคาต่ำสุดในกรุงเทพ ได้อานิสงส์รถไฟฟ้าสายสีชมพู"
+  },
+  {
+    "id": "cnx-nimman",
+    "provinceId": "chiangmai",
+    "nameTh": "นิมมานเหมินท์",
+    "nameEn": "Nimmanhaemin",
+    "lat": 18.7963,
+    "lng": 98.967,
+    "hasMassTransit": false,
+    "blurbTh": "ย่านคาเฟ่และโคเวิร์กกิ้ง ดีมานด์เช่ารายเดือนจากดิจิทัลโนแมดสูงสุดในเชียงใหม่"
+  },
+  {
+    "id": "cnx-oldcity",
+    "provinceId": "chiangmai",
+    "nameTh": "คูเมือง–เมืองเชียงใหม่",
+    "nameEn": "Old City",
+    "lat": 18.7877,
+    "lng": 98.9931,
+    "hasMassTransit": false,
+    "blurbTh": "เขตเมืองเก่าในคูเมือง ข้อจำกัดการก่อสร้างสูง ซัพพลายใหม่แทบไม่มี"
+  },
+  {
+    "id": "cnx-hangdong",
+    "provinceId": "chiangmai",
+    "nameTh": "หางดง",
+    "nameEn": "Hang Dong",
+    "lat": 18.689,
+    "lng": 98.92,
+    "hasMassTransit": false,
+    "blurbTh": "โซนบ้านจัดสรรและวิลล่าครอบครัว ใกล้โรงเรียนนานาชาติหลายแห่ง"
+  },
+  {
+    "id": "cnx-sansai",
+    "provinceId": "chiangmai",
+    "nameTh": "สันทราย",
+    "nameEn": "San Sai",
+    "lat": 18.858,
+    "lng": 99.045,
+    "hasMassTransit": false,
+    "blurbTh": "โซนมหาวิทยาลัยแม่โจ้ ตลาดเช่านักศึกษาและบ้านเดี่ยวราคาเข้าถึงได้"
+  },
+  {
+    "id": "cnx-maerim",
+    "provinceId": "chiangmai",
+    "nameTh": "แม่ริม",
+    "nameEn": "Mae Rim",
+    "lat": 18.916,
+    "lng": 98.937,
+    "hasMassTransit": false,
+    "blurbTh": "โซนวิวภูเขาและรีสอร์ต บ้านพักตากอากาศเป็นหลัก"
+  },
+  {
+    "id": "cnx-sankamphaeng",
+    "provinceId": "chiangmai",
+    "nameTh": "สันกำแพง",
+    "nameEn": "San Kamphaeng",
+    "lat": 18.745,
+    "lng": 99.118,
+    "hasMassTransit": false,
+    "blurbTh": "โซนหัตถกรรมและบ่อน้ำพุร้อน ราคาต่ำสุดในกลุ่มปริมณฑลเชียงใหม่"
+  },
+  {
+    "id": "hkt-patong",
+    "provinceId": "phuket",
+    "nameTh": "ป่าตอง",
+    "nameEn": "Patong",
+    "lat": 7.8918,
+    "lng": 98.296,
+    "hasMassTransit": false,
+    "blurbTh": "ศูนย์กลางท่องเที่ยวของภูเก็ต อัตราเข้าพักและรายได้ค่าเช่าผันผวนตามฤดูกาลรุนแรง"
+  },
+  {
+    "id": "hkt-bangtao",
+    "provinceId": "phuket",
+    "nameTh": "บางเทา–เชิงทะเล",
+    "nameEn": "Bangtao-Cherngtalay",
+    "lat": 8,
+    "lng": 98.293,
+    "hasMassTransit": false,
+    "blurbTh": "โซนวิลล่าหรูและบีชคลับ ราคาต่อตารางเมตรสูงสุดของภูเก็ต"
+  },
+  {
+    "id": "hkt-karonkata",
+    "provinceId": "phuket",
+    "nameTh": "กะรน–กะตะ",
+    "nameEn": "Karon-Kata",
+    "lat": 7.818,
+    "lng": 98.296,
+    "hasMassTransit": false,
+    "blurbTh": "หาดครอบครัวเงียบกว่าป่าตอง คอนโดวิวทะเลปล่อยเช่ารายวันเป็นหลัก"
+  },
+  {
+    "id": "hkt-rawai",
+    "provinceId": "phuket",
+    "nameTh": "ราไวย์",
+    "nameEn": "Rawai",
+    "lat": 7.776,
+    "lng": 98.325,
+    "hasMassTransit": false,
+    "blurbTh": "โซนผู้พักอาศัยระยะยาวและครอบครัวต่างชาติ ราคาต่ำกว่าฝั่งหาดท่องเที่ยว"
+  },
+  {
+    "id": "hkt-town",
+    "provinceId": "phuket",
+    "nameTh": "เมืองภูเก็ต",
+    "nameEn": "Phuket Town",
+    "lat": 7.8804,
+    "lng": 98.3923,
+    "hasMassTransit": false,
+    "blurbTh": "ย่านเมืองเก่าและศูนย์ราชการ ดีมานด์จากคนทำงานประจำ ไม่พึ่งท่องเที่ยวมากนัก"
+  },
+  {
+    "id": "hkt-maikhao",
+    "provinceId": "phuket",
+    "nameTh": "ไม้ขาว",
+    "nameEn": "Mai Khao",
+    "lat": 8.155,
+    "lng": 98.3,
+    "hasMassTransit": false,
+    "blurbTh": "หาดยาวติดสนามบิน โครงการแบรนด์เรสซิเดนซ์และรีสอร์ตระดับบน"
+  },
+  {
+    "id": "msk-thakhonyang",
+    "provinceId": "mahasarakham",
+    "nameTh": "ท่าขอนยาง",
+    "nameEn": "Tha Khon Yang",
+    "lat": 16.247,
+    "lng": 103.25,
+    "hasMassTransit": false,
+    "blurbTh": "หน้ามหาวิทยาลัยมหาสารคาม เขตขามเรียง ตลาดหอพักหนาแน่นที่สุดของจังหวัด"
+  },
+  {
+    "id": "msk-khamriang",
+    "provinceId": "mahasarakham",
+    "nameTh": "ขามเรียง",
+    "nameEn": "Kham Riang",
+    "lat": 16.253,
+    "lng": 103.24,
+    "hasMassTransit": false,
+    "blurbTh": "ติดพื้นที่การศึกษา มมส. ซัพพลายหอพักใหม่เพิ่มต่อเนื่อง แข่งขันด้านราคาเช่าสูง"
+  },
+  {
+    "id": "msk-town",
+    "provinceId": "mahasarakham",
+    "nameTh": "เมืองมหาสารคาม",
+    "nameEn": "Maha Sarakham City",
+    "lat": 16.185,
+    "lng": 103.3,
+    "hasMassTransit": false,
+    "blurbTh": "เขตเทศบาลเมือง ศูนย์ราชการและโรงเรียน ดีมานด์จากครอบครัวประจำถิ่น"
+  },
+  {
+    "id": "msk-koeng",
+    "provinceId": "mahasarakham",
+    "nameTh": "เกิ้ง",
+    "nameEn": "Koeng",
+    "lat": 16.2,
+    "lng": 103.27,
+    "hasMassTransit": false,
+    "blurbTh": "รอยต่อเมืองกับ มมส. บ้านเดี่ยวราคาเข้าถึงได้สำหรับบุคลากรมหาวิทยาลัย"
+  },
+  {
+    "id": "msk-waengnang",
+    "provinceId": "mahasarakham",
+    "nameTh": "แวงน่าง",
+    "nameEn": "Waeng Nang",
+    "lat": 16.16,
+    "lng": 103.29,
+    "hasMassTransit": false,
+    "blurbTh": "โซนชานเมืองด้านใต้ ที่ดินแปลงใหญ่ ราคาต่ำ ซัพพลายบ้านสร้างเองเป็นหลัก"
+  },
+  {
+    "id": "msk-borabue",
+    "provinceId": "mahasarakham",
+    "nameTh": "บรบือ",
+    "nameEn": "Borabue",
+    "lat": 16.03,
+    "lng": 103.12,
+    "hasMassTransit": false,
+    "blurbTh": "อำเภอรองห่างตัวเมือง 25 กม. ราคาต่ำสุดในชุดข้อมูล สภาพคล่องต่ำ"
+  }
+]

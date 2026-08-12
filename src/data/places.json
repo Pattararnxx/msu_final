@@ -1,0 +1,962 @@
+[
+  {
+    "id": "P0001",
+    "zoneId": "bkk-asoke",
+    "nameTh": "BTS อโศก",
+    "category": "transit",
+    "distanceKm": 0.2,
+    "walkMinutes": 2
+  },
+  {
+    "id": "P0002",
+    "zoneId": "bkk-asoke",
+    "nameTh": "MRT สุขุมวิท",
+    "category": "transit",
+    "distanceKm": 0.35,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0003",
+    "zoneId": "bkk-asoke",
+    "nameTh": "เทอร์มินอล 21",
+    "category": "mall",
+    "distanceKm": 0.3,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0004",
+    "zoneId": "bkk-asoke",
+    "nameTh": "โรงพยาบาลบำรุงราษฎร์",
+    "category": "hospital",
+    "distanceKm": 1.2,
+    "walkMinutes": 14
+  },
+  {
+    "id": "P0005",
+    "zoneId": "bkk-asoke",
+    "nameTh": "สวนเบญจกิติ",
+    "category": "park",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0006",
+    "zoneId": "bkk-sathorn",
+    "nameTh": "BTS ช่องนนทรี",
+    "category": "transit",
+    "distanceKm": 0.25,
+    "walkMinutes": 3
+  },
+  {
+    "id": "P0007",
+    "zoneId": "bkk-sathorn",
+    "nameTh": "MRT ลุมพินี",
+    "category": "transit",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0008",
+    "zoneId": "bkk-sathorn",
+    "nameTh": "สีลมคอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 0.7,
+    "walkMinutes": 8
+  },
+  {
+    "id": "P0009",
+    "zoneId": "bkk-sathorn",
+    "nameTh": "โรงพยาบาลบีเอ็นเอช",
+    "category": "hospital",
+    "distanceKm": 0.8,
+    "walkMinutes": 10
+  },
+  {
+    "id": "P0010",
+    "zoneId": "bkk-sathorn",
+    "nameTh": "สวนลุมพินี",
+    "category": "park",
+    "distanceKm": 0.9,
+    "walkMinutes": 11
+  },
+  {
+    "id": "P0011",
+    "zoneId": "bkk-ari",
+    "nameTh": "BTS อารีย์",
+    "category": "transit",
+    "distanceKm": 0.25,
+    "walkMinutes": 3
+  },
+  {
+    "id": "P0012",
+    "zoneId": "bkk-ari",
+    "nameTh": "ลาวิลล่า อารีย์",
+    "category": "mall",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0013",
+    "zoneId": "bkk-ari",
+    "nameTh": "โรงพยาบาลพญาไท 2",
+    "category": "hospital",
+    "distanceKm": 1.4,
+    "walkMinutes": 17
+  },
+  {
+    "id": "P0014",
+    "zoneId": "bkk-ari",
+    "nameTh": "ตลาดอารีย์",
+    "category": "market",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0015",
+    "zoneId": "bkk-ari",
+    "nameTh": "สวนรถไฟ",
+    "category": "park",
+    "distanceKm": 2.1,
+    "walkMinutes": 25
+  },
+  {
+    "id": "P0016",
+    "zoneId": "bkk-ladprao",
+    "nameTh": "MRT ลาดพร้าว",
+    "category": "transit",
+    "distanceKm": 0.3,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0017",
+    "zoneId": "bkk-ladprao",
+    "nameTh": "เซ็นทรัล ลาดพร้าว",
+    "category": "mall",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0018",
+    "zoneId": "bkk-ladprao",
+    "nameTh": "ตลาดนัดจตุจักร",
+    "category": "market",
+    "distanceKm": 2.4,
+    "walkMinutes": 29
+  },
+  {
+    "id": "P0019",
+    "zoneId": "bkk-ladprao",
+    "nameTh": "โรงพยาบาลเปาโล เกษตร",
+    "category": "hospital",
+    "distanceKm": 2,
+    "walkMinutes": 24
+  },
+  {
+    "id": "P0020",
+    "zoneId": "bkk-ladprao",
+    "nameTh": "สวนจตุจักร",
+    "category": "park",
+    "distanceKm": 2.2,
+    "walkMinutes": 26
+  },
+  {
+    "id": "P0021",
+    "zoneId": "bkk-bangna",
+    "nameTh": "BTS บางนา",
+    "category": "transit",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0022",
+    "zoneId": "bkk-bangna",
+    "nameTh": "เซ็นทรัล บางนา",
+    "category": "mall",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0023",
+    "zoneId": "bkk-bangna",
+    "nameTh": "โรงพยาบาลบางนา 1",
+    "category": "hospital",
+    "distanceKm": 1.8,
+    "walkMinutes": 22
+  },
+  {
+    "id": "P0024",
+    "zoneId": "bkk-bangna",
+    "nameTh": "โรงเรียนนานาชาติเบิร์กลีย์",
+    "category": "school",
+    "distanceKm": 2.6,
+    "walkMinutes": 31
+  },
+  {
+    "id": "P0025",
+    "zoneId": "bkk-bangna",
+    "nameTh": "ท่าอากาศยานสุวรรณภูมิ",
+    "category": "airport",
+    "distanceKm": 14.5,
+    "walkMinutes": 174
+  },
+  {
+    "id": "P0026",
+    "zoneId": "bkk-minburi",
+    "nameTh": "MRT สายสีชมพู มีนบุรี",
+    "category": "transit",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0027",
+    "zoneId": "bkk-minburi",
+    "nameTh": "ตลาดมีนบุรี",
+    "category": "market",
+    "distanceKm": 0.7,
+    "walkMinutes": 8
+  },
+  {
+    "id": "P0028",
+    "zoneId": "bkk-minburi",
+    "nameTh": "โรงพยาบาลนพรัตนราชธานี",
+    "category": "hospital",
+    "distanceKm": 2.8,
+    "walkMinutes": 34
+  },
+  {
+    "id": "P0029",
+    "zoneId": "bkk-minburi",
+    "nameTh": "แฟชั่นไอส์แลนด์",
+    "category": "mall",
+    "distanceKm": 4.2,
+    "walkMinutes": 50
+  },
+  {
+    "id": "P0030",
+    "zoneId": "bkk-minburi",
+    "nameTh": "สวนเฉลิมพระเกียรติ ร.9",
+    "category": "park",
+    "distanceKm": 3.1,
+    "walkMinutes": 37
+  },
+  {
+    "id": "P0031",
+    "zoneId": "cnx-nimman",
+    "nameTh": "มหาวิทยาลัยเชียงใหม่",
+    "category": "university",
+    "distanceKm": 1.3,
+    "walkMinutes": 16
+  },
+  {
+    "id": "P0032",
+    "zoneId": "cnx-nimman",
+    "nameTh": "เมญ่า ไลฟ์สไตล์ ช้อปปิ้งเซ็นเตอร์",
+    "category": "mall",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0033",
+    "zoneId": "cnx-nimman",
+    "nameTh": "โรงพยาบาลสวนดอก",
+    "category": "hospital",
+    "distanceKm": 1.6,
+    "walkMinutes": 19
+  },
+  {
+    "id": "P0034",
+    "zoneId": "cnx-nimman",
+    "nameTh": "ตลาดต้นพยอม",
+    "category": "market",
+    "distanceKm": 1.5,
+    "walkMinutes": 18
+  },
+  {
+    "id": "P0035",
+    "zoneId": "cnx-nimman",
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "category": "airport",
+    "distanceKm": 4.4,
+    "walkMinutes": 53
+  },
+  {
+    "id": "P0036",
+    "zoneId": "cnx-oldcity",
+    "nameTh": "ประตูท่าแพ",
+    "category": "park",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0037",
+    "zoneId": "cnx-oldcity",
+    "nameTh": "ตลาดวโรรส",
+    "category": "market",
+    "distanceKm": 1.2,
+    "walkMinutes": 14
+  },
+  {
+    "id": "P0038",
+    "zoneId": "cnx-oldcity",
+    "nameTh": "โรงพยาบาลเชียงใหม่ราม",
+    "category": "hospital",
+    "distanceKm": 1.9,
+    "walkMinutes": 23
+  },
+  {
+    "id": "P0039",
+    "zoneId": "cnx-oldcity",
+    "nameTh": "เซ็นทรัล กาดสวนแก้ว",
+    "category": "mall",
+    "distanceKm": 1.7,
+    "walkMinutes": 20
+  },
+  {
+    "id": "P0040",
+    "zoneId": "cnx-oldcity",
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "category": "airport",
+    "distanceKm": 3.8,
+    "walkMinutes": 46
+  },
+  {
+    "id": "P0041",
+    "zoneId": "cnx-hangdong",
+    "nameTh": "โรงเรียนนานาชาติเปรมติณสูลานนท์",
+    "category": "school",
+    "distanceKm": 3.4,
+    "walkMinutes": 41
+  },
+  {
+    "id": "P0042",
+    "zoneId": "cnx-hangdong",
+    "nameTh": "เซ็นทรัล เชียงใหม่ แอร์พอร์ต",
+    "category": "mall",
+    "distanceKm": 6.2,
+    "walkMinutes": 74
+  },
+  {
+    "id": "P0043",
+    "zoneId": "cnx-hangdong",
+    "nameTh": "โรงพยาบาลหางดง",
+    "category": "hospital",
+    "distanceKm": 1.5,
+    "walkMinutes": 18
+  },
+  {
+    "id": "P0044",
+    "zoneId": "cnx-hangdong",
+    "nameTh": "ตลาดหางดง",
+    "category": "market",
+    "distanceKm": 0.8,
+    "walkMinutes": 10
+  },
+  {
+    "id": "P0045",
+    "zoneId": "cnx-hangdong",
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "category": "airport",
+    "distanceKm": 7.9,
+    "walkMinutes": 95
+  },
+  {
+    "id": "P0046",
+    "zoneId": "cnx-sansai",
+    "nameTh": "มหาวิทยาลัยแม่โจ้",
+    "category": "university",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0047",
+    "zoneId": "cnx-sansai",
+    "nameTh": "โรงพยาบาลสันทราย",
+    "category": "hospital",
+    "distanceKm": 2.3,
+    "walkMinutes": 28
+  },
+  {
+    "id": "P0048",
+    "zoneId": "cnx-sansai",
+    "nameTh": "ตลาดสันทรายหลวง",
+    "category": "market",
+    "distanceKm": 1,
+    "walkMinutes": 12
+  },
+  {
+    "id": "P0049",
+    "zoneId": "cnx-sansai",
+    "nameTh": "เซ็นทรัล เฟสติวัล เชียงใหม่",
+    "category": "mall",
+    "distanceKm": 7.4,
+    "walkMinutes": 89
+  },
+  {
+    "id": "P0050",
+    "zoneId": "cnx-sansai",
+    "nameTh": "สวนสาธารณะหนองน้ำสันทราย",
+    "category": "park",
+    "distanceKm": 1.8,
+    "walkMinutes": 22
+  },
+  {
+    "id": "P0051",
+    "zoneId": "cnx-maerim",
+    "nameTh": "สวนพฤกษศาสตร์สมเด็จพระนางเจ้าสิริกิติ์",
+    "category": "park",
+    "distanceKm": 5.6,
+    "walkMinutes": 67
+  },
+  {
+    "id": "P0052",
+    "zoneId": "cnx-maerim",
+    "nameTh": "โรงพยาบาลแม่ริม",
+    "category": "hospital",
+    "distanceKm": 1.4,
+    "walkMinutes": 17
+  },
+  {
+    "id": "P0053",
+    "zoneId": "cnx-maerim",
+    "nameTh": "ตลาดแม่ริม",
+    "category": "market",
+    "distanceKm": 0.9,
+    "walkMinutes": 11
+  },
+  {
+    "id": "P0054",
+    "zoneId": "cnx-maerim",
+    "nameTh": "โรงเรียนนานาชาติลานนา",
+    "category": "school",
+    "distanceKm": 8.2,
+    "walkMinutes": 98
+  },
+  {
+    "id": "P0055",
+    "zoneId": "cnx-maerim",
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "category": "airport",
+    "distanceKm": 16.3,
+    "walkMinutes": 196
+  },
+  {
+    "id": "P0056",
+    "zoneId": "cnx-sankamphaeng",
+    "nameTh": "น้ำพุร้อนสันกำแพง",
+    "category": "park",
+    "distanceKm": 11.4,
+    "walkMinutes": 137
+  },
+  {
+    "id": "P0057",
+    "zoneId": "cnx-sankamphaeng",
+    "nameTh": "โรงพยาบาลสันกำแพง",
+    "category": "hospital",
+    "distanceKm": 1.2,
+    "walkMinutes": 14
+  },
+  {
+    "id": "P0058",
+    "zoneId": "cnx-sankamphaeng",
+    "nameTh": "ตลาดสันกำแพง",
+    "category": "market",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0059",
+    "zoneId": "cnx-sankamphaeng",
+    "nameTh": "พรอมเมนาดา รีสอร์ต มอลล์",
+    "category": "mall",
+    "distanceKm": 6.8,
+    "walkMinutes": 82
+  },
+  {
+    "id": "P0060",
+    "zoneId": "cnx-sankamphaeng",
+    "nameTh": "ท่าอากาศยานเชียงใหม่",
+    "category": "airport",
+    "distanceKm": 13.1,
+    "walkMinutes": 157
+  },
+  {
+    "id": "P0061",
+    "zoneId": "hkt-patong",
+    "nameTh": "หาดป่าตอง",
+    "category": "beach",
+    "distanceKm": 0.3,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0062",
+    "zoneId": "hkt-patong",
+    "nameTh": "จังซีลอน",
+    "category": "mall",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0063",
+    "zoneId": "hkt-patong",
+    "nameTh": "โรงพยาบาลป่าตอง",
+    "category": "hospital",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0064",
+    "zoneId": "hkt-patong",
+    "nameTh": "ถนนบางลา",
+    "category": "market",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0065",
+    "zoneId": "hkt-patong",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 24.6,
+    "walkMinutes": 295
+  },
+  {
+    "id": "P0066",
+    "zoneId": "hkt-bangtao",
+    "nameTh": "หาดบางเทา",
+    "category": "beach",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0067",
+    "zoneId": "hkt-bangtao",
+    "nameTh": "ปอร์โต เดอ ภูเก็ต",
+    "category": "mall",
+    "distanceKm": 2.8,
+    "walkMinutes": 34
+  },
+  {
+    "id": "P0068",
+    "zoneId": "hkt-bangtao",
+    "nameTh": "โรงพยาบาลถลาง",
+    "category": "hospital",
+    "distanceKm": 6.4,
+    "walkMinutes": 77
+  },
+  {
+    "id": "P0069",
+    "zoneId": "hkt-bangtao",
+    "nameTh": "โรงเรียนนานาชาติยูดับเบิลยูซี",
+    "category": "school",
+    "distanceKm": 4.1,
+    "walkMinutes": 49
+  },
+  {
+    "id": "P0070",
+    "zoneId": "hkt-bangtao",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 13.2,
+    "walkMinutes": 158
+  },
+  {
+    "id": "P0071",
+    "zoneId": "hkt-karonkata",
+    "nameTh": "หาดกะตะ",
+    "category": "beach",
+    "distanceKm": 0.3,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0072",
+    "zoneId": "hkt-karonkata",
+    "nameTh": "หาดกะรน",
+    "category": "beach",
+    "distanceKm": 1.4,
+    "walkMinutes": 17
+  },
+  {
+    "id": "P0073",
+    "zoneId": "hkt-karonkata",
+    "nameTh": "โรงพยาบาลฉลอง",
+    "category": "hospital",
+    "distanceKm": 5.2,
+    "walkMinutes": 62
+  },
+  {
+    "id": "P0074",
+    "zoneId": "hkt-karonkata",
+    "nameTh": "ตลาดกะรน",
+    "category": "market",
+    "distanceKm": 0.8,
+    "walkMinutes": 10
+  },
+  {
+    "id": "P0075",
+    "zoneId": "hkt-karonkata",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 30.4,
+    "walkMinutes": 365
+  },
+  {
+    "id": "P0076",
+    "zoneId": "hkt-rawai",
+    "nameTh": "หาดราไวย์",
+    "category": "beach",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0077",
+    "zoneId": "hkt-rawai",
+    "nameTh": "แหลมพรหมเทพ",
+    "category": "park",
+    "distanceKm": 3.2,
+    "walkMinutes": 38
+  },
+  {
+    "id": "P0078",
+    "zoneId": "hkt-rawai",
+    "nameTh": "โรงพยาบาลฉลอง",
+    "category": "hospital",
+    "distanceKm": 2.6,
+    "walkMinutes": 31
+  },
+  {
+    "id": "P0079",
+    "zoneId": "hkt-rawai",
+    "nameTh": "ตลาดราไวย์",
+    "category": "market",
+    "distanceKm": 0.7,
+    "walkMinutes": 8
+  },
+  {
+    "id": "P0080",
+    "zoneId": "hkt-rawai",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 33.8,
+    "walkMinutes": 406
+  },
+  {
+    "id": "P0081",
+    "zoneId": "hkt-town",
+    "nameTh": "เซ็นทรัล ภูเก็ต",
+    "category": "mall",
+    "distanceKm": 2.4,
+    "walkMinutes": 29
+  },
+  {
+    "id": "P0082",
+    "zoneId": "hkt-town",
+    "nameTh": "โรงพยาบาลวชิระภูเก็ต",
+    "category": "hospital",
+    "distanceKm": 1.3,
+    "walkMinutes": 16
+  },
+  {
+    "id": "P0083",
+    "zoneId": "hkt-town",
+    "nameTh": "ย่านเมืองเก่าถนนถลาง",
+    "category": "market",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0084",
+    "zoneId": "hkt-town",
+    "nameTh": "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตภูเก็ต",
+    "category": "university",
+    "distanceKm": 4.8,
+    "walkMinutes": 58
+  },
+  {
+    "id": "P0085",
+    "zoneId": "hkt-town",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 30.2,
+    "walkMinutes": 362
+  },
+  {
+    "id": "P0086",
+    "zoneId": "hkt-maikhao",
+    "nameTh": "หาดไม้ขาว",
+    "category": "beach",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0087",
+    "zoneId": "hkt-maikhao",
+    "nameTh": "ท่าอากาศยานภูเก็ต",
+    "category": "airport",
+    "distanceKm": 4.6,
+    "walkMinutes": 55
+  },
+  {
+    "id": "P0088",
+    "zoneId": "hkt-maikhao",
+    "nameTh": "โรงพยาบาลถลาง",
+    "category": "hospital",
+    "distanceKm": 9.1,
+    "walkMinutes": 109
+  },
+  {
+    "id": "P0089",
+    "zoneId": "hkt-maikhao",
+    "nameTh": "ตลาดถลาง",
+    "category": "market",
+    "distanceKm": 8.4,
+    "walkMinutes": 101
+  },
+  {
+    "id": "P0090",
+    "zoneId": "hkt-maikhao",
+    "nameTh": "อุทยานแห่งชาติสิรินาถ",
+    "category": "park",
+    "distanceKm": 1.2,
+    "walkMinutes": 14
+  },
+  {
+    "id": "P0091",
+    "zoneId": "msk-thakhonyang",
+    "nameTh": "มหาวิทยาลัยมหาสารคาม เขตขามเรียง",
+    "category": "university",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0092",
+    "zoneId": "msk-thakhonyang",
+    "nameTh": "ตลาดน้อย ท่าขอนยาง",
+    "category": "market",
+    "distanceKm": 0.3,
+    "walkMinutes": 4
+  },
+  {
+    "id": "P0093",
+    "zoneId": "msk-thakhonyang",
+    "nameTh": "โรงพยาบาลสุทธาเวช",
+    "category": "hospital",
+    "distanceKm": 1.4,
+    "walkMinutes": 17
+  },
+  {
+    "id": "P0094",
+    "zoneId": "msk-thakhonyang",
+    "nameTh": "เสริมไทย คอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 8.6,
+    "walkMinutes": 103
+  },
+  {
+    "id": "P0095",
+    "zoneId": "msk-thakhonyang",
+    "nameTh": "สวนสุขภาพ มมส.",
+    "category": "park",
+    "distanceKm": 0.9,
+    "walkMinutes": 11
+  },
+  {
+    "id": "P0096",
+    "zoneId": "msk-khamriang",
+    "nameTh": "มหาวิทยาลัยมหาสารคาม เขตขามเรียง",
+    "category": "university",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0097",
+    "zoneId": "msk-khamriang",
+    "nameTh": "ตลาดขามเรียง",
+    "category": "market",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0098",
+    "zoneId": "msk-khamriang",
+    "nameTh": "โรงพยาบาลสุทธาเวช",
+    "category": "hospital",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0099",
+    "zoneId": "msk-khamriang",
+    "nameTh": "โรงเรียนสาธิต มมส.",
+    "category": "school",
+    "distanceKm": 1,
+    "walkMinutes": 12
+  },
+  {
+    "id": "P0100",
+    "zoneId": "msk-khamriang",
+    "nameTh": "สวนสุขภาพ มมส.",
+    "category": "park",
+    "distanceKm": 0.7,
+    "walkMinutes": 8
+  },
+  {
+    "id": "P0101",
+    "zoneId": "msk-town",
+    "nameTh": "เสริมไทย คอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 0.9,
+    "walkMinutes": 11
+  },
+  {
+    "id": "P0102",
+    "zoneId": "msk-town",
+    "nameTh": "โรงพยาบาลมหาสารคาม",
+    "category": "hospital",
+    "distanceKm": 1.2,
+    "walkMinutes": 14
+  },
+  {
+    "id": "P0103",
+    "zoneId": "msk-town",
+    "nameTh": "ตลาดสดเทศบาลเมือง",
+    "category": "market",
+    "distanceKm": 0.5,
+    "walkMinutes": 6
+  },
+  {
+    "id": "P0104",
+    "zoneId": "msk-town",
+    "nameTh": "โรงเรียนสารคามพิทยาคม",
+    "category": "school",
+    "distanceKm": 1.6,
+    "walkMinutes": 19
+  },
+  {
+    "id": "P0105",
+    "zoneId": "msk-town",
+    "nameTh": "มหาวิทยาลัยมหาสารคาม เขตในเมือง",
+    "category": "university",
+    "distanceKm": 2.1,
+    "walkMinutes": 25
+  },
+  {
+    "id": "P0106",
+    "zoneId": "msk-koeng",
+    "nameTh": "มหาวิทยาลัยมหาสารคาม เขตขามเรียง",
+    "category": "university",
+    "distanceKm": 4.2,
+    "walkMinutes": 50
+  },
+  {
+    "id": "P0107",
+    "zoneId": "msk-koeng",
+    "nameTh": "โรงพยาบาลมหาสารคาม",
+    "category": "hospital",
+    "distanceKm": 3.1,
+    "walkMinutes": 37
+  },
+  {
+    "id": "P0108",
+    "zoneId": "msk-koeng",
+    "nameTh": "ตลาดเกิ้ง",
+    "category": "market",
+    "distanceKm": 0.6,
+    "walkMinutes": 7
+  },
+  {
+    "id": "P0109",
+    "zoneId": "msk-koeng",
+    "nameTh": "เสริมไทย คอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 3.4,
+    "walkMinutes": 41
+  },
+  {
+    "id": "P0110",
+    "zoneId": "msk-koeng",
+    "nameTh": "สวนสาธารณะหนองข่า",
+    "category": "park",
+    "distanceKm": 1.7,
+    "walkMinutes": 20
+  },
+  {
+    "id": "P0111",
+    "zoneId": "msk-waengnang",
+    "nameTh": "โรงพยาบาลมหาสารคาม",
+    "category": "hospital",
+    "distanceKm": 4.4,
+    "walkMinutes": 53
+  },
+  {
+    "id": "P0112",
+    "zoneId": "msk-waengnang",
+    "nameTh": "ตลาดแวงน่าง",
+    "category": "market",
+    "distanceKm": 0.8,
+    "walkMinutes": 10
+  },
+  {
+    "id": "P0113",
+    "zoneId": "msk-waengnang",
+    "nameTh": "โรงเรียนแวงน่างวิทยาคม",
+    "category": "school",
+    "distanceKm": 1.3,
+    "walkMinutes": 16
+  },
+  {
+    "id": "P0114",
+    "zoneId": "msk-waengnang",
+    "nameTh": "เสริมไทย คอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 4.9,
+    "walkMinutes": 59
+  },
+  {
+    "id": "P0115",
+    "zoneId": "msk-waengnang",
+    "nameTh": "มหาวิทยาลัยมหาสารคาม เขตในเมือง",
+    "category": "university",
+    "distanceKm": 5.2,
+    "walkMinutes": 62
+  },
+  {
+    "id": "P0116",
+    "zoneId": "msk-borabue",
+    "nameTh": "โรงพยาบาลบรบือ",
+    "category": "hospital",
+    "distanceKm": 0.8,
+    "walkMinutes": 10
+  },
+  {
+    "id": "P0117",
+    "zoneId": "msk-borabue",
+    "nameTh": "ตลาดบรบือ",
+    "category": "market",
+    "distanceKm": 0.4,
+    "walkMinutes": 5
+  },
+  {
+    "id": "P0118",
+    "zoneId": "msk-borabue",
+    "nameTh": "โรงเรียนบรบือวิทยาคาร",
+    "category": "school",
+    "distanceKm": 1.1,
+    "walkMinutes": 13
+  },
+  {
+    "id": "P0119",
+    "zoneId": "msk-borabue",
+    "nameTh": "เสริมไทย คอมเพล็กซ์",
+    "category": "mall",
+    "distanceKm": 26.3,
+    "walkMinutes": 316
+  },
+  {
+    "id": "P0120",
+    "zoneId": "msk-borabue",
+    "nameTh": "อ่างเก็บน้ำหนองบ่อ",
+    "category": "park",
+    "distanceKm": 2.2,
+    "walkMinutes": 26
+  }
+]

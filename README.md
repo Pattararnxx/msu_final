@@ -1,5 +1,36 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## แชทบอทอสังหาริมทรัพย์
+
+ชุดข้อมูลจำลอง 4 จังหวัด 24 โซน 160 ประกาศ และดัชนีราคา 72 เส้น ย้อนหลัง 60 เดือน
+(2021-08 ถึง 2026-07) พร้อมแชทบอทที่ตอบจากข้อมูลชุดนี้ผ่าน tool calling เท่านั้น
+
+- `src/data/*.json` — ชุดข้อมูล สร้างจาก `scripts/generate-data.ts` แก้ด้วยมือได้
+- `src/lib/property/` — types, repository, forecast, tools, system prompt
+- `src/app/api/chat/route.ts` — endpoint แบบ stateless รองรับทั้ง stream และ JSON
+- `src/component/chatbot/` — panel ฝั่ง UI
+
+ตั้งค่า: คัดลอก `.env.example` เป็น `.env.local` แล้วใส่ `DEEPSEEK_API_KEY`
+ถ้าไม่มีคีย์ endpoint ยังตอบได้จากเทมเพลตออฟไลน์ที่อ่านข้อมูลชุดเดียวกัน
+
+สร้างข้อมูลใหม่ (เขียนทับ `src/data/`):
+
+```bash
+node scripts/generate-data.ts
+```
+
+ทดสอบสูตรพยากรณ์:
+
+```bash
+node --test scripts/forecast.test.ts
+```
+
+คุยกับบอทในเทอร์มินัล (ต้องรัน dev server ก่อน):
+
+```bash
+node scripts/chat.ts
+```
+
 ## Getting Started
 
 First, run the development server:

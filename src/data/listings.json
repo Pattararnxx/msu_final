@@ -1,0 +1,4544 @@
+[
+  {
+    "id": "L0001",
+    "titleTh": "คอนโด เดอะ เบส อโศก–สุขุมวิท 2 ห้องนอน 46 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-asoke",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 9670000,
+    "areaSqm": 46,
+    "pricePerSqm": 210200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 28,
+    "yearBuilt": 2023,
+    "listedDate": "2026-04-04",
+    "daysOnMarket": 118,
+    "nearestTransitKm": 0.2,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-13",
+        "fromPrice": 10900000,
+        "toPrice": 10250000,
+        "changePct": -5.96
+      },
+      {
+        "date": "2026-06-22",
+        "fromPrice": 10250000,
+        "toPrice": 9670000,
+        "changePct": -5.66
+      }
+    ]
+  },
+  {
+    "id": "L0002",
+    "titleTh": "คอนโด ลุมพินี วิลล์ อโศก–สุขุมวิท 2 ห้องนอน 56 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-asoke",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 10820000,
+    "areaSqm": 56,
+    "pricePerSqm": 193200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 25,
+    "yearBuilt": 2012,
+    "listedDate": "2026-06-20",
+    "daysOnMarket": 41,
+    "nearestTransitKm": 1.41,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0003",
+    "titleTh": "คอนโด เออร์บาโน่ อโศก–สุขุมวิท 2 ห้องนอน 45 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-asoke",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 7420000,
+    "areaSqm": 45,
+    "pricePerSqm": 164900,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 24,
+    "yearBuilt": 2023,
+    "listedDate": "2026-05-25",
+    "daysOnMarket": 67,
+    "nearestTransitKm": 1.76,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "วิวเมือง",
+      "เฟอร์นิเจอร์ครบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0004",
+    "titleTh": "บ้านเดี่ยว สราญสิริ อโศก–สุขุมวิท 4 ห้องนอน 251 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-asoke",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 50630000,
+    "areaSqm": 251,
+    "pricePerSqm": 201700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2025-12-19",
+    "daysOnMarket": 224,
+    "nearestTransitKm": 1.81,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ที่ดินแปลงมุม",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-04",
+        "fromPrice": 55110000,
+        "toPrice": 51750000,
+        "changePct": -6.1
+      },
+      {
+        "date": "2026-05-17",
+        "fromPrice": 51750000,
+        "toPrice": 50630000,
+        "changePct": -2.16
+      }
+    ]
+  },
+  {
+    "id": "L0005",
+    "titleTh": "คอนโด ริธึ่ม อโศก–สุขุมวิท 1 ห้องนอน 30 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-asoke",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5830000,
+    "areaSqm": 30,
+    "pricePerSqm": 194200,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 5,
+    "yearBuilt": 2021,
+    "listedDate": "2026-03-28",
+    "daysOnMarket": 125,
+    "nearestTransitKm": 1.48,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "โคเวิร์กกิ้งสเปซ",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0006",
+    "titleTh": "ทาวน์เฮาส์ สราญสิริ สาทร–สีลม 3 ห้องนอน 121 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-sathorn",
+    "propertyType": "townhouse",
+    "status": "under_offer",
+    "price": 18310000,
+    "areaSqm": 121,
+    "pricePerSqm": 151300,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-01-07",
+    "daysOnMarket": 205,
+    "nearestTransitKm": 1.82,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "ครัวไทยแยกส่วน",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-16",
+        "fromPrice": 20230000,
+        "toPrice": 19120000,
+        "changePct": -5.49
+      },
+      {
+        "date": "2026-05-24",
+        "fromPrice": 19120000,
+        "toPrice": 18310000,
+        "changePct": -4.24
+      }
+    ]
+  },
+  {
+    "id": "L0007",
+    "titleTh": "ทาวน์เฮาส์ บ้านกลางเมือง สาทร–สีลม 3 ห้องนอน 130 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-sathorn",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 17240000,
+    "areaSqm": 130,
+    "pricePerSqm": 132600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2025-12-10",
+    "daysOnMarket": 233,
+    "nearestTransitKm": 1.84,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "หมู่บ้านมีรั้วรอบ",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-26",
+        "fromPrice": 19660000,
+        "toPrice": 18420000,
+        "changePct": -6.31
+      },
+      {
+        "date": "2026-05-14",
+        "fromPrice": 18420000,
+        "toPrice": 17240000,
+        "changePct": -6.41
+      }
+    ]
+  },
+  {
+    "id": "L0008",
+    "titleTh": "คอนโด นิช ไพรด์ สาทร–สีลม 3 ห้องนอน 73 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-sathorn",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 13480000,
+    "areaSqm": 73,
+    "pricePerSqm": 184600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 29,
+    "yearBuilt": 2017,
+    "listedDate": "2026-03-22",
+    "daysOnMarket": 131,
+    "nearestTransitKm": 1.26,
+    "featuresTh": [
+      "วิวเมือง",
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0009",
+    "titleTh": "คอนโด เออร์บาโน่ สาทร–สีลม 3 ห้องนอน 67 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-sathorn",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 13510000,
+    "areaSqm": 67,
+    "pricePerSqm": 201600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 20,
+    "yearBuilt": 2018,
+    "listedDate": "2026-07-20",
+    "daysOnMarket": 11,
+    "nearestTransitKm": 1.48,
+    "featuresTh": [
+      "วิวเมือง",
+      "เฟอร์นิเจอร์ครบ",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0010",
+    "titleTh": "คอนโด แอสปาย สาทร–สีลม 2 ห้องนอน 61 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-sathorn",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 10340000,
+    "areaSqm": 61,
+    "pricePerSqm": 169500,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 26,
+    "yearBuilt": 2014,
+    "listedDate": "2026-04-18",
+    "daysOnMarket": 104,
+    "nearestTransitKm": 1.82,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "ฟิตเนสชั้นดาดฟ้า",
+      "วิวเมือง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0011",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ อารีย์–พหลโยธิน 4 ห้องนอน 147 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 33320000,
+    "areaSqm": 147,
+    "pricePerSqm": 226700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-04-15",
+    "daysOnMarket": 107,
+    "nearestTransitKm": 0.67,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0012",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ อารีย์–พหลโยธิน 3 ห้องนอน 126 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 21580000,
+    "areaSqm": 126,
+    "pricePerSqm": 171300,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2025,
+    "listedDate": "2026-06-18",
+    "daysOnMarket": 43,
+    "nearestTransitKm": 0.99,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ใกล้ทางด่วน",
+      "ที่จอดรถ 2 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0013",
+    "titleTh": "บ้านเดี่ยว บ้านกลางเมือง อารีย์–พหลโยธิน 4 ห้องนอน 305 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 58100000,
+    "areaSqm": 305,
+    "pricePerSqm": 190500,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-04-13",
+    "daysOnMarket": 109,
+    "nearestTransitKm": 1.79,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "สวนขนาดใหญ่",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0014",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ อารีย์–พหลโยธิน 4 ห้องนอน 161 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 25280000,
+    "areaSqm": 161,
+    "pricePerSqm": 157000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-01-03",
+    "daysOnMarket": 209,
+    "nearestTransitKm": 1.19,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "หมู่บ้านมีรั้วรอบ",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-14",
+        "fromPrice": 28500000,
+        "toPrice": 26810000,
+        "changePct": -5.93
+      },
+      {
+        "date": "2026-05-22",
+        "fromPrice": 26810000,
+        "toPrice": 25280000,
+        "changePct": -5.71
+      }
+    ]
+  },
+  {
+    "id": "L0015",
+    "titleTh": "คอนโด นิช ไพรด์ อารีย์–พหลโยธิน 3 ห้องนอน 63 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 9370000,
+    "areaSqm": 63,
+    "pricePerSqm": 148700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 6,
+    "yearBuilt": 2023,
+    "listedDate": "2026-02-11",
+    "daysOnMarket": 170,
+    "nearestTransitKm": 1.66,
+    "featuresTh": [
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-07",
+        "fromPrice": 9900000,
+        "toPrice": 9370000,
+        "changePct": -5.35
+      }
+    ]
+  },
+  {
+    "id": "L0016",
+    "titleTh": "คอนโด เดอะ เบส อารีย์–พหลโยธิน 3 ห้องนอน 81 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ari",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 15410000,
+    "areaSqm": 81,
+    "pricePerSqm": 190200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 27,
+    "yearBuilt": 2013,
+    "listedDate": "2026-02-16",
+    "daysOnMarket": 165,
+    "nearestTransitKm": 0.83,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-09",
+        "fromPrice": 16280000,
+        "toPrice": 15410000,
+        "changePct": -5.34
+      }
+    ]
+  },
+  {
+    "id": "L0017",
+    "titleTh": "คอนโด ลุมพินี วิลล์ ลาดพร้าว–จตุจักร 1 ห้องนอน 28 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2820000,
+    "areaSqm": 28,
+    "pricePerSqm": 100600,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 8,
+    "yearBuilt": 2025,
+    "listedDate": "2026-02-23",
+    "daysOnMarket": 158,
+    "nearestTransitKm": 1.92,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "สระว่ายน้ำระบบเกลือ",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0018",
+    "titleTh": "คอนโด เออร์บาโน่ ลาดพร้าว–จตุจักร 2 ห้องนอน 61 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 6320000,
+    "areaSqm": 61,
+    "pricePerSqm": 103600,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 25,
+    "yearBuilt": 2014,
+    "listedDate": "2026-05-18",
+    "daysOnMarket": 74,
+    "nearestTransitKm": 1.64,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "วิวเมือง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0019",
+    "titleTh": "คอนโด เดอะ ริช ลาดพร้าว–จตุจักร 3 ห้องนอน 62 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5490000,
+    "areaSqm": 62,
+    "pricePerSqm": 88500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 16,
+    "yearBuilt": 2019,
+    "listedDate": "2026-02-14",
+    "daysOnMarket": 167,
+    "nearestTransitKm": 1.93,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "ฟิตเนสชั้นดาดฟ้า",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-08",
+        "fromPrice": 5680000,
+        "toPrice": 5490000,
+        "changePct": -3.35
+      }
+    ]
+  },
+  {
+    "id": "L0020",
+    "titleTh": "คอนโด เดอะ เบส ลาดพร้าว–จตุจักร 3 ห้องนอน 66 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 9300000,
+    "areaSqm": 66,
+    "pricePerSqm": 140900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 20,
+    "yearBuilt": 2025,
+    "listedDate": "2026-06-30",
+    "daysOnMarket": 31,
+    "nearestTransitKm": 0.52,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "ที่จอดรถส่วนตัว",
+      "วิวเมือง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0021",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา ลาดพร้าว–จตุจักร 4 ห้องนอน 161 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 15700000,
+    "areaSqm": 161,
+    "pricePerSqm": 97500,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-05-17",
+    "daysOnMarket": 75,
+    "nearestTransitKm": 1.74,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ใกล้ทางด่วน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0022",
+    "titleTh": "คอนโด เออร์บาโน่ ลาดพร้าว–จตุจักร 3 ห้องนอน 88 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 8870000,
+    "areaSqm": 88,
+    "pricePerSqm": 100800,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 16,
+    "yearBuilt": 2016,
+    "listedDate": "2026-02-02",
+    "daysOnMarket": 179,
+    "nearestTransitKm": 1.93,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-02",
+        "fromPrice": 9460000,
+        "toPrice": 8870000,
+        "changePct": -6.24
+      }
+    ]
+  },
+  {
+    "id": "L0023",
+    "titleTh": "คอนโด เดอะ เบส ลาดพร้าว–จตุจักร 1 ห้องนอน 33 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-ladprao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 4020000,
+    "areaSqm": 33,
+    "pricePerSqm": 121700,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 6,
+    "yearBuilt": 2017,
+    "listedDate": "2026-02-22",
+    "daysOnMarket": 159,
+    "nearestTransitKm": 1.25,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "รักษาความปลอดภัย 24 ชม.",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-12",
+        "fromPrice": 4310000,
+        "toPrice": 4020000,
+        "changePct": -6.73
+      }
+    ]
+  },
+  {
+    "id": "L0024",
+    "titleTh": "คอนโด เออร์บาโน่ บางนา 2 ห้องนอน 38 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3400000,
+    "areaSqm": 38,
+    "pricePerSqm": 89500,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 10,
+    "yearBuilt": 2023,
+    "listedDate": "2026-03-31",
+    "daysOnMarket": 122,
+    "nearestTransitKm": 1.34,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "โคเวิร์กกิ้งสเปซ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-31",
+        "fromPrice": 3540000,
+        "toPrice": 3400000,
+        "changePct": -3.95
+      }
+    ]
+  },
+  {
+    "id": "L0025",
+    "titleTh": "คอนโด ไอดีโอ โมบิ บางนา 3 ห้องนอน 76 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 7210000,
+    "areaSqm": 76,
+    "pricePerSqm": 94900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 13,
+    "yearBuilt": 2014,
+    "listedDate": "2026-05-12",
+    "daysOnMarket": 80,
+    "nearestTransitKm": 1.14,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "เฟอร์นิเจอร์ครบ",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0026",
+    "titleTh": "คอนโด ริธึ่ม บางนา 2 ห้องนอน 39 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 3460000,
+    "areaSqm": 39,
+    "pricePerSqm": 88700,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 19,
+    "yearBuilt": 2020,
+    "listedDate": "2026-03-19",
+    "daysOnMarket": 134,
+    "nearestTransitKm": 1.41,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ที่จอดรถส่วนตัว",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-25",
+        "fromPrice": 3720000,
+        "toPrice": 3460000,
+        "changePct": -6.99
+      }
+    ]
+  },
+  {
+    "id": "L0027",
+    "titleTh": "คอนโด พลัม คอนโด บางนา 2 ห้องนอน 42 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3570000,
+    "areaSqm": 42,
+    "pricePerSqm": 85000,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 22,
+    "yearBuilt": 2014,
+    "listedDate": "2026-06-12",
+    "daysOnMarket": 49,
+    "nearestTransitKm": 1.82,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "โคเวิร์กกิ้งสเปซ",
+      "วิวเมือง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0028",
+    "titleTh": "คอนโด เดอะ เบส บางนา 2 ห้องนอน 56 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5390000,
+    "areaSqm": 56,
+    "pricePerSqm": 96300,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 2,
+    "yearBuilt": 2024,
+    "listedDate": "2026-06-18",
+    "daysOnMarket": 43,
+    "nearestTransitKm": 1.11,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "เฟอร์นิเจอร์ครบ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0029",
+    "titleTh": "คอนโด แอสปาย บางนา 3 ห้องนอน 69 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 6180000,
+    "areaSqm": 69,
+    "pricePerSqm": 89500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 17,
+    "yearBuilt": 2014,
+    "listedDate": "2026-05-06",
+    "daysOnMarket": 86,
+    "nearestTransitKm": 1.27,
+    "featuresTh": [
+      "วิวเมือง",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0030",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ บางนา 3 ห้องนอน 117 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "townhouse",
+    "status": "under_offer",
+    "price": 9910000,
+    "areaSqm": 117,
+    "pricePerSqm": 84700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2021,
+    "listedDate": "2026-05-29",
+    "daysOnMarket": 63,
+    "nearestTransitKm": 1.07,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0031",
+    "titleTh": "คอนโด เออร์บาโน่ บางนา 3 ห้องนอน 92 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 7620000,
+    "areaSqm": 92,
+    "pricePerSqm": 82800,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 2,
+    "yearBuilt": 2013,
+    "listedDate": "2026-02-15",
+    "daysOnMarket": 166,
+    "nearestTransitKm": 1.85,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "วิวเมือง",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-09",
+        "fromPrice": 7940000,
+        "toPrice": 7620000,
+        "changePct": -4.03
+      }
+    ]
+  },
+  {
+    "id": "L0032",
+    "titleTh": "คอนโด เดอะ ริช บางนา 3 ห้องนอน 87 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-bangna",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 8130000,
+    "areaSqm": 87,
+    "pricePerSqm": 93500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 12,
+    "yearBuilt": 2024,
+    "listedDate": "2026-05-06",
+    "daysOnMarket": 86,
+    "nearestTransitKm": 0.99,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-06-18",
+        "fromPrice": 8610000,
+        "toPrice": 8130000,
+        "changePct": -5.57
+      }
+    ]
+  },
+  {
+    "id": "L0033",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ มีนบุรี 4 ห้องนอน 161 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 11430000,
+    "areaSqm": 161,
+    "pricePerSqm": 71000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2026-07-16",
+    "daysOnMarket": 15,
+    "nearestTransitKm": 1.07,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "ห้องแม่บ้านแยกส่วน",
+      "ห้องนอนชั้นล่าง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0034",
+    "titleTh": "คอนโด ศุภาลัย ปาร์ค มีนบุรี 2 ห้องนอน 46 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2760000,
+    "areaSqm": 46,
+    "pricePerSqm": 60000,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 29,
+    "yearBuilt": 2024,
+    "listedDate": "2026-01-01",
+    "daysOnMarket": 211,
+    "nearestTransitKm": 1.63,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "โคเวิร์กกิ้งสเปซ",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-12",
+        "fromPrice": 3110000,
+        "toPrice": 2950000,
+        "changePct": -5.14
+      },
+      {
+        "date": "2026-05-22",
+        "fromPrice": 2950000,
+        "toPrice": 2760000,
+        "changePct": -6.44
+      }
+    ]
+  },
+  {
+    "id": "L0035",
+    "titleTh": "บ้านเดี่ยว มัณฑนา มีนบุรี 4 ห้องนอน 308 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 19650000,
+    "areaSqm": 308,
+    "pricePerSqm": 63800,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-02-22",
+    "daysOnMarket": 159,
+    "nearestTransitKm": 1.51,
+    "featuresTh": [
+      "โซลาร์รูฟ",
+      "ห้องแม่บ้านแยกส่วน",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-12",
+        "fromPrice": 20050000,
+        "toPrice": 19650000,
+        "changePct": -2
+      }
+    ]
+  },
+  {
+    "id": "L0036",
+    "titleTh": "บ้านเดี่ยว อนาสิริ มีนบุรี 4 ห้องนอน 182 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 10670000,
+    "areaSqm": 182,
+    "pricePerSqm": 58600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2026-02-04",
+    "daysOnMarket": 177,
+    "nearestTransitKm": 2.04,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "สวนขนาดใหญ่",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-03",
+        "fromPrice": 11470000,
+        "toPrice": 10670000,
+        "changePct": -6.97
+      }
+    ]
+  },
+  {
+    "id": "L0037",
+    "titleTh": "คอนโด ริธึ่ม มีนบุรี 1 ห้องนอน 34 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1850000,
+    "areaSqm": 34,
+    "pricePerSqm": 54400,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 17,
+    "yearBuilt": 2017,
+    "listedDate": "2026-04-09",
+    "daysOnMarket": 113,
+    "nearestTransitKm": 2.01,
+    "featuresTh": [
+      "วิวเมือง",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0038",
+    "titleTh": "คอนโด ลุมพินี วิลล์ มีนบุรี 3 ห้องนอน 65 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 4280000,
+    "areaSqm": 65,
+    "pricePerSqm": 65900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 5,
+    "yearBuilt": 2018,
+    "listedDate": "2026-03-09",
+    "daysOnMarket": 144,
+    "nearestTransitKm": 1.4,
+    "featuresTh": [
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0039",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ มีนบุรี 4 ห้องนอน 307 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 16180000,
+    "areaSqm": 307,
+    "pricePerSqm": 52700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2025,
+    "listedDate": "2026-05-24",
+    "daysOnMarket": 68,
+    "nearestTransitKm": 2.19,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "โซลาร์รูฟ",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0040",
+    "titleTh": "คอนโด ริธึ่ม มีนบุรี 3 ห้องนอน 64 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3880000,
+    "areaSqm": 64,
+    "pricePerSqm": 60700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 13,
+    "yearBuilt": 2016,
+    "listedDate": "2025-11-13",
+    "daysOnMarket": 260,
+    "nearestTransitKm": 1.68,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "โคเวิร์กกิ้งสเปซ",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-08",
+        "fromPrice": 4330000,
+        "toPrice": 4070000,
+        "changePct": -6
+      },
+      {
+        "date": "2026-05-05",
+        "fromPrice": 4070000,
+        "toPrice": 3880000,
+        "changePct": -4.67
+      }
+    ]
+  },
+  {
+    "id": "L0041",
+    "titleTh": "บ้านเดี่ยว แลนซีโอ มีนบุรี 4 ห้องนอน 235 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 14810000,
+    "areaSqm": 235,
+    "pricePerSqm": 63000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2026-03-18",
+    "daysOnMarket": 135,
+    "nearestTransitKm": 1.7,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "ครัวไทยแยกส่วน",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-24",
+        "fromPrice": 15230000,
+        "toPrice": 14810000,
+        "changePct": -2.76
+      }
+    ]
+  },
+  {
+    "id": "L0042",
+    "titleTh": "บ้านเดี่ยว มัณฑนา มีนบุรี 4 ห้องนอน 180 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 12200000,
+    "areaSqm": 180,
+    "pricePerSqm": 67800,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2025,
+    "listedDate": "2026-02-20",
+    "daysOnMarket": 161,
+    "nearestTransitKm": 1.48,
+    "featuresTh": [
+      "สวนขนาดใหญ่",
+      "สระว่ายน้ำส่วนตัว",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-11",
+        "fromPrice": 12780000,
+        "toPrice": 12200000,
+        "changePct": -4.54
+      }
+    ]
+  },
+  {
+    "id": "L0043",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ มีนบุรี 4 ห้องนอน 165 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "townhouse",
+    "status": "under_offer",
+    "price": 6800000,
+    "areaSqm": 165,
+    "pricePerSqm": 41200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2023,
+    "listedDate": "2026-01-05",
+    "daysOnMarket": 207,
+    "nearestTransitKm": 1.98,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-15",
+        "fromPrice": 7620000,
+        "toPrice": 7180000,
+        "changePct": -5.77
+      },
+      {
+        "date": "2026-05-23",
+        "fromPrice": 7180000,
+        "toPrice": 6800000,
+        "changePct": -5.29
+      }
+    ]
+  },
+  {
+    "id": "L0044",
+    "titleTh": "คอนโด เออร์บาโน่ มีนบุรี 3 ห้องนอน 95 ตร.ม.",
+    "provinceId": "bangkok",
+    "zoneId": "bkk-minburi",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 6290000,
+    "areaSqm": 95,
+    "pricePerSqm": 66200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 19,
+    "yearBuilt": 2017,
+    "listedDate": "2026-05-29",
+    "daysOnMarket": 63,
+    "nearestTransitKm": 1.5,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "เฟอร์นิเจอร์ครบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0045",
+    "titleTh": "คอนโด เออร์บาโน่ นิมมานเหมินท์ 1 ห้องนอน 29 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-nimman",
+    "propertyType": "condo",
+    "status": "under_offer",
+    "price": 2860000,
+    "areaSqm": 29,
+    "pricePerSqm": 98600,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 3,
+    "yearBuilt": 2019,
+    "listedDate": "2026-04-17",
+    "daysOnMarket": 105,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "วิวเมือง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0046",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ นิมมานเหมินท์ 4 ห้องนอน 304 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-nimman",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 34530000,
+    "areaSqm": 304,
+    "pricePerSqm": 113600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-03-23",
+    "daysOnMarket": 130,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ห้องนอนชั้นล่าง",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-27",
+        "fromPrice": 37110000,
+        "toPrice": 34530000,
+        "changePct": -6.95
+      }
+    ]
+  },
+  {
+    "id": "L0047",
+    "titleTh": "คอนโด พลัม คอนโด นิมมานเหมินท์ 3 ห้องนอน 91 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-nimman",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 9860000,
+    "areaSqm": 91,
+    "pricePerSqm": 108400,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 11,
+    "yearBuilt": 2018,
+    "listedDate": "2026-03-17",
+    "daysOnMarket": 136,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-24",
+        "fromPrice": 10430000,
+        "toPrice": 9860000,
+        "changePct": -5.47
+      }
+    ]
+  },
+  {
+    "id": "L0048",
+    "titleTh": "คอนโด ริธึ่ม นิมมานเหมินท์ 2 ห้องนอน 52 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-nimman",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5330000,
+    "areaSqm": 52,
+    "pricePerSqm": 102500,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 28,
+    "yearBuilt": 2024,
+    "listedDate": "2025-11-13",
+    "daysOnMarket": 260,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-08",
+        "fromPrice": 5910000,
+        "toPrice": 5670000,
+        "changePct": -4.06
+      },
+      {
+        "date": "2026-05-05",
+        "fromPrice": 5670000,
+        "toPrice": 5330000,
+        "changePct": -6
+      }
+    ]
+  },
+  {
+    "id": "L0049",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ คูเมือง–เมืองเชียงใหม่ 4 ห้องนอน 300 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-oldcity",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 27330000,
+    "areaSqm": 300,
+    "pricePerSqm": 91100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2016,
+    "listedDate": "2026-03-02",
+    "daysOnMarket": 151,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "สวนขนาดใหญ่",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0050",
+    "titleTh": "คอนโด ริธึ่ม คูเมือง–เมืองเชียงใหม่ 1 ห้องนอน 32 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-oldcity",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2280000,
+    "areaSqm": 32,
+    "pricePerSqm": 71200,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 23,
+    "yearBuilt": 2025,
+    "listedDate": "2026-03-25",
+    "daysOnMarket": 128,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "รักษาความปลอดภัย 24 ชม.",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-28",
+        "fromPrice": 2350000,
+        "toPrice": 2280000,
+        "changePct": -2.98
+      }
+    ]
+  },
+  {
+    "id": "L0051",
+    "titleTh": "บ้านเดี่ยว สราญสิริ คูเมือง–เมืองเชียงใหม่ 4 ห้องนอน 278 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-oldcity",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 24440000,
+    "areaSqm": 278,
+    "pricePerSqm": 87900,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-06-18",
+    "daysOnMarket": 43,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "สวนขนาดใหญ่",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0052",
+    "titleTh": "คอนโด นิช ไพรด์ คูเมือง–เมืองเชียงใหม่ 2 ห้องนอน 49 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-oldcity",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3350000,
+    "areaSqm": 49,
+    "pricePerSqm": 68400,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 31,
+    "yearBuilt": 2022,
+    "listedDate": "2026-03-16",
+    "daysOnMarket": 137,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "โคเวิร์กกิ้งสเปซ",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-23",
+        "fromPrice": 3470000,
+        "toPrice": 3350000,
+        "changePct": -3.46
+      }
+    ]
+  },
+  {
+    "id": "L0053",
+    "titleTh": "คอนโด เดอะ ริช คูเมือง–เมืองเชียงใหม่ 3 ห้องนอน 92 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-oldcity",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 8160000,
+    "areaSqm": 92,
+    "pricePerSqm": 88700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 10,
+    "yearBuilt": 2013,
+    "listedDate": "2026-03-16",
+    "daysOnMarket": 137,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-23",
+        "fromPrice": 8690000,
+        "toPrice": 8160000,
+        "changePct": -6.1
+      }
+    ]
+  },
+  {
+    "id": "L0054",
+    "titleTh": "บ้านเดี่ยว แลนซีโอ หางดง 4 ห้องนอน 161 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 8600000,
+    "areaSqm": 161,
+    "pricePerSqm": 53400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2013,
+    "listedDate": "2026-02-26",
+    "daysOnMarket": 155,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องนอนชั้นล่าง",
+      "สระว่ายน้ำส่วนตัว",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-14",
+        "fromPrice": 8900000,
+        "toPrice": 8600000,
+        "changePct": -3.37
+      }
+    ]
+  },
+  {
+    "id": "L0055",
+    "titleTh": "คอนโด นิช ไพรด์ หางดง 3 ห้องนอน 81 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 4450000,
+    "areaSqm": 81,
+    "pricePerSqm": 54900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 13,
+    "yearBuilt": 2021,
+    "listedDate": "2025-11-21",
+    "daysOnMarket": 252,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "วิวเมือง",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-27",
+        "fromPrice": 4630000,
+        "toPrice": 4450000,
+        "changePct": -3.89
+      }
+    ]
+  },
+  {
+    "id": "L0056",
+    "titleTh": "ทาวน์เฮาส์ ภัสสร หางดง 3 ห้องนอน 95 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "townhouse",
+    "status": "sold",
+    "price": 4040000,
+    "areaSqm": 95,
+    "pricePerSqm": 42500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-02-23",
+    "daysOnMarket": 158,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "รักษาความปลอดภัย 24 ชม.",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0057",
+    "titleTh": "คอนโด พลัม คอนโด หางดง 3 ห้องนอน 65 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "condo",
+    "status": "under_offer",
+    "price": 3410000,
+    "areaSqm": 65,
+    "pricePerSqm": 52400,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 29,
+    "yearBuilt": 2018,
+    "listedDate": "2026-02-10",
+    "daysOnMarket": 171,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-06",
+        "fromPrice": 3500000,
+        "toPrice": 3410000,
+        "changePct": -2.57
+      }
+    ]
+  },
+  {
+    "id": "L0058",
+    "titleTh": "คอนโด เดอะ เบส หางดง 2 ห้องนอน 47 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2450000,
+    "areaSqm": 47,
+    "pricePerSqm": 52200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 17,
+    "yearBuilt": 2014,
+    "listedDate": "2026-06-20",
+    "daysOnMarket": 41,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "เครื่องปรับอากาศทุกห้อง",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0059",
+    "titleTh": "คอนโด นิช ไพรด์ หางดง 2 ห้องนอน 44 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2270000,
+    "areaSqm": 44,
+    "pricePerSqm": 51600,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 23,
+    "yearBuilt": 2014,
+    "listedDate": "2026-07-26",
+    "daysOnMarket": 5,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ฟิตเนสชั้นดาดฟ้า",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0060",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา หางดง 3 ห้องนอน 134 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-hangdong",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 5130000,
+    "areaSqm": 134,
+    "pricePerSqm": 38300,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2014,
+    "listedDate": "2026-04-20",
+    "daysOnMarket": 102,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ครัวไทยแยกส่วน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0061",
+    "titleTh": "คอนโด เดอะ ริช สันทราย 2 ห้องนอน 52 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 2300000,
+    "areaSqm": 52,
+    "pricePerSqm": 44300,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 24,
+    "yearBuilt": 2025,
+    "listedDate": "2026-03-31",
+    "daysOnMarket": 122,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "วิวเมือง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-31",
+        "fromPrice": 2410000,
+        "toPrice": 2300000,
+        "changePct": -4.56
+      }
+    ]
+  },
+  {
+    "id": "L0062",
+    "titleTh": "บ้านเดี่ยว ภัสสร สันทราย 4 ห้องนอน 224 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 8490000,
+    "areaSqm": 224,
+    "pricePerSqm": 37900,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2016,
+    "listedDate": "2025-12-29",
+    "daysOnMarket": 214,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนขนาดใหญ่",
+      "ห้องแม่บ้านแยกส่วน",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-15",
+        "fromPrice": 8910000,
+        "toPrice": 8490000,
+        "changePct": -4.71
+      }
+    ]
+  },
+  {
+    "id": "L0063",
+    "titleTh": "คอนโด นิช ไพรด์ สันทราย 3 ห้องนอน 88 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "condo",
+    "status": "under_offer",
+    "price": 4070000,
+    "areaSqm": 88,
+    "pricePerSqm": 46300,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 3,
+    "yearBuilt": 2013,
+    "listedDate": "2026-05-19",
+    "daysOnMarket": 73,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "สระว่ายน้ำระบบเกลือ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0064",
+    "titleTh": "คอนโด ศุภาลัย ปาร์ค สันทราย 3 ห้องนอน 81 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5040000,
+    "areaSqm": 81,
+    "pricePerSqm": 62200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 29,
+    "yearBuilt": 2024,
+    "listedDate": "2026-02-11",
+    "daysOnMarket": 170,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "สระว่ายน้ำระบบเกลือ",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0065",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ สันทราย 4 ห้องนอน 280 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 17190000,
+    "areaSqm": 280,
+    "pricePerSqm": 61400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2025-12-27",
+    "daysOnMarket": 216,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องนอนชั้นล่าง",
+      "ครัวไทยแยกส่วน",
+      "สระว่ายน้ำส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-09",
+        "fromPrice": 18950000,
+        "toPrice": 18130000,
+        "changePct": -4.33
+      },
+      {
+        "date": "2026-05-20",
+        "fromPrice": 18130000,
+        "toPrice": 17190000,
+        "changePct": -5.18
+      }
+    ]
+  },
+  {
+    "id": "L0066",
+    "titleTh": "คอนโด ไอดีโอ โมบิ สันทราย 3 ห้องนอน 87 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "condo",
+    "status": "under_offer",
+    "price": 4430000,
+    "areaSqm": 87,
+    "pricePerSqm": 50900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 23,
+    "yearBuilt": 2012,
+    "listedDate": "2026-02-18",
+    "daysOnMarket": 163,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0067",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ สันทราย 3 ห้องนอน 90 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "townhouse",
+    "status": "under_offer",
+    "price": 3660000,
+    "areaSqm": 90,
+    "pricePerSqm": 40700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2023,
+    "listedDate": "2026-06-01",
+    "daysOnMarket": 60,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0068",
+    "titleTh": "บ้านเดี่ยว ภัสสร สันทราย 4 ห้องนอน 162 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sansai",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 9590000,
+    "areaSqm": 162,
+    "pricePerSqm": 59200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-06-21",
+    "daysOnMarket": 40,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ห้องแม่บ้านแยกส่วน",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0069",
+    "titleTh": "ทาวน์เฮาส์ ภัสสร แม่ริม 4 ห้องนอน 149 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 6420000,
+    "areaSqm": 149,
+    "pricePerSqm": 43100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2025-12-24",
+    "daysOnMarket": 219,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "สวนหลังบ้าน",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-07",
+        "fromPrice": 6810000,
+        "toPrice": 6590000,
+        "changePct": -3.23
+      },
+      {
+        "date": "2026-05-19",
+        "fromPrice": 6590000,
+        "toPrice": 6420000,
+        "changePct": -2.58
+      }
+    ]
+  },
+  {
+    "id": "L0070",
+    "titleTh": "คอนโด ริธึ่ม แม่ริม 2 ห้องนอน 37 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 1600000,
+    "areaSqm": 37,
+    "pricePerSqm": 43300,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 31,
+    "yearBuilt": 2022,
+    "listedDate": "2026-03-14",
+    "daysOnMarket": 139,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำระบบเกลือ",
+      "เฟอร์นิเจอร์ครบ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-22",
+        "fromPrice": 1640000,
+        "toPrice": 1600000,
+        "changePct": -2.44
+      }
+    ]
+  },
+  {
+    "id": "L0071",
+    "titleTh": "คอนโด เดอะ เบส แม่ริม 2 ห้องนอน 41 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1570000,
+    "areaSqm": 41,
+    "pricePerSqm": 38400,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 21,
+    "yearBuilt": 2015,
+    "listedDate": "2026-02-24",
+    "daysOnMarket": 157,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-13",
+        "fromPrice": 1640000,
+        "toPrice": 1570000,
+        "changePct": -4.27
+      }
+    ]
+  },
+  {
+    "id": "L0072",
+    "titleTh": "บ้านเดี่ยว สราญสิริ แม่ริม 4 ห้องนอน 318 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "detached_house",
+    "status": "sold",
+    "price": 21270000,
+    "areaSqm": 318,
+    "pricePerSqm": 66900,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-03-07",
+    "daysOnMarket": 146,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โซลาร์รูฟ",
+      "ที่จอดรถ 3 คัน",
+      "ห้องนอนชั้นล่าง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-19",
+        "fromPrice": 22040000,
+        "toPrice": 21270000,
+        "changePct": -3.49
+      }
+    ]
+  },
+  {
+    "id": "L0073",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ แม่ริม 4 ห้องนอน 198 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 11900000,
+    "areaSqm": 198,
+    "pricePerSqm": 60100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2013,
+    "listedDate": "2026-01-09",
+    "daysOnMarket": 203,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โซลาร์รูฟ",
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-18",
+        "fromPrice": 13280000,
+        "toPrice": 12420000,
+        "changePct": -6.48
+      },
+      {
+        "date": "2026-05-24",
+        "fromPrice": 12420000,
+        "toPrice": 11900000,
+        "changePct": -4.19
+      }
+    ]
+  },
+  {
+    "id": "L0074",
+    "titleTh": "บ้านเดี่ยว ชัยพฤกษ์ แม่ริม 4 ห้องนอน 256 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 15560000,
+    "areaSqm": 256,
+    "pricePerSqm": 60800,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2025-12-17",
+    "daysOnMarket": 226,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "ที่ดินแปลงมุม",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-02",
+        "fromPrice": 16930000,
+        "toPrice": 16270000,
+        "changePct": -3.9
+      },
+      {
+        "date": "2026-05-17",
+        "fromPrice": 16270000,
+        "toPrice": 15560000,
+        "changePct": -4.36
+      }
+    ]
+  },
+  {
+    "id": "L0075",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ แม่ริม 4 ห้องนอน 176 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 10490000,
+    "areaSqm": 176,
+    "pricePerSqm": 59600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2013,
+    "listedDate": "2026-04-06",
+    "daysOnMarket": 116,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "ที่จอดรถ 3 คัน",
+      "สวนขนาดใหญ่"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0076",
+    "titleTh": "ทาวน์เฮาส์ อนาสิริ แม่ริม 3 ห้องนอน 121 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-maerim",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 5430000,
+    "areaSqm": 121,
+    "pricePerSqm": 44900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2026-01-01",
+    "daysOnMarket": 211,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนหลังบ้าน",
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-16",
+        "fromPrice": 5720000,
+        "toPrice": 5430000,
+        "changePct": -5.07
+      }
+    ]
+  },
+  {
+    "id": "L0077",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ สันกำแพง 4 ห้องนอน 274 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 17970000,
+    "areaSqm": 274,
+    "pricePerSqm": 65600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-02-11",
+    "daysOnMarket": 170,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ห้องแม่บ้านแยกส่วน",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-07",
+        "fromPrice": 18930000,
+        "toPrice": 17970000,
+        "changePct": -5.07
+      }
+    ]
+  },
+  {
+    "id": "L0078",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ สันกำแพง 4 ห้องนอน 145 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 4920000,
+    "areaSqm": 145,
+    "pricePerSqm": 33900,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2025-12-18",
+    "daysOnMarket": 225,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "ครัวไทยแยกส่วน",
+      "ใกล้ทางด่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-03",
+        "fromPrice": 5390000,
+        "toPrice": 5100000,
+        "changePct": -5.38
+      },
+      {
+        "date": "2026-05-17",
+        "fromPrice": 5100000,
+        "toPrice": 4920000,
+        "changePct": -3.53
+      }
+    ]
+  },
+  {
+    "id": "L0079",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ สันกำแพง 4 ห้องนอน 144 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 6490000,
+    "areaSqm": 144,
+    "pricePerSqm": 45100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2025-12-30",
+    "daysOnMarket": 213,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "หมู่บ้านมีรั้วรอบ",
+      "ใกล้ทางด่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-11",
+        "fromPrice": 7320000,
+        "toPrice": 6920000,
+        "changePct": -5.46
+      },
+      {
+        "date": "2026-05-21",
+        "fromPrice": 6920000,
+        "toPrice": 6490000,
+        "changePct": -6.21
+      }
+    ]
+  },
+  {
+    "id": "L0080",
+    "titleTh": "บ้านเดี่ยว สราญสิริ สันกำแพง 4 ห้องนอน 174 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 9140000,
+    "areaSqm": 174,
+    "pricePerSqm": 52500,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2021,
+    "listedDate": "2026-05-12",
+    "daysOnMarket": 80,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องนอนชั้นล่าง",
+      "โซลาร์รูฟ",
+      "สระว่ายน้ำส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0081",
+    "titleTh": "ทาวน์เฮาส์ อนาสิริ สันกำแพง 4 ห้องนอน 167 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 5950000,
+    "areaSqm": 167,
+    "pricePerSqm": 35600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-07-26",
+    "daysOnMarket": 5,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "สวนหลังบ้าน",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0082",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ สันกำแพง 4 ห้องนอน 177 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 7500000,
+    "areaSqm": 177,
+    "pricePerSqm": 42400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2015,
+    "listedDate": "2026-02-03",
+    "daysOnMarket": 178,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 3 คัน",
+      "ห้องนอนชั้นล่าง",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0083",
+    "titleTh": "คอนโด เดอะ ริช สันกำแพง 3 ห้องนอน 71 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3370000,
+    "areaSqm": 71,
+    "pricePerSqm": 47400,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 27,
+    "yearBuilt": 2025,
+    "listedDate": "2026-03-07",
+    "daysOnMarket": 146,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0084",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ สันกำแพง 4 ห้องนอน 144 ตร.ม.",
+    "provinceId": "chiangmai",
+    "zoneId": "cnx-sankamphaeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 5790000,
+    "areaSqm": 144,
+    "pricePerSqm": 40200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-03-15",
+    "daysOnMarket": 138,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "ใกล้ทางด่วน",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-23",
+        "fromPrice": 6100000,
+        "toPrice": 5790000,
+        "changePct": -5.08
+      }
+    ]
+  },
+  {
+    "id": "L0085",
+    "titleTh": "ทาวน์เฮาส์ ภัสสร ป่าตอง 4 ห้องนอน 143 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 10540000,
+    "areaSqm": 143,
+    "pricePerSqm": 73700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-06-18",
+    "daysOnMarket": 43,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ที่จอดรถ 2 คัน",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0086",
+    "titleTh": "คอนโด ริธึ่ม ป่าตอง 2 ห้องนอน 46 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5180000,
+    "areaSqm": 46,
+    "pricePerSqm": 112500,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 23,
+    "yearBuilt": 2025,
+    "listedDate": "2026-01-24",
+    "daysOnMarket": 188,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0087",
+    "titleTh": "คอนโด เดอะ เบส ป่าตอง 3 ห้องนอน 83 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 10010000,
+    "areaSqm": 83,
+    "pricePerSqm": 120600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 15,
+    "yearBuilt": 2015,
+    "listedDate": "2026-03-07",
+    "daysOnMarket": 146,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "เฟอร์นิเจอร์ครบ",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0088",
+    "titleTh": "คอนโด เออร์บาโน่ ป่าตอง 3 ห้องนอน 76 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 8950000,
+    "areaSqm": 76,
+    "pricePerSqm": 117800,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 13,
+    "yearBuilt": 2019,
+    "listedDate": "2026-01-30",
+    "daysOnMarket": 182,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "รักษาความปลอดภัย 24 ชม.",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-01",
+        "fromPrice": 9210000,
+        "toPrice": 8950000,
+        "changePct": -2.82
+      }
+    ]
+  },
+  {
+    "id": "L0089",
+    "titleTh": "ทาวน์เฮาส์ บ้านกลางเมือง ป่าตอง 4 ห้องนอน 145 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 13830000,
+    "areaSqm": 145,
+    "pricePerSqm": 95400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-02-03",
+    "daysOnMarket": 178,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0090",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ ป่าตอง 4 ห้องนอน 298 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-patong",
+    "propertyType": "detached_house",
+    "status": "sold",
+    "price": 44280000,
+    "areaSqm": 298,
+    "pricePerSqm": 148600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-05-05",
+    "daysOnMarket": 87,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 3 คัน",
+      "โซลาร์รูฟ",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0091",
+    "titleTh": "ทาวน์เฮาส์ ชัยพฤกษ์ บางเทา–เชิงทะเล 3 ห้องนอน 116 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-bangtao",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 11990000,
+    "areaSqm": 116,
+    "pricePerSqm": 103400,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2015,
+    "listedDate": "2026-05-29",
+    "daysOnMarket": 63,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "ครัวไทยแยกส่วน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0092",
+    "titleTh": "บ้านเดี่ยว แลนซีโอ บางเทา–เชิงทะเล 4 ห้องนอน 317 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-bangtao",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 64220000,
+    "areaSqm": 317,
+    "pricePerSqm": 202600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2015,
+    "listedDate": "2026-05-15",
+    "daysOnMarket": 77,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องนอนชั้นล่าง",
+      "โซลาร์รูฟ",
+      "สวนขนาดใหญ่"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0093",
+    "titleTh": "บ้านเดี่ยว เดอะ แพลนท์ บางเทา–เชิงทะเล 4 ห้องนอน 261 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-bangtao",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 47580000,
+    "areaSqm": 261,
+    "pricePerSqm": 182300,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2016,
+    "listedDate": "2026-03-05",
+    "daysOnMarket": 148,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 3 คัน",
+      "ที่ดินแปลงมุม",
+      "ห้องนอนชั้นล่าง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-18",
+        "fromPrice": 50210000,
+        "toPrice": 47580000,
+        "changePct": -5.24
+      }
+    ]
+  },
+  {
+    "id": "L0094",
+    "titleTh": "คอนโด แอสปาย บางเทา–เชิงทะเล 2 ห้องนอน 58 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-bangtao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 8860000,
+    "areaSqm": 58,
+    "pricePerSqm": 152800,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 12,
+    "yearBuilt": 2022,
+    "listedDate": "2025-12-12",
+    "daysOnMarket": 231,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "เครื่องปรับอากาศทุกห้อง",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-27",
+        "fromPrice": 9620000,
+        "toPrice": 9070000,
+        "changePct": -5.72
+      },
+      {
+        "date": "2026-05-15",
+        "fromPrice": 9070000,
+        "toPrice": 8860000,
+        "changePct": -2.32
+      }
+    ]
+  },
+  {
+    "id": "L0095",
+    "titleTh": "ทาวน์เฮาส์ อนาสิริ บางเทา–เชิงทะเล 3 ห้องนอน 121 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-bangtao",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 15440000,
+    "areaSqm": 121,
+    "pricePerSqm": 127600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-03-16",
+    "daysOnMarket": 137,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0096",
+    "titleTh": "คอนโด ศุภาลัย ปาร์ค กะรน–กะตะ 3 ห้องนอน 94 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 9790000,
+    "areaSqm": 94,
+    "pricePerSqm": 104100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 7,
+    "yearBuilt": 2022,
+    "listedDate": "2026-05-01",
+    "daysOnMarket": 91,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "ที่จอดรถส่วนตัว",
+      "เฟอร์นิเจอร์ครบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0097",
+    "titleTh": "ทาวน์เฮาส์ คาซ่า วิลล์ กะรน–กะตะ 3 ห้องนอน 113 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 6640000,
+    "areaSqm": 113,
+    "pricePerSqm": 58800,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-05-08",
+    "daysOnMarket": 84,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0098",
+    "titleTh": "คอนโด ริธึ่ม กะรน–กะตะ 1 ห้องนอน 29 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3290000,
+    "areaSqm": 29,
+    "pricePerSqm": 113500,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 18,
+    "yearBuilt": 2020,
+    "listedDate": "2026-01-31",
+    "daysOnMarket": 181,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "วิวเมือง",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0099",
+    "titleTh": "บ้านเดี่ยว มัณฑนา กะรน–กะตะ 4 ห้องนอน 144 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 16340000,
+    "areaSqm": 144,
+    "pricePerSqm": 113500,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2025-11-28",
+    "daysOnMarket": 245,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "ที่จอดรถ 3 คัน",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-18",
+        "fromPrice": 18720000,
+        "toPrice": 17440000,
+        "changePct": -6.84
+      },
+      {
+        "date": "2026-05-10",
+        "fromPrice": 17440000,
+        "toPrice": 16340000,
+        "changePct": -6.31
+      }
+    ]
+  },
+  {
+    "id": "L0100",
+    "titleTh": "ทาวน์เฮาส์ คาซ่า วิลล์ กะรน–กะตะ 4 ห้องนอน 153 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "townhouse",
+    "status": "sold",
+    "price": 10820000,
+    "areaSqm": 153,
+    "pricePerSqm": 70700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-01-12",
+    "daysOnMarket": 200,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนหลังบ้าน",
+      "รักษาความปลอดภัย 24 ชม.",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-22",
+        "fromPrice": 11550000,
+        "toPrice": 10820000,
+        "changePct": -6.32
+      }
+    ]
+  },
+  {
+    "id": "L0101",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ กะรน–กะตะ 4 ห้องนอน 250 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-karonkata",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 29350000,
+    "areaSqm": 250,
+    "pricePerSqm": 117400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-01-21",
+    "daysOnMarket": 191,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "สวนขนาดใหญ่",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-26",
+        "fromPrice": 30910000,
+        "toPrice": 29350000,
+        "changePct": -5.05
+      }
+    ]
+  },
+  {
+    "id": "L0102",
+    "titleTh": "บ้านเดี่ยว แลนซีโอ ราไวย์ 4 ห้องนอน 168 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 19640000,
+    "areaSqm": 168,
+    "pricePerSqm": 116900,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2025-12-23",
+    "daysOnMarket": 220,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องแม่บ้านแยกส่วน",
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-12",
+        "fromPrice": 20820000,
+        "toPrice": 19640000,
+        "changePct": -5.67
+      }
+    ]
+  },
+  {
+    "id": "L0103",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ ราไวย์ 4 ห้องนอน 151 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 10720000,
+    "areaSqm": 151,
+    "pricePerSqm": 71000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2014,
+    "listedDate": "2026-03-10",
+    "daysOnMarket": 143,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "ใกล้ทางด่วน",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0104",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ ราไวย์ 4 ห้องนอน 216 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 27450000,
+    "areaSqm": 216,
+    "pricePerSqm": 127100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2026-01-17",
+    "daysOnMarket": 195,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0105",
+    "titleTh": "คอนโด นิช ไพรด์ ราไวย์ 3 ห้องนอน 64 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 6150000,
+    "areaSqm": 64,
+    "pricePerSqm": 96100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 21,
+    "yearBuilt": 2014,
+    "listedDate": "2026-02-21",
+    "daysOnMarket": 160,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "ที่จอดรถส่วนตัว",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0106",
+    "titleTh": "คอนโด ศุภาลัย ปาร์ค ราไวย์ 3 ห้องนอน 78 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 7020000,
+    "areaSqm": 78,
+    "pricePerSqm": 90000,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 28,
+    "yearBuilt": 2023,
+    "listedDate": "2026-07-20",
+    "daysOnMarket": 11,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "เฟอร์นิเจอร์ครบ",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0107",
+    "titleTh": "คอนโด ไอดีโอ โมบิ ราไวย์ 3 ห้องนอน 66 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 7260000,
+    "areaSqm": 66,
+    "pricePerSqm": 110000,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 2,
+    "yearBuilt": 2020,
+    "listedDate": "2026-01-24",
+    "daysOnMarket": 188,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "โคเวิร์กกิ้งสเปซ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-28",
+        "fromPrice": 7720000,
+        "toPrice": 7260000,
+        "changePct": -5.96
+      }
+    ]
+  },
+  {
+    "id": "L0108",
+    "titleTh": "คอนโด ลุมพินี วิลล์ ราไวย์ 2 ห้องนอน 47 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-rawai",
+    "propertyType": "condo",
+    "status": "sold",
+    "price": 5090000,
+    "areaSqm": 47,
+    "pricePerSqm": 108300,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 5,
+    "yearBuilt": 2018,
+    "listedDate": "2026-07-24",
+    "daysOnMarket": 7,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "ที่จอดรถส่วนตัว",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0109",
+    "titleTh": "คอนโด ไอดีโอ โมบิ เมืองภูเก็ต 1 ห้องนอน 30 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2010000,
+    "areaSqm": 30,
+    "pricePerSqm": 66900,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 13,
+    "yearBuilt": 2016,
+    "listedDate": "2026-01-08",
+    "daysOnMarket": 204,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "เครื่องปรับอากาศทุกห้อง",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-17",
+        "fromPrice": 2160000,
+        "toPrice": 2080000,
+        "changePct": -3.7
+      },
+      {
+        "date": "2026-05-24",
+        "fromPrice": 2080000,
+        "toPrice": 2010000,
+        "changePct": -3.37
+      }
+    ]
+  },
+  {
+    "id": "L0110",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ เมืองภูเก็ต 4 ห้องนอน 292 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 23540000,
+    "areaSqm": 292,
+    "pricePerSqm": 80600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2026-05-14",
+    "daysOnMarket": 78,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "สระว่ายน้ำส่วนตัว",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0111",
+    "titleTh": "คอนโด ลุมพินี วิลล์ เมืองภูเก็ต 2 ห้องนอน 43 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2240000,
+    "areaSqm": 43,
+    "pricePerSqm": 52200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 12,
+    "yearBuilt": 2018,
+    "listedDate": "2025-12-29",
+    "daysOnMarket": 214,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ",
+      "วิวเมือง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-10",
+        "fromPrice": 2420000,
+        "toPrice": 2310000,
+        "changePct": -4.55
+      },
+      {
+        "date": "2026-05-21",
+        "fromPrice": 2310000,
+        "toPrice": 2240000,
+        "changePct": -3.03
+      }
+    ]
+  },
+  {
+    "id": "L0112",
+    "titleTh": "คอนโด ไอดีโอ โมบิ เมืองภูเก็ต 3 ห้องนอน 77 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5380000,
+    "areaSqm": 77,
+    "pricePerSqm": 69900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 11,
+    "yearBuilt": 2012,
+    "listedDate": "2026-04-06",
+    "daysOnMarket": 116,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0113",
+    "titleTh": "คอนโด แอสปาย เมืองภูเก็ต 3 ห้องนอน 69 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3880000,
+    "areaSqm": 69,
+    "pricePerSqm": 56200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 26,
+    "yearBuilt": 2018,
+    "listedDate": "2026-01-25",
+    "daysOnMarket": 187,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "สระว่ายน้ำระบบเกลือ",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0114",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ เมืองภูเก็ต 3 ห้องนอน 102 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 7490000,
+    "areaSqm": 102,
+    "pricePerSqm": 73400,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2017,
+    "listedDate": "2026-05-21",
+    "daysOnMarket": 71,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "รักษาความปลอดภัย 24 ชม.",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0115",
+    "titleTh": "คอนโด เออร์บาโน่ เมืองภูเก็ต 2 ห้องนอน 45 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3160000,
+    "areaSqm": 45,
+    "pricePerSqm": 70200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 27,
+    "yearBuilt": 2017,
+    "listedDate": "2025-11-13",
+    "daysOnMarket": 260,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-08",
+        "fromPrice": 3410000,
+        "toPrice": 3300000,
+        "changePct": -3.23
+      },
+      {
+        "date": "2026-05-05",
+        "fromPrice": 3300000,
+        "toPrice": 3160000,
+        "changePct": -4.24
+      }
+    ]
+  },
+  {
+    "id": "L0116",
+    "titleTh": "คอนโด เดอะ เบส เมืองภูเก็ต 1 ห้องนอน 30 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2080000,
+    "areaSqm": 30,
+    "pricePerSqm": 69300,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 5,
+    "yearBuilt": 2016,
+    "listedDate": "2025-12-02",
+    "daysOnMarket": 241,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "เครื่องปรับอากาศทุกห้อง",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-20",
+        "fromPrice": 2300000,
+        "toPrice": 2180000,
+        "changePct": -5.22
+      },
+      {
+        "date": "2026-05-12",
+        "fromPrice": 2180000,
+        "toPrice": 2080000,
+        "changePct": -4.59
+      }
+    ]
+  },
+  {
+    "id": "L0117",
+    "titleTh": "คอนโด ลุมพินี วิลล์ เมืองภูเก็ต 1 ห้องนอน 34 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1990000,
+    "areaSqm": 34,
+    "pricePerSqm": 58500,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 31,
+    "yearBuilt": 2020,
+    "listedDate": "2026-05-06",
+    "daysOnMarket": 86,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-06-18",
+        "fromPrice": 2050000,
+        "toPrice": 1990000,
+        "changePct": -2.93
+      }
+    ]
+  },
+  {
+    "id": "L0118",
+    "titleTh": "คอนโด ลุมพินี วิลล์ ไม้ขาว 2 ห้องนอน 42 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 4190000,
+    "areaSqm": 42,
+    "pricePerSqm": 99700,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 10,
+    "yearBuilt": 2024,
+    "listedDate": "2026-06-29",
+    "daysOnMarket": 32,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ",
+      "เฟอร์นิเจอร์ครบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0119",
+    "titleTh": "คอนโด เดอะ เบส ไม้ขาว 2 ห้องนอน 44 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3860000,
+    "areaSqm": 44,
+    "pricePerSqm": 87700,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 31,
+    "yearBuilt": 2013,
+    "listedDate": "2025-11-28",
+    "daysOnMarket": 245,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-18",
+        "fromPrice": 4220000,
+        "toPrice": 4050000,
+        "changePct": -4.03
+      },
+      {
+        "date": "2026-05-10",
+        "fromPrice": 4050000,
+        "toPrice": 3860000,
+        "changePct": -4.69
+      }
+    ]
+  },
+  {
+    "id": "L0120",
+    "titleTh": "คอนโด ไอดีโอ โมบิ ไม้ขาว 2 ห้องนอน 50 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5980000,
+    "areaSqm": 50,
+    "pricePerSqm": 119600,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 28,
+    "yearBuilt": 2023,
+    "listedDate": "2026-05-19",
+    "daysOnMarket": 73,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "เฟอร์นิเจอร์ครบ",
+      "วิวเมือง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0121",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ ไม้ขาว 3 ห้องนอน 120 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 9970000,
+    "areaSqm": 120,
+    "pricePerSqm": 83100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2023,
+    "listedDate": "2025-12-24",
+    "daysOnMarket": 219,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-12",
+        "fromPrice": 10340000,
+        "toPrice": 9970000,
+        "changePct": -3.58
+      }
+    ]
+  },
+  {
+    "id": "L0122",
+    "titleTh": "คอนโด ไอดีโอ โมบิ ไม้ขาว 2 ห้องนอน 50 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 4430000,
+    "areaSqm": 50,
+    "pricePerSqm": 88600,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 19,
+    "yearBuilt": 2012,
+    "listedDate": "2025-12-28",
+    "daysOnMarket": 215,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "ฟิตเนสชั้นดาดฟ้า",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-10",
+        "fromPrice": 4870000,
+        "toPrice": 4710000,
+        "changePct": -3.29
+      },
+      {
+        "date": "2026-05-20",
+        "fromPrice": 4710000,
+        "toPrice": 4430000,
+        "changePct": -5.94
+      }
+    ]
+  },
+  {
+    "id": "L0123",
+    "titleTh": "บ้านเดี่ยว บ้านกลางเมือง ไม้ขาว 4 ห้องนอน 256 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 34940000,
+    "areaSqm": 256,
+    "pricePerSqm": 136500,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2025-12-04",
+    "daysOnMarket": 239,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "ที่ดินแปลงมุม",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-02",
+        "fromPrice": 35780000,
+        "toPrice": 34940000,
+        "changePct": -2.35
+      }
+    ]
+  },
+  {
+    "id": "L0124",
+    "titleTh": "คอนโด เดอะ เบส ไม้ขาว 2 ห้องนอน 56 ตร.ม.",
+    "provinceId": "phuket",
+    "zoneId": "hkt-maikhao",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 5500000,
+    "areaSqm": 56,
+    "pricePerSqm": 98200,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 4,
+    "yearBuilt": 2018,
+    "listedDate": "2026-04-02",
+    "daysOnMarket": 120,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-06-01",
+        "fromPrice": 5900000,
+        "toPrice": 5500000,
+        "changePct": -6.78
+      }
+    ]
+  },
+  {
+    "id": "L0125",
+    "titleTh": "ทาวน์เฮาส์ ชัยพฤกษ์ ท่าขอนยาง 3 ห้องนอน 138 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-thakhonyang",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 4580000,
+    "areaSqm": 138,
+    "pricePerSqm": 33200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2016,
+    "listedDate": "2026-02-17",
+    "daysOnMarket": 164,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "ต่อเติมแล้ว",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-10",
+        "fromPrice": 4750000,
+        "toPrice": 4580000,
+        "changePct": -3.58
+      }
+    ]
+  },
+  {
+    "id": "L0126",
+    "titleTh": "ทาวน์เฮาส์ แลนซีโอ ท่าขอนยาง 3 ห้องนอน 113 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-thakhonyang",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 3630000,
+    "areaSqm": 113,
+    "pricePerSqm": 32100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2014,
+    "listedDate": "2025-11-27",
+    "daysOnMarket": 246,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "สวนหลังบ้าน",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-17",
+        "fromPrice": 3990000,
+        "toPrice": 3870000,
+        "changePct": -3.01
+      },
+      {
+        "date": "2026-05-10",
+        "fromPrice": 3870000,
+        "toPrice": 3630000,
+        "changePct": -6.2
+      }
+    ]
+  },
+  {
+    "id": "L0127",
+    "titleTh": "ทาวน์เฮาส์ ภัสสร ท่าขอนยาง 3 ห้องนอน 126 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-thakhonyang",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 4180000,
+    "areaSqm": 126,
+    "pricePerSqm": 33200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-04-04",
+    "daysOnMarket": 118,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "ที่จอดรถ 2 คัน",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0128",
+    "titleTh": "ทาวน์เฮาส์ คาซ่า วิลล์ ท่าขอนยาง 3 ห้องนอน 96 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-thakhonyang",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 3240000,
+    "areaSqm": 96,
+    "pricePerSqm": 33700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-06-25",
+    "daysOnMarket": 36,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0129",
+    "titleTh": "คอนโด ริธึ่ม ท่าขอนยาง 3 ห้องนอน 68 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-thakhonyang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2670000,
+    "areaSqm": 68,
+    "pricePerSqm": 39200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 14,
+    "yearBuilt": 2012,
+    "listedDate": "2026-05-25",
+    "daysOnMarket": 67,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "เฟอร์นิเจอร์ครบ",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-06-27",
+        "fromPrice": 2750000,
+        "toPrice": 2670000,
+        "changePct": -2.91
+      }
+    ]
+  },
+  {
+    "id": "L0130",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา ขามเรียง 4 ห้องนอน 158 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-khamriang",
+    "propertyType": "townhouse",
+    "status": "under_offer",
+    "price": 5750000,
+    "areaSqm": 158,
+    "pricePerSqm": 36400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-05-18",
+    "daysOnMarket": 74,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนหลังบ้าน",
+      "ต่อเติมแล้ว",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0131",
+    "titleTh": "คอนโด ริธึ่ม ขามเรียง 2 ห้องนอน 44 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-khamriang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1430000,
+    "areaSqm": 44,
+    "pricePerSqm": 32400,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 5,
+    "yearBuilt": 2020,
+    "listedDate": "2026-02-03",
+    "daysOnMarket": 178,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ฟิตเนสชั้นดาดฟ้า",
+      "เครื่องปรับอากาศทุกห้อง",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0132",
+    "titleTh": "บ้านเดี่ยว มัณฑนา ขามเรียง 4 ห้องนอน 224 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-khamriang",
+    "propertyType": "detached_house",
+    "status": "under_offer",
+    "price": 7190000,
+    "areaSqm": 224,
+    "pricePerSqm": 32100,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2021,
+    "listedDate": "2026-01-03",
+    "daysOnMarket": 209,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 3 คัน",
+      "ห้องนอนชั้นล่าง",
+      "โซลาร์รูฟ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-17",
+        "fromPrice": 7380000,
+        "toPrice": 7190000,
+        "changePct": -2.57
+      }
+    ]
+  },
+  {
+    "id": "L0133",
+    "titleTh": "คอนโด พลัม คอนโด ขามเรียง 3 ห้องนอน 85 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-khamriang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 3610000,
+    "areaSqm": 85,
+    "pricePerSqm": 42500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 7,
+    "yearBuilt": 2022,
+    "listedDate": "2025-12-20",
+    "daysOnMarket": 223,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "วิวเมือง",
+      "ที่จอดรถส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-10",
+        "fromPrice": 3790000,
+        "toPrice": 3610000,
+        "changePct": -4.75
+      }
+    ]
+  },
+  {
+    "id": "L0134",
+    "titleTh": "คอนโด ริธึ่ม ขามเรียง 3 ห้องนอน 81 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-khamriang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 2990000,
+    "areaSqm": 81,
+    "pricePerSqm": 36900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 32,
+    "yearBuilt": 2020,
+    "listedDate": "2026-02-25",
+    "daysOnMarket": 156,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถส่วนตัว",
+      "เครื่องปรับอากาศทุกห้อง",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0135",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา เมืองมหาสารคาม 4 ห้องนอน 162 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 4280000,
+    "areaSqm": 162,
+    "pricePerSqm": 26400,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2025,
+    "listedDate": "2026-02-19",
+    "daysOnMarket": 162,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "สวนหลังบ้าน",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-11",
+        "fromPrice": 4590000,
+        "toPrice": 4280000,
+        "changePct": -6.75
+      }
+    ]
+  },
+  {
+    "id": "L0136",
+    "titleTh": "คอนโด เดอะ เบส เมืองมหาสารคาม 1 ห้องนอน 31 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 970000,
+    "areaSqm": 31,
+    "pricePerSqm": 31300,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "floor": 12,
+    "yearBuilt": 2025,
+    "listedDate": "2026-03-14",
+    "daysOnMarket": 139,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "เครื่องปรับอากาศทุกห้อง",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-22",
+        "fromPrice": 1040000,
+        "toPrice": 970000,
+        "changePct": -6.73
+      }
+    ]
+  },
+  {
+    "id": "L0137",
+    "titleTh": "ทาวน์เฮาส์ บ้านกลางเมือง เมืองมหาสารคาม 3 ห้องนอน 103 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 2890000,
+    "areaSqm": 103,
+    "pricePerSqm": 28100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2026-07-04",
+    "daysOnMarket": 27,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 2 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0138",
+    "titleTh": "บ้านเดี่ยว ชัยพฤกษ์ เมืองมหาสารคาม 4 ห้องนอน 260 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 6660000,
+    "areaSqm": 260,
+    "pricePerSqm": 25600,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-06-12",
+    "daysOnMarket": 49,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "ห้องนอนชั้นล่าง",
+      "ห้องแม่บ้านแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0139",
+    "titleTh": "คอนโด เดอะ ริช เมืองมหาสารคาม 3 ห้องนอน 69 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "condo",
+    "status": "under_offer",
+    "price": 2000000,
+    "areaSqm": 69,
+    "pricePerSqm": 29000,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 20,
+    "yearBuilt": 2021,
+    "listedDate": "2026-07-24",
+    "daysOnMarket": 7,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "วิวเมือง",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0140",
+    "titleTh": "ทาวน์เฮาส์ อนาสิริ เมืองมหาสารคาม 3 ห้องนอน 103 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-town",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 2640000,
+    "areaSqm": 103,
+    "pricePerSqm": 25600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2013,
+    "listedDate": "2025-11-16",
+    "daysOnMarket": 257,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ใกล้ทางด่วน",
+      "หมู่บ้านมีรั้วรอบ",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-24",
+        "fromPrice": 2760000,
+        "toPrice": 2640000,
+        "changePct": -4.35
+      }
+    ]
+  },
+  {
+    "id": "L0141",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา เกิ้ง 3 ห้องนอน 88 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 2280000,
+    "areaSqm": 88,
+    "pricePerSqm": 25900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2013,
+    "listedDate": "2026-01-16",
+    "daysOnMarket": 196,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ต่อเติมแล้ว",
+      "ใกล้ทางด่วน",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-24",
+        "fromPrice": 2350000,
+        "toPrice": 2280000,
+        "changePct": -2.98
+      }
+    ]
+  },
+  {
+    "id": "L0142",
+    "titleTh": "คอนโด เดอะ ริช เกิ้ง 2 ห้องนอน 46 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1490000,
+    "areaSqm": 46,
+    "pricePerSqm": 32400,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 25,
+    "yearBuilt": 2014,
+    "listedDate": "2026-05-12",
+    "daysOnMarket": 80,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เครื่องปรับอากาศทุกห้อง",
+      "โคเวิร์กกิ้งสเปซ",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0143",
+    "titleTh": "คอนโด เดอะ ริช เกิ้ง 3 ห้องนอน 67 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1610000,
+    "areaSqm": 67,
+    "pricePerSqm": 24100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 10,
+    "yearBuilt": 2023,
+    "listedDate": "2026-03-05",
+    "daysOnMarket": 148,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โคเวิร์กกิ้งสเปซ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "สระว่ายน้ำระบบเกลือ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-05-18",
+        "fromPrice": 1660000,
+        "toPrice": 1610000,
+        "changePct": -3.01
+      }
+    ]
+  },
+  {
+    "id": "L0144",
+    "titleTh": "ทาวน์เฮาส์ เดอะ แพลนท์ เกิ้ง 4 ห้องนอน 149 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 3920000,
+    "areaSqm": 149,
+    "pricePerSqm": 26300,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2012,
+    "listedDate": "2026-03-09",
+    "daysOnMarket": 144,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "สวนหลังบ้าน",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0145",
+    "titleTh": "คอนโด เดอะ ริช เกิ้ง 3 ห้องนอน 64 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1900000,
+    "areaSqm": 64,
+    "pricePerSqm": 29700,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 28,
+    "yearBuilt": 2024,
+    "listedDate": "2026-05-30",
+    "daysOnMarket": 62,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "รักษาความปลอดภัย 24 ชม.",
+      "เฟอร์นิเจอร์ครบ",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0146",
+    "titleTh": "ทาวน์เฮาส์ อนาสิริ เกิ้ง 3 ห้องนอน 111 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-koeng",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 2940000,
+    "areaSqm": 111,
+    "pricePerSqm": 26500,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2025,
+    "listedDate": "2026-04-26",
+    "daysOnMarket": 96,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "หมู่บ้านมีรั้วรอบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ครัวไทยแยกส่วน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0147",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ แวงน่าง 4 ห้องนอน 240 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 6050000,
+    "areaSqm": 240,
+    "pricePerSqm": 25200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2026-04-22",
+    "daysOnMarket": 100,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ที่ดินแปลงมุม",
+      "ห้องแม่บ้านแยกส่วน"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-06-11",
+        "fromPrice": 6290000,
+        "toPrice": 6050000,
+        "changePct": -3.82
+      }
+    ]
+  },
+  {
+    "id": "L0148",
+    "titleTh": "บ้านเดี่ยว แลนซีโอ แวงน่าง 4 ห้องนอน 192 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 5510000,
+    "areaSqm": 192,
+    "pricePerSqm": 28700,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2025-12-11",
+    "daysOnMarket": 232,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "โซลาร์รูฟ",
+      "สระว่ายน้ำส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-06",
+        "fromPrice": 5810000,
+        "toPrice": 5510000,
+        "changePct": -5.16
+      }
+    ]
+  },
+  {
+    "id": "L0149",
+    "titleTh": "คอนโด นิช ไพรด์ แวงน่าง 3 ห้องนอน 64 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1730000,
+    "areaSqm": 64,
+    "pricePerSqm": 27100,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 10,
+    "yearBuilt": 2019,
+    "listedDate": "2026-03-15",
+    "daysOnMarket": 138,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "รักษาความปลอดภัย 24 ชม.",
+      "เครื่องปรับอากาศทุกห้อง"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0150",
+    "titleTh": "คอนโด ลุมพินี วิลล์ แวงน่าง 2 ห้องนอน 61 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1600000,
+    "areaSqm": 61,
+    "pricePerSqm": 26300,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 29,
+    "yearBuilt": 2014,
+    "listedDate": "2026-01-04",
+    "daysOnMarket": 208,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "วิวเมือง",
+      "สระว่ายน้ำระบบเกลือ",
+      "โคเวิร์กกิ้งสเปซ"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-03-14",
+        "fromPrice": 1690000,
+        "toPrice": 1650000,
+        "changePct": -2.37
+      },
+      {
+        "date": "2026-05-23",
+        "fromPrice": 1650000,
+        "toPrice": 1600000,
+        "changePct": -3.03
+      }
+    ]
+  },
+  {
+    "id": "L0151",
+    "titleTh": "บ้านเดี่ยว อนาสิริ แวงน่าง 4 ห้องนอน 225 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "detached_house",
+    "status": "under_offer",
+    "price": 5670000,
+    "areaSqm": 225,
+    "pricePerSqm": 25200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2020,
+    "listedDate": "2026-01-13",
+    "daysOnMarket": 199,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่ดินแปลงมุม",
+      "สวนขนาดใหญ่",
+      "ที่จอดรถ 3 คัน"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0152",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ แวงน่าง 4 ห้องนอน 185 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 5030000,
+    "areaSqm": 185,
+    "pricePerSqm": 27200,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2022,
+    "listedDate": "2025-12-04",
+    "daysOnMarket": 239,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ห้องนอนชั้นล่าง",
+      "สวนขนาดใหญ่",
+      "สระว่ายน้ำส่วนตัว"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-02",
+        "fromPrice": 5370000,
+        "toPrice": 5030000,
+        "changePct": -6.33
+      }
+    ]
+  },
+  {
+    "id": "L0153",
+    "titleTh": "ทาวน์เฮาส์ เศรษฐสิริ แวงน่าง 3 ห้องนอน 88 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-waengnang",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 1950000,
+    "areaSqm": 88,
+    "pricePerSqm": 22200,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2023,
+    "listedDate": "2026-04-10",
+    "daysOnMarket": 112,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ที่จอดรถ 2 คัน",
+      "ใกล้ทางด่วน",
+      "รักษาความปลอดภัย 24 ชม."
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0154",
+    "titleTh": "คอนโด ศุภาลัย ปาร์ค บรบือ 3 ห้องนอน 76 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "condo",
+    "status": "for_sale",
+    "price": 1970000,
+    "areaSqm": 76,
+    "pricePerSqm": 25900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": 6,
+    "yearBuilt": 2020,
+    "listedDate": "2026-05-15",
+    "daysOnMarket": 77,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "เฟอร์นิเจอร์ครบ",
+      "รักษาความปลอดภัย 24 ชม.",
+      "ฟิตเนสชั้นดาดฟ้า"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0155",
+    "titleTh": "ทาวน์เฮาส์ สราญสิริ บรบือ 4 ห้องนอน 158 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "townhouse",
+    "status": "sold",
+    "price": 3160000,
+    "areaSqm": 158,
+    "pricePerSqm": 20000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2019,
+    "listedDate": "2026-03-15",
+    "daysOnMarket": 138,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนหลังบ้าน",
+      "ใกล้ทางด่วน",
+      "หมู่บ้านมีรั้วรอบ"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0156",
+    "titleTh": "บ้านเดี่ยว เศรษฐสิริ บรบือ 4 ห้องนอน 245 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 6080000,
+    "areaSqm": 245,
+    "pricePerSqm": 24800,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2021,
+    "listedDate": "2025-12-11",
+    "daysOnMarket": 232,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สระว่ายน้ำส่วนตัว",
+      "โซลาร์รูฟ",
+      "ห้องนอนชั้นล่าง"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-02-26",
+        "fromPrice": 6800000,
+        "toPrice": 6370000,
+        "changePct": -6.32
+      },
+      {
+        "date": "2026-05-15",
+        "fromPrice": 6370000,
+        "toPrice": 6080000,
+        "changePct": -4.55
+      }
+    ]
+  },
+  {
+    "id": "L0157",
+    "titleTh": "บ้านเดี่ยว บ้านกลางเมือง บรบือ 4 ห้องนอน 284 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "detached_house",
+    "status": "for_sale",
+    "price": 7470000,
+    "areaSqm": 284,
+    "pricePerSqm": 26300,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-06-04",
+    "daysOnMarket": 57,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โซลาร์รูฟ",
+      "ที่ดินแปลงมุม",
+      "สวนขนาดใหญ่"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0158",
+    "titleTh": "ทาวน์เฮาส์ มัณฑนา บรบือ 3 ห้องนอน 130 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 2330000,
+    "areaSqm": 130,
+    "pricePerSqm": 17900,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-03-11",
+    "daysOnMarket": 142,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "สวนหลังบ้าน",
+      "หมู่บ้านมีรั้วรอบ",
+      "ต่อเติมแล้ว"
+    ],
+    "priceChanges": []
+  },
+  {
+    "id": "L0159",
+    "titleTh": "บ้านเดี่ยว คาซ่า วิลล์ บรบือ 4 ห้องนอน 269 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "detached_house",
+    "status": "sold",
+    "price": 6000000,
+    "areaSqm": 269,
+    "pricePerSqm": 22300,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "floor": null,
+    "yearBuilt": 2018,
+    "listedDate": "2026-01-22",
+    "daysOnMarket": 190,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "โซลาร์รูฟ",
+      "ห้องแม่บ้านแยกส่วน",
+      "ที่ดินแปลงมุม"
+    ],
+    "priceChanges": [
+      {
+        "date": "2026-04-27",
+        "fromPrice": 6430000,
+        "toPrice": 6000000,
+        "changePct": -6.69
+      }
+    ]
+  },
+  {
+    "id": "L0160",
+    "titleTh": "ทาวน์เฮาส์ สราญสิริ บรบือ 3 ห้องนอน 103 ตร.ม.",
+    "provinceId": "mahasarakham",
+    "zoneId": "msk-borabue",
+    "propertyType": "townhouse",
+    "status": "for_sale",
+    "price": 1920000,
+    "areaSqm": 103,
+    "pricePerSqm": 18600,
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "floor": null,
+    "yearBuilt": 2024,
+    "listedDate": "2026-06-03",
+    "daysOnMarket": 58,
+    "nearestTransitKm": null,
+    "featuresTh": [
+      "ครัวไทยแยกส่วน",
+      "ที่จอดรถ 2 คัน",
+      "สวนหลังบ้าน"
+    ],
+    "priceChanges": []
+  }
+]
