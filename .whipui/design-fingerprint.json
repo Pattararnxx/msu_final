@@ -1,91 +1,94 @@
 {
   "schemaVersion": 1,
-  "status": "pending-agent-analysis",
+  "status": "analyzed",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-12T06:36:18.591Z",
+  "updatedAt": "2026-08-12T00:00:00.000Z",
   "intent": "adapt",
   "projectDna": "`.whipui/project-dna.json`",
   "sources": {
-    "prompt": null,
-    "screenshot": null,
+    "prompt": "Site header / navbar for \"KKP Better\" — logo and language switcher explicitly excluded, wording is placeholder.",
+    "screenshot": "user-supplied navbar reference (logo mark, 5 nav links with one dropdown, TH language pill, purple download pill, thin gradient rule under the bar)",
     "figma": null,
     "url": null,
     "existingRepo": {
       "kind": "existing-repo",
       "root": ".",
-      "inspected": false
+      "inspected": true
     }
   },
   "identity": {
-    "oneThingToRemember": "",
-    "productType": "",
-    "audience": "",
-    "artDirection": "",
-    "keywords": [],
-    "antiReferences": []
+    "oneThingToRemember": "Calm white bank header: wordmark left, flat text nav center, one purple pill CTA right — no logo art, no language switcher.",
+    "productType": "fintech / consumer banking app marketing site",
+    "audience": "Thai retail banking customers evaluating/downloading the app",
+    "artDirection": "clean corporate-fintech, generous whitespace, single purple accent, no gradients or glass",
+    "keywords": ["banking", "trustworthy", "minimal", "single-accent"],
+    "antiReferences": ["default purple-gradient SaaS hero", "glassmorphism", "dense enterprise toolbar"]
   },
   "composition": {
-    "symmetry": "",
-    "density": "",
-    "dominantAxis": "",
-    "contentWidth": "",
-    "grid": "",
-    "whitespace": "",
-    "focalPoint": ""
+    "symmetry": "asymmetric 3-zone header: brand / nav / actions",
+    "density": "low — 72px bar height, wide inter-item gaps",
+    "dominantAxis": "horizontal",
+    "contentWidth": "max-width 1280px centered, 24px mobile / 40px desktop side padding",
+    "grid": "flex row, actions pinned right via margin-left:auto",
+    "whitespace": "generous horizontal gaps (24px) between brand/nav/actions",
+    "focalPoint": "purple \"ดาวน์โหลด\" pill, top right"
   },
   "typography": {
     "display": {
-      "category": "",
-      "family": "",
-      "scale": "",
-      "weight": "",
-      "leading": ""
+      "category": "sans",
+      "family": "inherits var(--font-geist-sans) from root layout",
+      "scale": "18px",
+      "weight": "700",
+      "leading": "normal"
     },
     "body": {
-      "category": "",
-      "family": "",
-      "scale": "",
-      "weight": "",
-      "leading": ""
+      "category": "sans",
+      "family": "inherits var(--font-geist-sans) from root layout",
+      "scale": "15px nav links / 14px CTA",
+      "weight": "500-600",
+      "leading": "normal"
     },
-    "casing": "",
-    "contrast": ""
+    "casing": "none (Thai + sentence-case English mix, as in source)",
+    "contrast": "high — dark navy-black text on white surface"
   },
   "color": {
-    "background": "",
-    "surface": "",
-    "foreground": "",
-    "muted": "",
-    "accent": "",
+    "background": "#ffffff (--navbar-surface)",
+    "surface": "#ffffff",
+    "foreground": "#171923 (--navbar-text)",
+    "muted": "#4a4f5c (--navbar-text-muted)",
+    "accent": "#6a5ae0 (--navbar-accent), hover #5847d1",
     "semantic": {},
-    "usageRules": []
+    "usageRules": [
+      "Accent purple is reserved for the primary CTA and active/hover states only.",
+      "No gradient fills anywhere in the bar — screenshot's decorative bottom gradient rule was dropped as brand-specific art, replaced with a plain 1px --navbar-border."
+    ]
   },
   "spacing": {
-    "rhythm": "",
-    "baseUnit": "",
-    "sectionGap": "",
-    "layoutPadding": "",
-    "radius": "",
-    "shadow": ""
+    "rhythm": "4/8px increments",
+    "baseUnit": "8px",
+    "sectionGap": "24px between brand/nav/actions",
+    "layoutPadding": "24px mobile, 40px desktop",
+    "radius": "8-12px controls, 128px pill (matches existing .ctas a convention in app/page.module.css)",
+    "shadow": "dropdown only: 0 12px 24px -8px rgb(0 0 0 / 0.14)"
   },
   "imagery": {
-    "treatment": "",
-    "subject": "",
-    "crop": "",
-    "texture": "",
-    "rules": []
+    "treatment": "none",
+    "subject": "brand mark intentionally omitted per request — text placeholder \"Better\" stands in for the logo slot",
+    "crop": "n/a",
+    "texture": "none",
+    "rules": ["No logo asset until real brand mark is supplied.", "No language switcher — out of scope per request."]
   },
   "motion": {
-    "personality": "",
-    "duration": "",
-    "easing": "",
-    "rules": []
+    "personality": "subtle, instant-feeling",
+    "duration": "150ms",
+    "easing": "ease",
+    "rules": ["Icon rotate + color/background transitions only.", "All transitions removed under prefers-reduced-motion."]
   },
   "responsive": {
-    "strategy": "",
-    "preserved": [],
-    "allowedToChange": [],
-    "breakpoints": []
+    "strategy": "collapse to hamburger + slide-down panel below 1100px; desktop inline nav + CTA at/above 1100px",
+    "preserved": ["brand mark position", "purple CTA as pill", "one-level dropdown becomes inline accordion on mobile"],
+    "allowedToChange": ["nav links move from inline row to stacked panel", "CTA becomes full-width in mobile panel"],
+    "breakpoints": ["mobile < 1100px (hamburger)", "desktop >= 1100px (inline nav)"]
   },
   "webCapture": {
     "status": "not-requested",
@@ -99,8 +102,13 @@
       "interactionStates"
     ]
   },
-  "components": [],
-  "uxRules": [],
+  "components": ["src/component/navbar/navbar.tsx", "src/component/navbar/navbar.module.css"],
+  "uxRules": [
+    "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
+    "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",
+    "Focus-visible outline on every interactive element.",
+    "Icons use currentColor via CSS mask so they inherit text/hover color instead of being baked-in bitmaps."
+  ],
   "antiSlopChecks": [
     "No default purple-gradient-on-white treatment unless the source asks for it.",
     "No invented component variants when an existing project component can be reused.",
@@ -109,17 +117,16 @@
     "No silent substitution of the source character with a generic dashboard or landing-page pattern."
   ],
   "openQuestions": [
-    "What is the single memorable visual idea?",
-    "Which visual traits are identity and which are accidental details of the reference?",
-    "What must remain true at mobile widths?"
+    "Real logo asset and TH/EN language switcher were deferred per request — revisit when brand assets and i18n routing exist.",
+    "Nav link hrefs and dropdown items are placeholders (\"#\") pending real routes/IA."
   ],
   "analysis": {
     "owner": "agent",
-    "status": "pending",
-    "notes": "Inspect the input sources and existing repo, then replace placeholders with concrete decisions."
+    "status": "complete",
+    "notes": "No existing design system in repo (fresh create-next-app); CSS Modules + component-scoped custom properties chosen to match the repo's only existing convention (app/page.module.css). Reused its 128px pill radius and hover-only media query pattern."
   },
   "visualQa": {
-    "status": "pending",
+    "status": "passed",
     "axes": [
       "identity",
       "composition-and-hierarchy",
@@ -130,7 +137,11 @@
       "interaction-states",
       "accessibility"
     ],
-    "findings": [],
-    "iterations": 0
+    "findings": [
+      "Mobile accordion sub-items were visually cramped (10px padding, no gap) — fixed with 4px item gap and consistent 8px padding.",
+      "No horizontal overflow confirmed at 1440/1024/390 widths via Playwright.",
+      "Desktop dropdown, mobile menu open/close, and mobile accordion open all verified visually with screenshots."
+    ],
+    "iterations": 1
   }
 }
