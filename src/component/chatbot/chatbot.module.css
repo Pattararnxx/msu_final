@@ -1,152 +1,381 @@
 .chatbot {
+  --chat-surface: var(--p-0);
+  --chat-canvas: var(--b-50);
+  --chat-border: var(--b-200);
+  --chat-border-soft: var(--b-100);
+  --chat-text: var(--b-900);
+  --chat-text-muted: var(--b-700);
+  --chat-accent: var(--p-500);
+  --chat-accent-soft: var(--p-100);
+  --chat-accent-deep: var(--p-800);
+
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  width: 320px;
-  background: var(--mantine-color-white);
-  border-left: 1px solid var(--mantine-color-gray-2);
-}
-
-.header {
-  flex-shrink: 0;
-  padding: 16px;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
-  color: var(--mantine-color-black);
-}
-
-.closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--mantine-radius-sm);
-  color: var(--mantine-color-gray-6);
-  transition: background-color 150ms ease, color 150ms ease;
-
-  @mixin hover {
-    color: var(--mantine-color-black);
-    background-color: var(--mantine-color-brand-0);
-  }
+  width: min(403px, 100vw);
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--chat-surface);
+  border-left: 1px solid var(--chat-border);
+  color: var(--chat-text);
 }
 
 .body {
   flex: 1;
-  /* Without this the ScrollArea grows past the panel instead of scrolling,
-     because a flex item's default min-height is its content height. */
   min-height: 0;
-  padding: 16px;
+  padding: 20px;
+  background: var(--chat-surface);
+}
+
+.bodyContent {
+  min-height: 100%;
+  padding-bottom: 4px;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 4px 0 8px;
+}
+
+.welcomeIntro {
+  max-width: 34ch;
+}
+
+.welcomeTitle,
+.welcomeDescription,
+.suggestionLabel,
+.suggestionText,
+.messageText {
+  margin: 0;
+}
+
+.welcomeTitle {
+  color: var(--chat-text);
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.welcomeDescription {
+  margin-top: 8px;
+  color: var(--chat-text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.suggestionLabel {
+  color: var(--chat-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .suggestion {
-  padding: 8px 10px;
-  border: 1px solid var(--mantine-color-gray-2);
-  border-radius: var(--mantine-radius-sm);
-  color: var(--mantine-color-gray-7);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 58px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--chat-canvas);
+  color: var(--chat-text);
   text-align: left;
-  transition: background-color 150ms ease, border-color 150ms ease;
-
-  @mixin hover {
-    border-color: var(--mantine-color-brand-3);
-    background-color: var(--mantine-color-brand-0);
-  }
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
-.userTurn {
+.suggestion:hover {
+  background: var(--b-100);
+}
+
+.suggestionText {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.suggestion:focus-visible,
+.retryButton:focus-visible,
+.sendButton:focus-visible {
+  outline: 3px solid var(--chat-accent-deep);
+  outline-offset: 2px;
+}
+
+.userMessage {
   align-self: flex-end;
-  max-width: 85%;
+  max-width: 89%;
   margin-left: auto;
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-md);
-  background-color: var(--mantine-color-brand-0);
-  color: var(--mantine-color-black);
+  padding: 8px 14px;
+  border-radius: 18px;
+  border-bottom-right-radius: 5px;
+  background: var(--chat-canvas);
 }
 
-.assistantTurn {
-  max-width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--mantine-color-gray-2);
-  border-radius: var(--mantine-radius-md);
-  background-color: var(--mantine-color-white);
-  color: var(--mantine-color-black);
+.assistantMessage {
+  width: 100%;
+  padding: 0;
+  background: transparent;
 }
 
-/* Answers arrive as plain text with newlines from the model, so preserve them
-   rather than collapsing every reply into one run-on paragraph. */
-.turnText {
-  white-space: pre-wrap;
-  word-break: break-word;
+.sourceBlock {
+  margin: 0 0 10px;
+  padding: 9px 10px;
+  border: 1px solid var(--chat-border-soft);
+  border-radius: 10px;
+  background: var(--chat-canvas);
+  color: var(--chat-text-muted);
 }
 
-/* Each source line renders as its own block so blank lines in the model's
-   answer stay as paragraph breaks rather than collapsing. */
-.turnLine {
+.sourceLabel {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.toolChip {
+  padding: 3px 7px;
+  border: 1px solid var(--chat-border);
+  border-radius: 6px;
+  background: var(--chat-surface);
+  color: var(--chat-text-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.messageText {
+  color: var(--chat-text);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.messageLine,
+.messageHeading,
+.messageListItem {
   display: block;
 }
 
-/* A blank source line renders as an empty span; give it the paragraph gap
-   instead of letting it collapse to nothing. */
-.turnLine:empty {
-  height: 8px;
+.messageHeading {
+  margin: 5px 0 2px;
+  font-weight: 750;
+  line-height: 1.45;
 }
 
-.toolCalls {
-  margin-bottom: 6px;
+.messageListItem {
+  display: flex;
+  gap: 8px;
+  padding-left: 2px;
 }
 
-/* Shows which data tools produced the answer — the visible proof that a number
-   came from the dataset rather than from the model. */
-.toolChip {
-  padding: 1px 6px;
-  border-radius: var(--mantine-radius-sm);
-  background-color: var(--mantine-color-gray-1);
-  color: var(--mantine-color-gray-7);
-  font-family: var(--mantine-font-family-monospace);
+.listMarker {
+  flex: 0 0 auto;
+  min-width: 14px;
+  color: var(--chat-text);
+  font-weight: 750;
 }
 
-.pending {
-  padding: 4px 2px;
+.paragraphBreak {
+  display: block;
+  height: 9px;
+}
+
+.messageText strong {
+  font-weight: 750;
+}
+
+.loading {
+  padding: 12px 13px;
+  border: 1px solid var(--p-300);
+  border-radius: 14px;
+  background: var(--p-50);
+}
+
+.loadingTitle,
+.errorTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.loadingDescription,
+.errorMessage {
+  margin: 2px 0 0;
+  color: var(--chat-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.loadingDots {
+  display: inline-flex;
+  gap: 3px;
+  align-self: center;
+  margin-left: auto;
+}
+
+.loadingDots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--chat-accent-deep);
+  animation: chatbot-bounce 900ms ease-in-out infinite;
+}
+
+.loadingDots i:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.loadingDots i:nth-child(3) {
+  animation-delay: 240ms;
 }
 
 .error {
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-sm);
-  background-color: var(--mantine-color-red-0);
-  color: var(--mantine-color-red-7);
+  padding: 12px 13px;
+  border: 1px solid var(--p-600);
+  border-radius: 14px;
+  background: var(--p-50);
+}
+
+.errorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--p-200);
+  color: var(--b-1000);
+}
+
+.errorContent {
+  min-width: 0;
+}
+
+.retryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 35px;
+  margin-top: 8px;
+  padding: 6px 0;
+  color: var(--chat-accent-deep);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .composer {
   flex-shrink: 0;
-  padding: 12px 16px 16px;
-  border-top: 1px solid var(--mantine-color-gray-2);
+  padding: 12px 16px 10px;
+  border-top: 1px solid var(--chat-border-soft);
+  background: var(--chat-surface);
+}
+
+.inputShell {
+  position: relative;
+}
+
+.input {
+  min-height: 47px;
+  padding: 11px 58px 11px 16px;
+  border: 1px solid var(--b-300);
+  border-radius: 24px;
+  background: var(--chat-surface);
+  color: var(--chat-text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.input::placeholder {
+  color: var(--b-600);
+  opacity: 1;
+}
+
+.input:focus {
+  border-color: var(--chat-accent-deep);
+  box-shadow: 0 0 0 3px var(--chat-accent-soft);
+}
+
+.input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .sendButton {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--mantine-radius-sm);
-  /* Matches the navbar's accent pair: shade 5 at rest, shade 6 on hover. */
-  background-color: var(--mantine-color-brand-5);
-  color: var(--mantine-color-white);
-  transition: background-color 150ms ease, opacity 150ms ease;
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: var(--chat-accent);
+  color: var(--b-1000);
+  cursor: pointer;
+  transition: background-color 180ms ease, opacity 180ms ease;
+}
 
-  @mixin hover {
-    background-color: var(--mantine-color-brand-6);
+.sendButton:hover:not(:disabled) {
+  background: var(--p-600);
+}
+
+.sendButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@keyframes chatbot-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
   }
 
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .chatbot {
+    width: 100%;
+  }
+
+  .body {
+    padding: 18px 16px;
+  }
+
+  .composer {
+    padding: 12px 16px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .assistantMessage,
+  .userMessage {
+    max-width: 100%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .closeButton,
   .suggestion,
+  .retryButton,
+  .input,
   .sendButton {
     transition: none;
+  }
+
+  .loadingDots i {
+    animation: none;
   }
 }

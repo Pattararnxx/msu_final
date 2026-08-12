@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "draft",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-12T06:36:18.591Z",
+  "updatedAt": "2026-08-12T09:00:00.000Z",
   "project": {
     "name": "msu",
     "root": ".",
@@ -26,8 +26,8 @@
   },
   "designSystem": {
     "sourceOfTruth": "inspect-existing-repo-first",
-    "tokens": [],
-    "components": [],
+    "tokens": ["src/styles/_color.scss", "src/mantine-theme.ts"],
+    "components": ["src/component/navbar", "src/component/chatbot"],
     "fonts": [],
     "assets": [],
     "references": []
