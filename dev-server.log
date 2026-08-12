@@ -1,0 +1,15 @@
+
+> msu@0.1.0 dev
+> next dev
+
+▲ Next.js 16.3.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://100.118.77.71:3000
+✓ Ready in 1291ms
+⚠ Warning: Next.js ignored package-lock.json in D:\code because it is outside the current Git repository (D:\code\msu\msu).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 98ms
+
+ GET /home 200 in 808ms (next.js: 456ms, application-code: 353ms)
+ GET / 307 in 151ms (next.js: 54ms, application-code: 98ms)
