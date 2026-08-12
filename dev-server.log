@@ -13,3 +13,4 @@
 
  GET /home 200 in 808ms (next.js: 456ms, application-code: 353ms)
  GET / 307 in 151ms (next.js: 54ms, application-code: 98ms)
+ GET /home 200 in 102ms (next.js: 11ms, application-code: 91ms)
