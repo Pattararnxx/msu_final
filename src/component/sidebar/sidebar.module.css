@@ -1,0 +1,52 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: min(380px, 100vw);
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--mantine-color-white);
+  border-left: 1px solid var(--mantine-color-gray-2);
+}
+
+.header {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.title {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-black);
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-gray-6);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.closeButton:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100%;
+  }
+}
