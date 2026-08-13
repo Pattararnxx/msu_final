@@ -6,7 +6,6 @@
   height: 100dvh;
   position: sticky;
   top: 0;
-  overflow: hidden;
   background: var(--b-0);
   border-right: 1px solid var(--b-100);
 }
