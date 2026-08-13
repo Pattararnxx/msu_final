@@ -1,0 +1,68 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 18px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.plot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.title {
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: 160px;
+}
+
+.hitArea {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.dot {
+  fill: var(--primary-700);
+  stroke: var(--b-0);
+  stroke-width: 2;
+  transition: r 120ms ease;
+}
+
+.point:hover .dot,
+.point:focus-within .dot {
+  r: 6;
+}
+
+.axisRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+.hourLabel {
+  color: var(--b-500);
+  font-size: 11px;
+}
