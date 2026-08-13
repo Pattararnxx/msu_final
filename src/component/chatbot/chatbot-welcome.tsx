@@ -1,6 +1,7 @@
 import { Box, Group, Stack, Text, UnstyledButton } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import styles from "./chatbot.module.css";
+import Image from "next/image";
 
 export const CHATBOT_SUGGESTIONS = [
   "ช่วยคิดโปรโมชันจากเมนูขายดีของร้าน",
@@ -22,12 +23,17 @@ export default function ChatbotWelcome({ onSelect }: ChatbotWelcomeProps) {
   return (
     <Box className={styles.welcome}>
       <Box className={styles.welcomeIntro}>
-        <span className={styles.welcomeMark} aria-hidden="true">
-          <Icon src="/icon/regular/sparkle.svg" size={18} />
-        </span>
-        <Text component="h1" className={styles.welcomeTitle}>
-          วางแผนการตลาดร้านให้พร้อมขาย
-        </Text>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}> 
+          <Image
+            src="/logo/ai_logo.svg"
+            alt="Chatbot Icon"
+            width={64}
+            height={64}
+          />
+          <Text component="h1" className={styles.welcomeTitle}>
+            แชทบอท
+          </Text>
+        </div>
         <Text component="p" className={styles.welcomeDescription}>
           ฉันช่วยเลือกเมนูที่จะดัน คิดโปรโมชัน และร่างโพสต์ให้เข้ากับร้านได้
         </Text>
