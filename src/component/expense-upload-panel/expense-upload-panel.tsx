@@ -13,7 +13,8 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import type { DocumentType, PaymentStatus } from "@/lib/expense/types";
+import Accordion, { type AccordionItem } from "@/component/accordion/accordion";
+import type { FoodType, PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
 
@@ -31,7 +32,7 @@ interface PickedFile {
 
 interface DraftLineItem {
   date: string;
-  documentType: DocumentType;
+  documentType: FoodType;
   vendor: string;
   description: string;
   category: string;
@@ -40,21 +41,7 @@ interface DraftLineItem {
   amount: number | "";
 }
 
-// One staged expense: either backed by an uploaded file (auto-filled on
-// add) or a manual, fileless placeholder — both carry the same editable
-// draft, shown inline instead of behind a separate "edit" step.
-interface StagedEntry {
-  id: string;
-  file?: PickedFile;
-  draft: DraftLineItem;
-}
-
-const DOCUMENT_TYPES: DocumentType[] = [
-  "สลิปโอนเงิน",
-  "ใบเสร็จรับเงิน",
-  "ใบกำกับภาษี",
-  "อื่นๆ",
-];
+const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
 const CATEGORIES = [
   "วัตถุดิบ",
   "ค่าเช่าร้าน",
@@ -242,13 +229,98 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
     0,
   );
 
-  const totalFileSize = entries.reduce((sum, entry) => sum + (entry.file?.file.size ?? 0), 0);
-  const manualEntryCount = entries.length - fileEntryCount;
+  const totalFileSize = files.reduce((sum, item) => sum + item.file.size, 0);
 
-  const summaryParts: string[] = [];
-  if (fileEntryCount > 0) summaryParts.push(`${fileEntryCount} ไฟล์ (${formatFileSize(totalFileSize)})`);
-  if (manualEntryCount > 0) summaryParts.push(`${manualEntryCount} รายการกรอกเอง`);
-  const summaryText = summaryParts.length > 0 ? `เลือกแล้ว ${summaryParts.join(" • ")}` : "";
+  const accordionItems: AccordionItem[] = items.map((item) => {
+    const file = files.find((f) => f.id === item.fileId);
+    return {
+      value: item.fileId,
+      label: file?.file.name ?? item.fileId,
+      icon:
+        file?.kind === "image" ? (
+          <Image src={file.previewUrl} alt="" w={28} h={28} radius="sm" fit="cover" />
+        ) : (
+          <span className={styles.pdfBadge}>
+            <Icon src="/icon/regular/file-pdf.svg" size={16} />
+          </span>
+        ),
+      content: (
+        <Stack gap={10}>
+          <TextInput
+            label="วันที่"
+            type="date"
+            size="sm"
+            value={item.date}
+            onChange={(event) => updateItem(item.fileId, { date: event.currentTarget.value })}
+          />
+          <Select
+            label="ประเภทอาหาร"
+            size="sm"
+            data={DOCUMENT_TYPES}
+            value={item.documentType}
+            onChange={(value) =>
+              value && updateItem(item.fileId, { documentType: value as FoodType })
+            }
+            checkIconPosition="right"
+          />
+          <TextInput
+            label="ร้านค้า"
+            size="sm"
+            placeholder="ชื่อร้านค้า/ผู้รับเงิน"
+            withAsterisk
+            value={item.vendor}
+            onChange={(event) => updateItem(item.fileId, { vendor: event.currentTarget.value })}
+          />
+          <TextInput
+            label="รายละเอียด"
+            size="sm"
+            value={item.description}
+            onChange={(event) =>
+              updateItem(item.fileId, { description: event.currentTarget.value })
+            }
+          />
+          <Select
+            label="หมวดหมู่"
+            size="sm"
+            data={CATEGORIES}
+            value={item.category}
+            onChange={(value) => value && updateItem(item.fileId, { category: value })}
+            checkIconPosition="right"
+          />
+          <Select
+            label="ผู้จ่ายเงิน"
+            size="sm"
+            data={PAYERS}
+            value={item.payer}
+            onChange={(value) => value && updateItem(item.fileId, { payer: value })}
+            checkIconPosition="right"
+          />
+          <Select
+            label="สถานะจ่าย"
+            size="sm"
+            data={PAYMENT_STATUSES}
+            value={item.status}
+            onChange={(value) =>
+              value && updateItem(item.fileId, { status: value as PaymentStatus })
+            }
+            checkIconPosition="right"
+          />
+          <NumberInput
+            label="จำนวนเงิน"
+            size="sm"
+            withAsterisk
+            leftSection="฿"
+            min={0}
+            decimalScale={2}
+            value={item.amount}
+            onChange={(value) =>
+              updateItem(item.fileId, { amount: typeof value === "number" ? value : "" })
+            }
+          />
+        </Stack>
+      ),
+    };
+  });
 
   return (
     <aside

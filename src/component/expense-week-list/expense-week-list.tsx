@@ -1,22 +1,15 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { ActionIcon, Badge, Checkbox, Table } from "@mantine/core";
+import { ActionIcon, Badge, Checkbox, Group, Table } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ExpenseWeekGroup } from "@/lib/expense/group-by-week";
 import { formatCurrency, formatThaiDate } from "@/lib/expense/group-by-week";
-import type { PaymentStatus } from "@/lib/expense/types";
 import styles from "./expense-week-list.module.css";
 
 interface ExpenseWeekListProps {
   groups: ExpenseWeekGroup[];
 }
-
-const STATUS_COLOR: Record<PaymentStatus, string> = {
-  จ่ายแล้ว: "green",
-  รอจ่าย: "yellow",
-  ยกเลิก: "gray",
-};
 
 export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
   // All weeks start expanded, same as the reference design's month groups.
@@ -35,27 +28,20 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
   };
 
   if (groups.length === 0) {
-    return (
-      <div className={styles.empty}>ไม่มีรายการค่าใช้จ่ายในช่วงที่เลือก</div>
-    );
+    return <div className={styles.empty}>ไม่มีออเดอร์ในช่วงที่เลือก</div>;
   }
 
   return (
-    <Table.ScrollContainer minWidth={880} className={styles.scrollContainer}>
-      <Table
-        verticalSpacing={10}
-        horizontalSpacing="md"
-        className={styles.table}
-      >
+    <Table.ScrollContainer minWidth={840} className={styles.scrollContainer}>
+      <Table verticalSpacing={10} horizontalSpacing="md" className={styles.table}>
         <Table.Thead>
           <Table.Tr>
             <Table.Th className={styles.checkboxCol}></Table.Th>
             <Table.Th>วันที่</Table.Th>
-            <Table.Th>ประเภทเอกสาร</Table.Th>
-            <Table.Th>ร้านค้า</Table.Th>
+            <Table.Th>รายการอาหาร</Table.Th>
+            <Table.Th>ชื่อผู้สั่ง</Table.Th>
             <Table.Th>รายละเอียด</Table.Th>
-            <Table.Th>ผู้จ่ายเงิน</Table.Th>
-            <Table.Th>สถานะจ่าย</Table.Th>
+            <Table.Th>เวลาอัปโหลด</Table.Th>
             <Table.Th className={styles.amountCol}>จำนวนเงิน</Table.Th>
             <Table.Th className={styles.actionCol} />
           </Table.Tr>
@@ -66,7 +52,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
             return (
               <Fragment key={group.key}>
                 <Table.Tr className={styles.groupRow}>
-                  <Table.Td colSpan={9} className={styles.groupCell}>
+                  <Table.Td colSpan={8} className={styles.groupCell}>
                     <button
                       type="button"
                       className={styles.groupHeader}
@@ -101,7 +87,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                     <Table.Tr key={item.id}>
                       <Table.Td>
                         <Checkbox
-                          aria-label={`เลือก ${item.description}`}
+                          aria-label={`เลือก ${item.customerName ?? "ไม่ทราบชื่อ"}`}
                           size="xs"
                         />
                       </Table.Td>
@@ -109,34 +95,25 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                         {formatThaiDate(item.date)}
                       </Table.Td>
                       <Table.Td>
-                        <Badge
-                          size="sm"
-                          variant="outline"
-                          color="gray"
-                          radius="sm"
-                        >
-                          {item.documentType}
-                        </Badge>
+                        <Group gap={4} wrap="wrap">
+                          {item.foodItems.map((food) => (
+                            <Badge key={food} size="sm" variant="outline" color="gray" radius="sm">
+                              {food}
+                            </Badge>
+                          ))}
+                        </Group>
                       </Table.Td>
-                      <Table.Td className={styles.vendorCell}>
-                        {item.vendor}
+                      <Table.Td className={styles.customerNameCell}>
+                        {item.customerName ? (
+                          item.customerName
+                        ) : (
+                          <span className={styles.unknownName}>ไม่ทราบชื่อ</span>
+                        )}
                       </Table.Td>
                       <Table.Td className={styles.descriptionCell}>
                         {item.description}
                       </Table.Td>
-                      <Table.Td className={styles.payerCell}>
-                        {item.payer}
-                      </Table.Td>
-                      <Table.Td>
-                        <Badge
-                          size="sm"
-                          variant="light"
-                          color={STATUS_COLOR[item.status]}
-                          radius="sm"
-                        >
-                          {item.status}
-                        </Badge>
-                      </Table.Td>
+                      <Table.Td className={styles.uploadedAtCell}>{item.uploadedAt}</Table.Td>
                       <Table.Td className={styles.amountCol}>
                         ฿{formatCurrency(item.amount)}
                       </Table.Td>
