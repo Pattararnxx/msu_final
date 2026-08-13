@@ -3,14 +3,14 @@
   flex-direction: column;
   flex-shrink: 0;
 
-  width: 272px;
+  width: min(380px, 100vw);
   height: 100vh;
 
   position: sticky;
   top: 0;
 
-  background: var(--b-0);
-  border-right: 1px solid var(--b-100);
+  background: var(--mantine-color-white);
+  border-left: 1px solid var(--mantine-color-gray-2);
 }
 
 .header {

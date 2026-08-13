@@ -23,7 +23,8 @@ const REFERENCE_DATE = new Date("2026-05-01");
 const Home = () => {
   const weekGroups = groupExpensesByWeek(MOCK_EXPENSES);
   const summary = computeExpenseSummary(MOCK_EXPENSES, REFERENCE_DATE);
-  const [uploadOpened, { open: openUpload, close: closeUpload }] = useDisclosure(false);
+  const [uploadOpened, { open: openUpload, close: closeUpload }] =
+    useDisclosure(false);
 
   return (
     <div className={styles.page}>
@@ -38,7 +39,7 @@ const Home = () => {
           }
         >
           <ExpenseHeader
-            businessName="iEat"
+            businessName="โจ๊กป้าแดง"
             phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม"
             onUploadClick={openUpload}
           />

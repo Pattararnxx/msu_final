@@ -1,30 +1,34 @@
-/* position: fixed rather than a sticky flex sibling — sticky only stays
-   pinned when every ancestor between here and the viewport has
-   overflow: visible, which this layout has repeatedly failed to
-   guarantee (same reasoning as DashboardSidebar's .sidebar). Fixed always
-   tracks the viewport. Slides via transform (not the old width push), so
-   .content has to reserve its own space instead — see .contentSqueezed
-   in page.module.scss, applied by Home based on the same `opened` state
-   this panel gets as a prop. AnnouncementBar is also fixed and always
-   occupies the top --announcement-bar-height of the viewport, so this
-   panel offsets by the same amount to sit below it. */
+/* This element is both the flex item that pushes <main> over AND the
+   position: sticky element that keeps the panel pinned to the viewport
+   while the page scrolls. Those need to be the same element — an
+   overflow-hidden *ancestor* breaks a descendant's sticky positioning,
+   which is what happened with the earlier wrap/panel split. clip-path
+   (rather than overflow: hidden) clips this element's own content
+   (.inner, held at a constant 420px) while .panel's own width animates
+   0 → 420px — same visual clip, but it can never register as a scroll
+   container the way an overflow value can, which ruled it out as a
+   second possible cause of the sticky-not-following-scroll report. */
 .panel {
-  display: flex;
-  flex-direction: column;
-  width: 420px;
-  position: fixed;
-  top: var(--announcement-bar-height);
-  right: 0;
-  height: calc(100dvh - var(--announcement-bar-height));
-  z-index: 15;
+  flex-shrink: 0;
+  width: 0;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  clip-path: inset(0);
   background: var(--b-0);
   border-left: 1px solid var(--b-100);
-  transform: translateX(100%);
-  transition: transform 260ms ease;
+  transition: width 260ms ease;
 }
 
 .panelOpen {
-  transform: translateX(0);
+  width: 420px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 100%;
 }
 
 .header {
@@ -167,19 +171,39 @@
   }
 }
 
-.summary {
-  color: var(--b-500);
-  font-size: 12px;
-  text-align: center;
+/* Only the entry cards scroll — the add-photo/camera buttons and the
+   manual-entry link stay outside this container so they're always
+   reachable, no matter how many receipts pile up. */
+.entryScroll {
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
-/* Step 1 — edit (per-entry cards, always expanded) */
+.entryBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--b-50);
+  color: var(--b-600);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  transition: color 150ms ease;
+}
 
+/* One card per staged entry — fields sit directly below the thumbnail/
+   remove row, always expanded (no accordion) so they're visible the
+   moment a file lands, per the "fill in right below" requirement. */
 .entryCard {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px;
+  gap: 10px;
+  padding: 12px;
   border-radius: var(--mantine-radius-lg);
   border: 1px solid var(--b-100);
   background: var(--b-0);
@@ -187,16 +211,44 @@
 
 .entryCardHeader {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
-.entryCardHeader > *:first-child {
+.entryCardInfo {
   flex: 1;
   min-width: 0;
 }
 
-.entryCardRemove {
+.entryCardTitle {
+  overflow: hidden;
+  color: var(--b-800);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entryCardMeta {
+  color: var(--b-500);
+  font-size: 11px;
+}
+
+.entryCardFields {
+  padding-top: 2px;
+}
+
+.autoFillNote {
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.fileRowRemove {
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -329,9 +381,16 @@
   .panel {
     top: 0;
     width: 100vw;
-    height: 100dvh;
-    /* Above AnnouncementBar's z-index: 30 — a full-screen takeover should
-       cover it too, not have the banner poke through on top. */
-    z-index: 40;
+    transform: translateX(100%);
+    transition: transform 260ms ease;
+  }
+
+  .panelOpen {
+    width: 100vw;
+    transform: translateX(0);
+  }
+
+  .inner {
+    width: 100vw;
   }
 }

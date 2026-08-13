@@ -1,6 +1,5 @@
 .scrollContainer {
   border-radius: var(--mantine-radius-lg);
-  border: 1px solid var(--b-100);
   background: var(--b-0);
 }
 
@@ -43,6 +42,7 @@
 }
 
 .groupHeader {
+  border: none;
   display: flex;
   align-items: center;
   gap: 10px;

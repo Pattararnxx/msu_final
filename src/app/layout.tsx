@@ -7,7 +7,6 @@ import { ChatbotProvider } from "@/component/chatbot/chatbot-context";
 import ChatbotShell from "@/component/chatbot-shell/chatbot-shell";
 
 import {
-  ColorSchemeScript,
   MantineProvider,
   mantineHtmlProps,
 } from "@mantine/core";
@@ -42,12 +41,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable}`}
       {...mantineHtmlProps}
     >
-      <head>
-        <ColorSchemeScript />
-      </head>
-
       <body>
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme} forceColorScheme="light">
           <ChatbotProvider>
             <ChatbotShell>{children}</ChatbotShell>
           </ChatbotProvider>

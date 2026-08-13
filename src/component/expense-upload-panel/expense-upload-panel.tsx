@@ -40,9 +40,6 @@ interface DraftLineItem {
   amount: number | "";
 }
 
-// One staged expense: either backed by an uploaded file (auto-filled on
-// add) or a manual, fileless placeholder — both carry the same editable
-// draft, shown inline on step one instead of behind a separate edit step.
 interface StagedEntry {
   id: string;
   file?: PickedFile;
@@ -73,39 +70,39 @@ const MOCK_EXTRACTIONS: Array<{
   amountRange: [number, number];
 }> = [
   {
-    vendor: "โต๊ะ 2",
-    documentType: "ข้าวต้ม",
-    category: "วัตถุดิบ",
-    description: "ข้าวต้มหมูสับ 2 ที่, ไข่ลวก 1 ฟอง",
-    amountRange: [70, 140],
-  },
-  {
-    vendor: "เดลิเวอรี่ #Grab",
+    vendor: "ตลาดสดเช้าสี่มุมเมือง",
     documentType: "โจ๊ก",
     category: "วัตถุดิบ",
-    description: "โจ๊กไก่ฉีก 1, น้ำเปล่า 1",
-    amountRange: [50, 90],
+    description: "ค่าวัตถุดิบสด",
+    amountRange: [800, 4500],
   },
   {
-    vendor: "โต๊ะ 5",
-    documentType: "ก๋วยจั๊บ",
-    category: "วัตถุดิบ",
-    description: "ก๋วยจั๊บน้ำข้น หมูกรอบ 1 ที่",
-    amountRange: [50, 70],
-  },
-  {
-    vendor: "คุณลูกค้า",
+    vendor: "ร้านกาแฟคั่วบ้านๆ",
     documentType: "ข้าวต้ม",
     category: "วัตถุดิบ",
-    description: "ข้าวต้มปลากะพง 1 ที่",
-    amountRange: [65, 100],
+    description: "ค่าเมล็ดกาแฟและนมสด",
+    amountRange: [500, 2000],
   },
   {
-    vendor: "เดลิเวอรี่ #LINEMAN",
-    documentType: "อื่นๆ",
-    category: "อื่นๆ",
-    description: "ปาท่องโก๋ 4 ชิ้น, น้ำเต้าหู้ 1",
-    amountRange: [40, 60],
+    vendor: "ร้านแก๊สหุงต้มบุญมี",
+    documentType: "ก๋วยจั๊บ",
+    category: "ค่าสาธารณูปโภค",
+    description: "ค่าแก๊สหุงต้ม",
+    amountRange: [900, 1800],
+  },
+  {
+    vendor: "ร้านข้าวสารบุญมี",
+    documentType: "ข้าวต้ม",
+    category: "วัตถุดิบ",
+    description: "ค่าข้าวสารและเส้นก๋วยเตี๋ยว",
+    amountRange: [1000, 3000],
+  },
+  {
+    vendor: "บมจ. การไฟฟ้า",
+    documentType: "โจ๊ก",
+    category: "ค่าสาธารณูปโภค",
+    description: "ค่าไฟฟ้าร้าน",
+    amountRange: [1500, 4000],
   },
 ];
 
@@ -154,13 +151,13 @@ function simulatedDraft(seed: number): DraftLineItem {
   };
 }
 
-// A two-step flow (upload & fill → confirm) that slides in as a fixed
-// panel and squeezes <main> over via .contentSqueezed (see
-// page.module.scss). Uploading a photo auto-fills its card's fields
-// (simulated — see MOCK_EXTRACTIONS) right there on step one, no separate
-// edit step; a manual "fill it in myself" entry gets the same card, just
-// blank. Browsing/editing already-saved expenses still lives on its own
-// page.
+// A two-step flow (upload & fill → confirm) that slides in as a real flex
+// sibling of <main> and squeezes it, rather than a Drawer/overlay — no
+// backdrop, no portal, the main content area just gets narrower while this
+// panel's width animates in. Uploading a file auto-fills its card's fields
+// (simulated — see MOCK_EXTRACTIONS) right there in step one instead of
+// behind a separate edit step; browsing/editing already-saved expenses
+// still lives on their own page.
 export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPanelProps) {
   const [active, setActive] = useState(0);
   const [entries, setEntries] = useState<StagedEntry[]>([]);
@@ -237,86 +234,14 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
     0,
   );
 
-  const totalFileSize = entries.reduce((sum, entry) => sum + (entry.file?.file.size ?? 0), 0);
-  const manualEntryCount = entries.length - fileEntryCount;
-
-  const summaryParts: string[] = [];
-  if (fileEntryCount > 0) summaryParts.push(`${fileEntryCount} ไฟล์ (${formatFileSize(totalFileSize)})`);
-  if (manualEntryCount > 0) summaryParts.push(`${manualEntryCount} รายการกรอกเอง`);
-  const summaryText = summaryParts.length > 0 ? `เลือกแล้ว ${summaryParts.join(" • ")}` : "";
-
-  // Shared field set for every entry — identical whether it came from a
-  // photo or was added manually, since both just need someone to check or
-  // type the same details in either way.
-  const renderFields = (entry: StagedEntry) => (
-    <Stack gap={10}>
-      <TextInput
-        label="วันที่"
-        type="date"
-        size="sm"
-        value={entry.draft.date}
-        onChange={(event) => updateDraft(entry.id, { date: event.currentTarget.value })}
-      />
-      <Select
-        label="ประเภทอาหาร"
-        size="sm"
-        data={DOCUMENT_TYPES}
-        value={entry.draft.documentType}
-        onChange={(value) => value && updateDraft(entry.id, { documentType: value as FoodType })}
-        checkIconPosition="right"
-      />
-      <TextInput
-        label="ร้านค้า"
-        size="sm"
-        placeholder="ชื่อร้านค้า/ผู้รับเงิน"
-        withAsterisk
-        value={entry.draft.vendor}
-        onChange={(event) => updateDraft(entry.id, { vendor: event.currentTarget.value })}
-      />
-      <TextInput
-        label="รายละเอียด"
-        size="sm"
-        value={entry.draft.description}
-        onChange={(event) => updateDraft(entry.id, { description: event.currentTarget.value })}
-      />
-      <Select
-        label="หมวดหมู่"
-        size="sm"
-        data={CATEGORIES}
-        value={entry.draft.category}
-        onChange={(value) => value && updateDraft(entry.id, { category: value })}
-        checkIconPosition="right"
-      />
-      <Select
-        label="ผู้จ่ายเงิน"
-        size="sm"
-        data={PAYERS}
-        value={entry.draft.payer}
-        onChange={(value) => value && updateDraft(entry.id, { payer: value })}
-        checkIconPosition="right"
-      />
-      <Select
-        label="สถานะจ่าย"
-        size="sm"
-        data={PAYMENT_STATUSES}
-        value={entry.draft.status}
-        onChange={(value) => value && updateDraft(entry.id, { status: value as PaymentStatus })}
-        checkIconPosition="right"
-      />
-      <NumberInput
-        label="จำนวนเงิน"
-        size="sm"
-        withAsterisk
-        leftSection="฿"
-        min={0}
-        decimalScale={2}
-        value={entry.draft.amount}
-        onChange={(value) =>
-          updateDraft(entry.id, { amount: typeof value === "number" ? value : "" })
-        }
-      />
-    </Stack>
+  const totalFileSize = entries.reduce(
+    (sum, entry) => sum + (entry.file?.file.size ?? 0),
+    0,
   );
+  const summaryText =
+    entries.length > 0
+      ? `เลือกแล้ว ${entries.length} รายการ • รวม ${formatFileSize(totalFileSize)}`
+      : "";
 
   return (
     <aside
@@ -325,251 +250,353 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
       aria-hidden={!opened}
       inert={!opened}
     >
-      <div className={styles.header}>
-        <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
-        <UnstyledButton onClick={resetAndClose} aria-label="ปิด" className={styles.closeButton}>
-          <Icon src="/icon/regular/x.svg" size={16} />
-        </UnstyledButton>
-      </div>
+      {/* Fixed-width inner column — the outer <aside> is what animates its
+          width (0 → 420px, needed so main content actually reflows narrower,
+          not just gets covered), so this inner column stays a constant
+          width and its own content never visibly squishes mid-transition. */}
+      <div className={styles.inner}>
+        <div className={styles.header}>
+          <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
+          <UnstyledButton onClick={resetAndClose} aria-label="ปิด" className={styles.closeButton}>
+            <Icon src="/icon/regular/x.svg" size={16} />
+          </UnstyledButton>
+        </div>
 
-      <div className={styles.stepperHead}>
-        <Stepper
-          active={active}
-          color="dark"
-          size="xs"
-          iconSize={26}
-          allowNextStepsSelect={false}
-          classNames={{ steps: styles.steps }}
-        >
-          <Stepper.Step label="อัปโหลดและกรอกข้อมูล" />
-          <Stepper.Step label="ยืนยัน" />
-          <Stepper.Completed>เสร็จสิ้น</Stepper.Completed>
-        </Stepper>
-      </div>
+        <div className={styles.stepperHead}>
+          <Stepper
+            active={active}
+            color="dark"
+            size="xs"
+            iconSize={26}
+            allowNextStepsSelect={false}
+            classNames={{ steps: styles.steps }}
+          >
+            <Stepper.Step label="อัปโหลดและกรอกข้อมูล" />
+            <Stepper.Step label="ยืนยัน" />
+            <Stepper.Completed>เสร็จสิ้น</Stepper.Completed>
+          </Stepper>
+        </div>
 
-      <div className={styles.body}>
-        {active === 0 && (
-          <Stack gap={16}>
-            {/* Hidden pickers live outside the dropzone/button markup so
-                they're stable refs regardless of which of those is
-                currently rendered. */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*,application/pdf"
-              multiple
-              className={styles.hiddenInput}
-              onChange={(event) => addFiles(event.target.files)}
-            />
-            <input
-              ref={cameraInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className={styles.hiddenInput}
-              onChange={(event) => addFiles(event.target.files)}
-            />
+        <div className={styles.body}>
+          {active === 0 && (
+            <Stack gap={16}>
+              {/* Hidden pickers live outside the conditional dropzone below
+                  so the persistent "เพิ่มรูป"/"ถ่ายภาพ" buttons can always
+                  trigger them, even once the dropzone itself is replaced by
+                  the entry cards. */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,application/pdf"
+                multiple
+                className={styles.hiddenInput}
+                onChange={(event) => addFiles(event.target.files)}
+              />
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className={styles.hiddenInput}
+                onChange={(event) => addFiles(event.target.files)}
+              />
 
-            {entries.length === 0 && (
-              <div
-                className={
-                  dragActive ? `${styles.dropzone} ${styles.dropzoneActive}` : styles.dropzone
-                }
-                onDragOver={(event) => {
-                  event.preventDefault();
-                  setDragActive(true);
-                }}
-                onDragLeave={() => setDragActive(false)}
-                onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
-                }}
-              >
-                <Icon src="/icon/regular/image-square.svg" size={28} />
-                <span className={styles.dropzoneTitle}>ลากไฟล์ใบเสร็จมาวางที่นี่</span>
-                <span className={styles.dropzoneHint}>
-                  หรือคลิกเพื่อเลือกไฟล์ — JPG, PNG, PDF ไม่เกิน 10MB
-                </span>
-              </div>
-            )}
-
-            {entries.length === 0 && (
-              <Stack gap={8}>
-                <Button
-                  variant="default"
-                  radius="md"
-                  size="sm"
-                  fullWidth
-                  leftSection={<Icon src="/icon/regular/camera.svg" size={16} />}
-                  onClick={() => cameraInputRef.current?.click()}
-                >
-                  ถ่ายภาพ
-                </Button>
-                <Button
-                  variant="default"
-                  radius="md"
-                  size="sm"
-                  fullWidth
-                  leftSection={<Icon src="/icon/regular/upload-simple.svg" size={16} />}
+              {entries.length === 0 && (
+                <div
+                  className={
+                    dragActive ? `${styles.dropzone} ${styles.dropzoneActive}` : styles.dropzone
+                  }
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                    setDragActive(true);
+                  }}
+                  onDragLeave={() => setDragActive(false)}
+                  onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
+                  }}
                 >
-                  เลือกไฟล์
-                </Button>
-              </Stack>
-            )}
+                  <Icon src="/icon/regular/image-square.svg" size={28} />
+                  <span className={styles.dropzoneTitle}>ลากไฟล์ใบเสร็จมาวางที่นี่</span>
+                  <span className={styles.dropzoneHint}>
+                    หรือคลิกเพื่อเลือกไฟล์ — JPG, PNG, PDF ไม่เกิน 10MB
+                  </span>
+                </div>
+              )}
 
-            {entries.length === 0 && (
-              <Group gap={8} wrap="nowrap" className={styles.tip}>
-                <Icon src="/icon/regular/lightbulb.svg" size={16} />
-                <span>
-                  ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน — ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ แก้ไขเพิ่มเติมได้ทันที
-                </span>
-              </Group>
-            )}
+              {entries.length === 0 && (
+                <>
+                  <Stack gap={8}>
+                    <Button
+                      variant="default"
+                      radius="md"
+                      size="sm"
+                      fullWidth
+                      leftSection={<Icon src="/icon/regular/camera.svg" size={16} />}
+                      onClick={() => cameraInputRef.current?.click()}
+                    >
+                      ถ่ายภาพ
+                    </Button>
+                    <Button
+                      variant="default"
+                      radius="md"
+                      size="sm"
+                      fullWidth
+                      leftSection={<Icon src="/icon/regular/upload-simple.svg" size={16} />}
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      เลือกไฟล์
+                    </Button>
+                  </Stack>
 
-            {/* Once a photo's staged, the upload chrome (dropzone,
-                ถ่ายภาพ/เลือกไฟล์) is gone for good — the only way to add
-                more from here on is "กรอกข้อมูลเอง", which stays
-                available in both states. */}
-            <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
-              <Icon src="/icon/regular/note-pencil.svg" size={14} />
-              {entries.length === 0 ? "หรือกรอกข้อมูลเองแทน ไม่ต้องอัปโหลดไฟล์" : "เพิ่มรายการกรอกเอง"}
-            </UnstyledButton>
+                  <Group gap={8} wrap="nowrap" className={styles.tip}>
+                    <Icon src="/icon/regular/lightbulb.svg" size={16} />
+                    <span>
+                      ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน — ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ แก้ไขเพิ่มเติมได้ทีหลัง
+                    </span>
+                  </Group>
 
-            {summaryText && <span className={styles.summary}>{summaryText}</span>}
+                  <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
+                    <Icon src="/icon/regular/note-pencil.svg" size={14} />
+                    หรือกรอกข้อมูลเองแทน ไม่ต้องอัปโหลดไฟล์
+                  </UnstyledButton>
+                </>
+              )}
 
-            {/* Fields show up right below each entry the moment it's
-                staged — auto-filled for photos, blank for manual — no
-                separate edit step to click into. */}
-            {entries.length > 0 && (
-              <Stack gap={16}>
+              {/* Once something's staged, the upload chrome (dropzone,
+                  ถ่ายภาพ/เลือกไฟล์) is gone for good — only the staged
+                  data and this one link to add another manual entry
+                  remain, so the panel reads as "your data" instead of
+                  "an upload form" past the first item. */}
+              {entries.length > 0 && (
+                <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
+                  <Icon src="/icon/regular/note-pencil.svg" size={14} />
+                  เพิ่มรายการด้วยตนเอง
+                </UnstyledButton>
+              )}
+
+              {summaryText && <span className={styles.summary}>{summaryText}</span>}
+
+              {/* Only this list scrolls — everything above (dropzone/add
+                  buttons/manual-entry link) stays put so it's always
+                  reachable no matter how many entries pile up. */}
+              {entries.length > 0 && (
+                <div className={styles.entryScroll}>
+                  <Stack gap={10}>
+                    {entries.map((entry) => (
+                      <div key={entry.id} className={styles.entryCard}>
+                        <div className={styles.entryCardHeader}>
+                          {entry.file?.kind === "image" && (
+                            <Image
+                              src={entry.file.previewUrl}
+                              alt={entry.file.file.name}
+                              w={36}
+                              h={36}
+                              radius="sm"
+                              fit="cover"
+                            />
+                          )}
+                          {entry.file?.kind === "pdf" && (
+                            <span className={styles.entryBadge}>
+                              <Icon src="/icon/regular/file-pdf.svg" size={16} />
+                            </span>
+                          )}
+                          {!entry.file && (
+                            <span className={styles.entryBadge}>
+                              <Icon src="/icon/regular/note-pencil.svg" size={16} />
+                            </span>
+                          )}
+                          <Stack gap={0} className={styles.entryCardInfo}>
+                            <span className={styles.entryCardTitle}>
+                              {entry.file ? entry.file.file.name : "กรอกข้อมูลเอง"}
+                            </span>
+                            {entry.file && (
+                              <span className={styles.entryCardMeta}>
+                                {formatFileSize(entry.file.file.size)}
+                              </span>
+                            )}
+                          </Stack>
+                          <UnstyledButton
+                            onClick={() => removeEntry(entry.id)}
+                            aria-label="ลบรายการนี้"
+                            className={styles.fileRowRemove}
+                          >
+                            <Icon src="/icon/regular/x-circle.svg" size={16} />
+                          </UnstyledButton>
+                        </div>
+
+                        {entry.file && (
+                          <Group gap={6} wrap="nowrap" className={styles.autoFillNote}>
+                            <Icon src="/icon/regular/sparkle.svg" size={13} />
+                            <span>กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว กรุณาตรวจสอบก่อนบันทึก</span>
+                          </Group>
+                        )}
+
+                        <Stack gap={10} className={styles.entryCardFields}>
+                          <TextInput
+                            label="วันที่"
+                            type="date"
+                            size="sm"
+                            value={entry.draft.date}
+                            onChange={(event) =>
+                              updateDraft(entry.id, { date: event.currentTarget.value })
+                            }
+                          />
+                          <Select
+                            label="ประเภทเอกสาร"
+                            size="sm"
+                            data={DOCUMENT_TYPES}
+                            value={entry.draft.documentType}
+                            onChange={(value) =>
+                              value && updateDraft(entry.id, { documentType: value as FoodType })
+                            }
+                            checkIconPosition="right"
+                          />
+                          <TextInput
+                            label="ร้านค้า"
+                            size="sm"
+                            placeholder="ชื่อร้านค้า/ผู้รับเงิน"
+                            withAsterisk
+                            value={entry.draft.vendor}
+                            onChange={(event) =>
+                              updateDraft(entry.id, { vendor: event.currentTarget.value })
+                            }
+                          />
+                          <TextInput
+                            label="รายละเอียด"
+                            size="sm"
+                            value={entry.draft.description}
+                            onChange={(event) =>
+                              updateDraft(entry.id, { description: event.currentTarget.value })
+                            }
+                          />
+                          <Select
+                            label="หมวดหมู่"
+                            size="sm"
+                            data={CATEGORIES}
+                            value={entry.draft.category}
+                            onChange={(value) => value && updateDraft(entry.id, { category: value })}
+                            checkIconPosition="right"
+                          />
+                          <Select
+                            label="ผู้จ่ายเงิน"
+                            size="sm"
+                            data={PAYERS}
+                            value={entry.draft.payer}
+                            onChange={(value) => value && updateDraft(entry.id, { payer: value })}
+                            checkIconPosition="right"
+                          />
+                          <Select
+                            label="สถานะจ่าย"
+                            size="sm"
+                            data={PAYMENT_STATUSES}
+                            value={entry.draft.status}
+                            onChange={(value) =>
+                              value && updateDraft(entry.id, { status: value as PaymentStatus })
+                            }
+                            checkIconPosition="right"
+                          />
+                          <NumberInput
+                            label="จำนวนเงิน"
+                            size="sm"
+                            withAsterisk
+                            leftSection="฿"
+                            min={0}
+                            decimalScale={2}
+                            value={entry.draft.amount}
+                            onChange={(value) =>
+                              updateDraft(entry.id, { amount: typeof value === "number" ? value : "" })
+                            }
+                          />
+                        </Stack>
+                      </div>
+                    ))}
+                  </Stack>
+                </div>
+              )}
+            </Stack>
+          )}
+
+          {active === 1 && (
+            <Stack gap={12}>
+              <p className={styles.stepHint}>ตรวจสอบรายการก่อนบันทึก</p>
+              <Stack gap={8}>
                 {entries.map((entry) => (
-                  <div key={entry.id} className={styles.entryCard}>
-                    <div className={styles.entryCardHeader}>
-                      {entry.file?.kind === "image" && (
-                        <Image
-                          src={entry.file.previewUrl}
-                          alt={entry.file.file.name}
-                          radius="md"
-                          h={150}
-                          fit="cover"
-                        />
-                      )}
-                      {entry.file?.kind === "pdf" && (
-                        <Group gap={8} className={styles.pdfPreview}>
-                          <Icon src="/icon/regular/file-pdf.svg" size={22} />
-                          <span>{entry.file.file.name}</span>
-                        </Group>
-                      )}
-                      {!entry.file && (
-                        <Group gap={8} className={styles.manualCardLabel}>
-                          <Icon src="/icon/regular/note-pencil.svg" size={16} />
-                          <span>กรอกข้อมูลเอง</span>
-                        </Group>
-                      )}
-                      <UnstyledButton
-                        onClick={() => removeEntry(entry.id)}
-                        aria-label="ลบรายการนี้"
-                        className={styles.entryCardRemove}
-                      >
-                        <Icon src="/icon/regular/x-circle.svg" size={16} />
-                      </UnstyledButton>
-                    </div>
-
-                    {entry.file && (
-                      <Group gap={6} wrap="nowrap" className={styles.autoFillNote}>
-                        <Icon src="/icon/regular/sparkle.svg" size={13} />
-                        <span>กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว กรุณาตรวจสอบก่อนบันทึก</span>
-                      </Group>
-                    )}
-
-                    {renderFields(entry)}
+                  <div key={entry.id} className={styles.reviewRow}>
+                    <Stack gap={0} className={styles.reviewInfo}>
+                      <span className={styles.reviewVendor}>{entry.draft.vendor || "-"}</span>
+                      <span className={styles.reviewMeta}>
+                        {entry.draft.category} • {entry.draft.date}
+                      </span>
+                    </Stack>
+                    <span className={styles.reviewAmount}>
+                      ฿{formatCurrency(typeof entry.draft.amount === "number" ? entry.draft.amount : 0)}
+                    </span>
                   </div>
                 ))}
               </Stack>
-            )}
-          </Stack>
-        )}
-
-        {active === 1 && (
-          <Stack gap={12}>
-            <p className={styles.stepHint}>ตรวจสอบรายการก่อนบันทึก</p>
-            <Stack gap={8}>
-              {entries.map((entry) => (
-                <div key={entry.id} className={styles.reviewRow}>
-                  <Stack gap={0} className={styles.reviewInfo}>
-                    <span className={styles.reviewVendor}>{entry.draft.vendor || "-"}</span>
-                    <span className={styles.reviewMeta}>
-                      {entry.draft.category} • {entry.draft.date}
-                    </span>
-                  </Stack>
-                  <span className={styles.reviewAmount}>
-                    ฿{formatCurrency(typeof entry.draft.amount === "number" ? entry.draft.amount : 0)}
-                  </span>
-                </div>
-              ))}
+              <div className={styles.reviewTotal}>
+                <span>ยอดรวมทั้งหมด</span>
+                <span className={styles.reviewTotalAmount}>฿{formatCurrency(totalAmount)}</span>
+              </div>
             </Stack>
-            <div className={styles.reviewTotal}>
-              <span>ยอดรวมทั้งหมด</span>
-              <span className={styles.reviewTotalAmount}>฿{formatCurrency(totalAmount)}</span>
-            </div>
-          </Stack>
-        )}
+          )}
 
-        {active === 2 && (
-          <Stack gap={10} align="center" className={styles.doneState}>
-            <span className={styles.doneIcon}>
-              <Icon src="/icon/regular/check-circle.svg" size={32} />
-            </span>
-            <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
-            <span className={styles.stepHint}>
-              บันทึก {entries.length} รายการ รวม ฿{formatCurrency(totalAmount)} เรียบร้อยแล้ว
-            </span>
-          </Stack>
-        )}
+          {active === 2 && (
+            <Stack gap={10} align="center" className={styles.doneState}>
+              <span className={styles.doneIcon}>
+                <Icon src="/icon/regular/check-circle.svg" size={32} />
+              </span>
+              <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
+              <span className={styles.stepHint}>
+                บันทึก {entries.length} รายการ รวม ฿{formatCurrency(totalAmount)} เรียบร้อยแล้ว
+              </span>
+            </Stack>
+          )}
+        </div>
+
+        <Group gap={8} justify="space-between" className={styles.footer}>
+          {active === 0 && (
+            <>
+              <Button variant="default" radius="md" onClick={resetAndClose}>
+                ยกเลิก
+              </Button>
+              <Button
+                variant="filled"
+                color="dark"
+                radius="md"
+                disabled={!canConfirm}
+                onClick={() => setActive(1)}
+              >
+                ถัดไป
+              </Button>
+            </>
+          )}
+          {active === 1 && (
+            <>
+              <Button
+                variant="default"
+                radius="md"
+                leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
+                onClick={() => setActive(0)}
+              >
+                ย้อนกลับ
+              </Button>
+              <Button variant="filled" color="dark" radius="md" onClick={() => setActive(2)}>
+                ยืนยันและบันทึก
+              </Button>
+            </>
+          )}
+          {active === 2 && (
+            <Button variant="filled" color="dark" radius="md" fullWidth onClick={resetAndClose}>
+              เสร็จสิ้น
+            </Button>
+          )}
+        </Group>
       </div>
-
-      <Group gap={8} justify="space-between" className={styles.footer}>
-        {active === 0 && (
-          <>
-            <Button variant="default" radius="md" onClick={resetAndClose}>
-              ยกเลิก
-            </Button>
-            <Button
-              variant="filled"
-              color="dark"
-              radius="md"
-              disabled={!canConfirm}
-              onClick={() => setActive(1)}
-            >
-              ถัดไป
-            </Button>
-          </>
-        )}
-        {active === 1 && (
-          <>
-            <Button
-              variant="default"
-              radius="md"
-              leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
-              onClick={() => setActive(0)}
-            >
-              ย้อนกลับ
-            </Button>
-            <Button variant="filled" color="dark" radius="md" onClick={() => setActive(2)}>
-              ยืนยันและบันทึก
-            </Button>
-          </>
-        )}
-        {active === 2 && (
-          <Button variant="filled" color="dark" radius="md" fullWidth onClick={resetAndClose}>
-            เสร็จสิ้น
-          </Button>
-        )}
-      </Group>
     </aside>
   );
 }

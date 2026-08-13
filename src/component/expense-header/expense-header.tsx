@@ -2,6 +2,7 @@
 
 import { Button, Group, Stack } from "@mantine/core";
 import Icon from "@/component/icon/icon";
+import { useChatbot } from "@/component/chatbot/chatbot-context";
 import styles from "./expense-header.module.css";
 
 interface ExpenseHeaderProps {
@@ -10,13 +11,14 @@ interface ExpenseHeaderProps {
   onUploadClick: () => void;
 }
 
-// Business identity (left) + primary actions (right, two rows): upload/edit
+// Business identity (left) + primary actions (right, two rows): upload/chat
 // on top, export destinations below — matches the reference's action
-// grouping. Edit + export actions are still non-functional placeholders;
-// upload is owned by the page (ExpenseUploadPanel lives beside <main>, not
+// grouping. Export actions are still non-functional placeholders; upload is
+// owned by the page (ExpenseUploadPanel lives beside <main>, not
 // nested in here, since it needs to be a flex sibling of the whole content
-// column to push it over).
+// column to push it over). The chat button toggles the shared AI chat panel.
 export default function ExpenseHeader({ businessName, phone, onUploadClick }: ExpenseHeaderProps) {
+  const { opened: chatbotOpened, toggle: toggleChatbot } = useChatbot();
   return (
     <div className={styles.header}>
       <Stack gap={2} className={styles.identity}>
@@ -40,9 +42,11 @@ export default function ExpenseHeader({ businessName, phone, onUploadClick }: Ex
           <Button
             variant="default"
             radius="md"
-            leftSection={<Icon src="/icon/regular/pencil-simple.svg" size={16} />}
+            leftSection={<Icon src="/icon/regular/chat-circle-dots.svg" size={16} />}
+            onClick={toggleChatbot}
+            aria-expanded={chatbotOpened}
           >
-            แก้ไขข้อมูล
+            แชท AI
           </Button>
         </Group>
 
