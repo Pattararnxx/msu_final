@@ -1,17 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import DashboardShell from "@/component/dashboard-shell/dashboard-shell";
 import TeamStatsCards, {
   type StatCardConfig,
 } from "@/component/team-stats-cards/team-stats-cards";
-import TeamUploadChart from "@/component/team-upload-chart/team-upload-chart";
 import TeamActivityLog from "@/component/team-activity-log/team-activity-log";
 import TeamMembersTable from "@/component/team-members-table/team-members-table";
 import { STAFF_MEMBERS, PERMISSION_LOG, HOURLY_UPLOADS } from "@/lib/team/mock-data";
 import styles from "./page.module.css";
+
+const TeamUploadChart = dynamic(
+  () => import("@/component/team-upload-chart/team-upload-chart"),
+  {
+    loading: () => (
+      <div className={styles.chartLoading} role="status" aria-label="กำลังโหลดกราฟการอัปโหลด" />
+    ),
+  },
+);
 
 const TeamPage = () => {
   const [staff, setStaff] = useState(STAFF_MEMBERS);

@@ -1,9 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Chatbot from "@/component/chatbot/chatbot";
+import dynamic from "next/dynamic";
 import { useChatbot } from "@/component/chatbot/chatbot-context";
 import styles from "./chatbot-shell.module.css";
+
+const Chatbot = dynamic(() => import("@/component/chatbot/chatbot"), {
+  loading: () => (
+    <aside className={styles.loadingPanel} role="status" aria-live="polite">
+      กำลังเปิดผู้ช่วย AI…
+    </aside>
+  ),
+});
 
 // Keeps the page content in normal document flow while the chatbot stays
 // attached to the viewport's right edge. Desktop content reserves the panel's

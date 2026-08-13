@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Badge,
@@ -113,6 +113,19 @@ const BUSINESS_NAV: NavItem[] = [
   },
 ];
 
+function NavigationPending() {
+  const { pending } = useLinkStatus();
+
+  if (!pending) return null;
+
+  return (
+    <span className={styles.navPending} role="status" aria-live="polite">
+      <span className={styles.navPendingSpinner} aria-hidden="true" />
+      <span className={styles.navPendingText}>กำลังเปิด</span>
+    </span>
+  );
+}
+
 function NavRow({
   item,
   afterNavigate,
@@ -131,12 +144,14 @@ function NavRow({
   return (
     <Link
       href={item.href}
+      prefetch
       className={rowClassName}
       onClick={afterNavigate}
       aria-current={isActive ? "page" : undefined}
     >
       <Icon src={item.icon} size={18} />
       <span className={styles.navLabel}>{item.label}</span>
+      <NavigationPending />
     </Link>
   );
 }
@@ -186,6 +201,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
               <Link
                 key={todo.label}
                 href={todo.href}
+                prefetch
                 className={styles.todoRow}
                 onClick={afterNavigate}
               >
@@ -196,6 +212,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
                     {todo.badge}
                   </Badge>
                 )}
+                <NavigationPending />
               </Link>
             ))}
           </Stack>

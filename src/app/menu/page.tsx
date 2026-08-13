@@ -1,18 +1,32 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { ActionIcon, Button, Group, Modal, Tabs, Text, TextInput, Tooltip } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import DashboardSidebar from "@/component/dashboard-sidebar/dashboard-sidebar";
 import SidebarShell from "@/component/sidebar/sidebar-shell";
 import MenuCard from "@/component/menu-card/menu-card";
-import MenuDetailPanel from "@/component/menu-detail-panel/menu-detail-panel";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { close as closeSidebar, open as openSidebar } from "@/lib/redux/features/sidebar-slice";
 import { MOCK_MENU_ITEMS } from "@/lib/menu/mock-data";
 import { getTopSellerIds } from "@/lib/menu/sales";
 import { CATEGORY_META, FOOD_TYPES, type FoodType, type MenuItem } from "@/lib/menu/types";
 import styles from "./page.module.scss";
+
+function MenuPanelLoading() {
+  return (
+    <div className={styles.panelLoading} role="status" aria-live="polite">
+      <span className={styles.panelLoadingSpinner} aria-hidden="true" />
+      กำลังเปิดรายละเอียดเมนู…
+    </div>
+  );
+}
+
+const MenuDetailPanel = dynamic(
+  () => import("@/component/menu-detail-panel/menu-detail-panel"),
+  { loading: MenuPanelLoading },
+);
 
 // Computed once from the full 12-month mock sales history — see
 // src/lib/menu/sales.ts. Doesn't need to react to in-session add/edit/delete

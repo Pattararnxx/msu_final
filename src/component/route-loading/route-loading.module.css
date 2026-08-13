@@ -1,0 +1,103 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-height: 100dvh;
+  padding: 48px clamp(20px, 6vw, 80px);
+  background: var(--b-50);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--b-800);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border: 3px solid var(--b-200);
+  border-top-color: var(--primary-700);
+  border-radius: 50%;
+  animation: route-loading-spin 750ms linear infinite;
+}
+
+.title,
+.description {
+  display: block;
+}
+
+.title {
+  font-size: 15px;
+}
+
+.description {
+  margin-top: 2px;
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 1120px;
+}
+
+.headingLine,
+.cardRow > span,
+.contentBlock {
+  display: block;
+  background: var(--b-100);
+  border-radius: var(--mantine-radius-sm);
+}
+
+.headingLine {
+  width: min(260px, 65%);
+  height: 24px;
+}
+
+.cardRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cardRow > span {
+  height: 96px;
+}
+
+.contentBlock {
+  height: 260px;
+}
+
+@keyframes route-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    border-color: var(--primary-700);
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 32px 16px;
+  }
+
+  .cardRow {
+    grid-template-columns: 1fr;
+  }
+
+  .cardRow > span:nth-child(n + 2) {
+    display: none;
+  }
+}

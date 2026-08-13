@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@mantine/core";
 import AnnouncementBar from "@/component/announcement-bar/announcement-bar";
 import DashboardSidebar from "@/component/dashboard-sidebar/dashboard-sidebar";
@@ -9,11 +10,6 @@ import { useChatbot } from "@/component/chatbot/chatbot-context";
 import StatRow, {
   type StatTileData,
 } from "@/component/kitchen-dashboard/stat-row";
-import CostRevenueDonuts from "@/component/kitchen-dashboard/cost-revenue-donuts";
-import RevenueCostTrend from "@/component/kitchen-dashboard/revenue-cost-trend";
-import StockLevelTrend from "@/component/kitchen-dashboard/stock-level-trend";
-import UnitPriceTrend from "@/component/kitchen-dashboard/unit-price-trend";
-import MarginRanking from "@/component/kitchen-dashboard/margin-ranking";
 import StockAlerts from "@/component/kitchen-dashboard/stock-alerts";
 import OrderTable from "@/component/kitchen-dashboard/order-table";
 import PreparationForecast from "@/component/kitchen-dashboard/preparation-forecast";
@@ -30,6 +26,36 @@ import {
   computeStockAlerts,
 } from "@/lib/kitchen-dashboard/engine";
 import styles from "./page.module.scss";
+
+function ChartLoading() {
+  return (
+    <section className={styles.chartLoading} role="status" aria-label="กำลังโหลดกราฟ">
+      <span className={styles.chartLoadingTitle} />
+      <span className={styles.chartLoadingBody} />
+    </section>
+  );
+}
+
+const CostRevenueDonuts = dynamic(
+  () => import("@/component/kitchen-dashboard/cost-revenue-donuts"),
+  { loading: ChartLoading },
+);
+const RevenueCostTrend = dynamic(
+  () => import("@/component/kitchen-dashboard/revenue-cost-trend"),
+  { loading: ChartLoading },
+);
+const StockLevelTrend = dynamic(
+  () => import("@/component/kitchen-dashboard/stock-level-trend"),
+  { loading: ChartLoading },
+);
+const UnitPriceTrend = dynamic(
+  () => import("@/component/kitchen-dashboard/unit-price-trend"),
+  { loading: ChartLoading },
+);
+const MarginRanking = dynamic(
+  () => import("@/component/kitchen-dashboard/margin-ranking"),
+  { loading: ChartLoading },
+);
 
 const DashboardPage = () => {
   const {

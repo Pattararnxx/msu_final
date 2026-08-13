@@ -227,7 +227,7 @@
       "desktop": "420px fixed right panel with a matching flex slot that reserves workspace width without allowing the panel to scroll away",
       "tablet": "fixed right side sheet up to 460px from 960px down to 641px so the expense workspace is not squeezed",
       "mobile": "full-width fixed slide-in panel below 640px",
-      "flow": "upload receipt → edit expense fields → review and save",
+      "flow": "upload customer order slips → edit OCR menu lines → human review → price from shop catalogue → save",
       "density": "medium-high; two-column field grid, compact controls, and one body scroll region",
       "progress": "compact two-step progress row with short Thai labels that stay stable at narrow widths",
       "staging": "after the first upload, add-file and manual-entry actions remain available above the staged cards"
@@ -272,6 +272,17 @@
       "mobile": "board columns stack, thumbnails stay compact, detail panel becomes full width"
     }
   },
+  "dashboardNavigation": {
+    "mode": "operate",
+    "oneThingToRemember": "Every sidebar row causes a visible, deep-linkable result; there are no decorative or hash-placeholder navigation controls.",
+    "routes": ["/dashboard", "/home", "/menu", "/home/team"],
+    "todoLinks": {
+      "reviewQueue": "/home?view=review#order-list filters Home to orders that still need human review",
+      "todayOverview": "/dashboard#today-orders moves directly to today's order section"
+    },
+    "interaction": "Links have 44px minimum targets, pointer cursor, pressed feedback, focus-visible outlines, and aria-current on the active primary route. During a route transition the clicked row shows an inline spinner and กำลังเปิด status immediately.",
+    "performance": "All real sidebar destinations opt into full Link prefetch in production and provide route-level loading shells. Chart-heavy dashboard/team surfaces and closed upload, order-detail, menu-detail, and AI panels are component-split so their JavaScript is loaded only when the relevant surface is rendered."
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",
@@ -286,8 +297,7 @@
     "No silent substitution of the source character with a generic dashboard or landing-page pattern."
   ],
   "openQuestions": [
-    "Real logo asset and TH/EN language switcher were deferred per request — revisit when brand assets and i18n routing exist.",
-    "Nav link hrefs and dropdown items are placeholders (\"#\") pending real routes/IA."
+    "Real logo asset and TH/EN language switcher were deferred per request — revisit when brand assets and i18n routing exist."
   ],
   "analysis": {
     "owner": "agent",
@@ -308,9 +318,9 @@
     ],
     "findings": [
       "Expense upload layout scan returned no mechanical findings; targeted ESLint and tsc --noEmit pass.",
-      "The production build compiled the app, but its TypeScript worker hit the environment's EPERM spawn restriction; standalone tsc --noEmit passes.",
+      "The final production build and TypeScript check pass when the Next worker is allowed to spawn outside the filesystem sandbox.",
       "The upload panel now keeps one body scroll region, uses a compact two-step progress row, and separates a desktop width-reserving slot from the fixed viewport panel so page scrolling cannot move the form header/footer.",
-      "Browser screenshot QA could not run in this environment because Chromium/Chrome is not installed; do not treat this as a visual pass."
+      "Dashboard forecast browser QA passed at 1440/1024/390 with no horizontal overflow or console errors; the final sidebar deep-link change was verified by build/static checks because this root session had no Chrome binary."
     ],
     "iterations": 2
   }

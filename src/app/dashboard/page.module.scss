@@ -77,6 +77,34 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+
+.chartLoading {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 240px;
+  padding: 20px;
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+  border-radius: var(--mantine-radius-md);
+}
+
+.chartLoadingTitle,
+.chartLoadingBody {
+  display: block;
+  background: var(--b-100);
+  border-radius: var(--mantine-radius-sm);
+}
+
+.chartLoadingTitle {
+  width: 38%;
+  height: 18px;
+}
+
+.chartLoadingBody {
+  flex: 1;
+  min-height: 170px;
+}
 .headActions{
   display: flex;
   gap:10px;

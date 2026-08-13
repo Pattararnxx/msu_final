@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import dynamic from "next/dynamic";
 import { Tabs } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useSearchParams } from "next/navigation";
@@ -10,13 +11,30 @@ import ExpenseHeader from "@/component/expense-header/expense-header";
 import ExpenseSummaryCards from "@/component/expense-summary-cards/expense-summary-cards";
 import ExpenseFilterBar from "@/component/expense-filter-bar/expense-filter-bar";
 import ExpenseWeekList from "@/component/expense-week-list/expense-week-list";
-import ExpenseUploadPanel from "@/component/expense-upload-panel/expense-upload-panel";
-import OrderDetailPanel from "@/component/order-detail/order-detail-panel";
+import RouteLoading from "@/component/route-loading/route-loading";
 import { MOCK_EXPENSES } from "@/lib/expense/mock-data";
 import { groupExpensesByWeek } from "@/lib/expense/group-by-week";
 import { computeExpenseSummary } from "@/lib/expense/summary";
 import type { ExpenseItem } from "@/lib/expense/types";
 import styles from "./page.module.scss";
+
+function PanelLoading() {
+  return (
+    <aside className={styles.panelLoading} role="status" aria-live="polite">
+      <span className={styles.panelLoadingSpinner} aria-hidden="true" />
+      กำลังเปิดแผงข้อมูล…
+    </aside>
+  );
+}
+
+const ExpenseUploadPanel = dynamic(
+  () => import("@/component/expense-upload-panel/expense-upload-panel"),
+  { loading: PanelLoading },
+);
+const OrderDetailPanel = dynamic(
+  () => import("@/component/order-detail/order-detail-panel"),
+  { loading: PanelLoading },
+);
 
 // "Now" for the summary cards — the mock data sits in April 2026, so May
 // reads as the empty current month while the yearly total still adds up.
@@ -66,12 +84,16 @@ const HomeContent = () => {
     <DashboardShell
       asideSlot={
         <>
-          <ExpenseUploadPanel
-            opened={uploadOpened}
-            onClose={closeUpload}
-            onSave={saveOrders}
-          />
-          <OrderDetailPanel order={selectedOrder} onClose={closeOrderDetail} />
+          {uploadOpened && (
+            <ExpenseUploadPanel
+              opened
+              onClose={closeUpload}
+              onSave={saveOrders}
+            />
+          )}
+          {selectedOrder && (
+            <OrderDetailPanel order={selectedOrder} onClose={closeOrderDetail} />
+          )}
         </>
       }
     >
@@ -118,7 +140,7 @@ const HomeContent = () => {
 
 export default function Home() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<RouteLoading label="กำลังเปิดออร์เดอร์ลูกค้า" />}>
       <HomeContent />
     </Suspense>
   );

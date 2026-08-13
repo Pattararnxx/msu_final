@@ -32,6 +32,13 @@
   align-items: stretch;
 }
 
+.chartLoading {
+  min-height: 280px;
+  background: var(--b-100);
+  border: 1px solid var(--b-100);
+  border-radius: var(--mantine-radius-md);
+}
+
 @media (max-width: 900px) {
   .chartsRow {
     grid-template-columns: 1fr;
