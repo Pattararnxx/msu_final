@@ -13,7 +13,6 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import Accordion, { type AccordionItem } from "@/component/accordion/accordion";
 import type { FoodType, PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
@@ -41,6 +40,12 @@ interface DraftLineItem {
   amount: number | "";
 }
 
+interface StagedEntry {
+  id: string;
+  file?: PickedFile;
+  draft: DraftLineItem;
+}
+
 const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
 const CATEGORIES = [
   "วัตถุดิบ",
@@ -59,42 +64,42 @@ const PAYMENT_STATUSES: PaymentStatus[] = ["จ่ายแล้ว", "รอ�
 // what makes "upload a photo → fields fill themselves" demonstrable.
 const MOCK_EXTRACTIONS: Array<{
   vendor: string;
-  documentType: DocumentType;
+  documentType: FoodType;
   category: string;
   description: string;
   amountRange: [number, number];
 }> = [
   {
     vendor: "ตลาดสดเช้าสี่มุมเมือง",
-    documentType: "ใบเสร็จรับเงิน",
+    documentType: "โจ๊ก",
     category: "วัตถุดิบ",
     description: "ค่าวัตถุดิบสด",
     amountRange: [800, 4500],
   },
   {
     vendor: "ร้านกาแฟคั่วบ้านๆ",
-    documentType: "สลิปโอนเงิน",
+    documentType: "ข้าวต้ม",
     category: "วัตถุดิบ",
     description: "ค่าเมล็ดกาแฟและนมสด",
     amountRange: [500, 2000],
   },
   {
     vendor: "ร้านแก๊สหุงต้มบุญมี",
-    documentType: "ใบเสร็จรับเงิน",
+    documentType: "ก๋วยจั๊บ",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าแก๊สหุงต้ม",
     amountRange: [900, 1800],
   },
   {
     vendor: "ร้านข้าวสารบุญมี",
-    documentType: "ใบเสร็จรับเงิน",
+    documentType: "ข้าวต้ม",
     category: "วัตถุดิบ",
     description: "ค่าข้าวสารและเส้นก๋วยเตี๋ยว",
     amountRange: [1000, 3000],
   },
   {
     vendor: "บมจ. การไฟฟ้า",
-    documentType: "ใบเสร็จรับเงิน",
+    documentType: "โจ๊ก",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าไฟฟ้าร้าน",
     amountRange: [1500, 4000],
@@ -229,98 +234,14 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
     0,
   );
 
-  const totalFileSize = files.reduce((sum, item) => sum + item.file.size, 0);
-
-  const accordionItems: AccordionItem[] = items.map((item) => {
-    const file = files.find((f) => f.id === item.fileId);
-    return {
-      value: item.fileId,
-      label: file?.file.name ?? item.fileId,
-      icon:
-        file?.kind === "image" ? (
-          <Image src={file.previewUrl} alt="" w={28} h={28} radius="sm" fit="cover" />
-        ) : (
-          <span className={styles.pdfBadge}>
-            <Icon src="/icon/regular/file-pdf.svg" size={16} />
-          </span>
-        ),
-      content: (
-        <Stack gap={10}>
-          <TextInput
-            label="วันที่"
-            type="date"
-            size="sm"
-            value={item.date}
-            onChange={(event) => updateItem(item.fileId, { date: event.currentTarget.value })}
-          />
-          <Select
-            label="ประเภทอาหาร"
-            size="sm"
-            data={DOCUMENT_TYPES}
-            value={item.documentType}
-            onChange={(value) =>
-              value && updateItem(item.fileId, { documentType: value as FoodType })
-            }
-            checkIconPosition="right"
-          />
-          <TextInput
-            label="ร้านค้า"
-            size="sm"
-            placeholder="ชื่อร้านค้า/ผู้รับเงิน"
-            withAsterisk
-            value={item.vendor}
-            onChange={(event) => updateItem(item.fileId, { vendor: event.currentTarget.value })}
-          />
-          <TextInput
-            label="รายละเอียด"
-            size="sm"
-            value={item.description}
-            onChange={(event) =>
-              updateItem(item.fileId, { description: event.currentTarget.value })
-            }
-          />
-          <Select
-            label="หมวดหมู่"
-            size="sm"
-            data={CATEGORIES}
-            value={item.category}
-            onChange={(value) => value && updateItem(item.fileId, { category: value })}
-            checkIconPosition="right"
-          />
-          <Select
-            label="ผู้จ่ายเงิน"
-            size="sm"
-            data={PAYERS}
-            value={item.payer}
-            onChange={(value) => value && updateItem(item.fileId, { payer: value })}
-            checkIconPosition="right"
-          />
-          <Select
-            label="สถานะจ่าย"
-            size="sm"
-            data={PAYMENT_STATUSES}
-            value={item.status}
-            onChange={(value) =>
-              value && updateItem(item.fileId, { status: value as PaymentStatus })
-            }
-            checkIconPosition="right"
-          />
-          <NumberInput
-            label="จำนวนเงิน"
-            size="sm"
-            withAsterisk
-            leftSection="฿"
-            min={0}
-            decimalScale={2}
-            value={item.amount}
-            onChange={(value) =>
-              updateItem(item.fileId, { amount: typeof value === "number" ? value : "" })
-            }
-          />
-        </Stack>
-      ),
-    };
-  });
+  const totalFileSize = entries.reduce(
+    (sum, entry) => sum + (entry.file?.file.size ?? 0),
+    0,
+  );
+  const summaryText =
+    entries.length > 0
+      ? `เลือกแล้ว ${entries.length} รายการ • รวม ${formatFileSize(totalFileSize)}`
+      : "";
 
   return (
     <aside
@@ -530,7 +451,7 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             data={DOCUMENT_TYPES}
                             value={entry.draft.documentType}
                             onChange={(value) =>
-                              value && updateDraft(entry.id, { documentType: value as DocumentType })
+                              value && updateDraft(entry.id, { documentType: value as FoodType })
                             }
                             checkIconPosition="right"
                           />
