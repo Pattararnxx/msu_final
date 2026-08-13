@@ -22,10 +22,13 @@ interface DashboardShellProps {
 // took several rounds to get right (see dashboard-sidebar.module.css and
 // expense-upload-panel.module.css), so it's one shared place instead of
 // copies that could drift apart.
-export default function DashboardShell({ children, asideSlot }: DashboardShellProps) {
+export default function DashboardShell({
+  children,
+  asideSlot,
+}: DashboardShellProps) {
   return (
     <div className={styles.page}>
-      <AnnouncementBar message="ขอบคุณผู้ใช้งานที่สนับสนุนนักพัฒนาคนไทยด้วยกัน" />
+      <AnnouncementBar message="ตัวเลขในหน้านี้คำนวณสดทุกครั้งที่มี order ใหม่ ไม่ต้องกดรีเฟรช" />
 
       <div className={styles.shell}>
         <DashboardSidebar />
