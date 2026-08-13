@@ -111,7 +111,7 @@ const PRIMARY_NAV: NavItem[] = [
     badge: "เวอร์ชันทดลอง",
     children: [
       { label: "เอกสารรายงานเงิน", href: "#" },
-      { label: "เมนูอาหารของฉัน", href: "#" },
+      { label: "เมนูอาหารของฉัน", href: "/menu" },
       { label: "ลูกค้าของฉัน", href: "#" },
     ],
   },

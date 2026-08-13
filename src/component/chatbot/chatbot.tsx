@@ -15,8 +15,8 @@ import styles from "./chatbot.module.css";
 // The panel is kept mounted for the short close transition, then removed by
 // ChatbotShell. Its fixed right-edge placement is controlled by module styles.
 export default function Chatbot({ visible }: { visible: boolean }) {
- const { close, consumePendingQuestion } = useChatbot();
-  const { turns, pending, error, send } = useChatSession();
+  const { close, consumePendingQuestion } = useChatbot();
+  const { turns, pending, error, send, reset } = useChatSession();
   const [draft, setDraft] = useState("");
   const [lastSubmitted, setLastSubmitted] = useState("");
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -47,7 +47,9 @@ export default function Chatbot({ visible }: { visible: boolean }) {
   // we pick it up and fire it as the first turn.
   useEffect(() => {
     const question = consumePendingQuestion();
-    if (question) submit(question);
+    if (!question) return;
+    const frame = requestAnimationFrame(() => submit(question));
+    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,22 +57,48 @@ export default function Chatbot({ visible }: { visible: boolean }) {
     <Box
       component="aside"
       className={`${styles.chatbot} ${visible ? styles.visible : ""}`}
-      aria-label="ผู้ช่วยค้นหาข้อมูลอสังหาริมทรัพย์"
+      aria-label="ผู้ช่วยการตลาดร้านอาหาร"
       aria-hidden={!visible}
     >
       <div className={styles.header}>
-        <span className={styles.headerTitle}>ผู้ช่วยค้นหาอสังหาริมทรัพย์</span>
-        <button
-          type="button"
-          className={styles.closeButton}
-          aria-label="ปิดแชทบอท"
-          onClick={(event) => {
-            event.currentTarget.blur();
-            close();
-          }}
-        >
-          <Icon src="/icon/regular/x.svg" size={18} />
-        </button>
+        <div className={styles.headerIdentity}>
+          <span className={styles.headerMark} aria-hidden="true">
+            <Icon src="/icon/regular/megaphone.svg" size={17} />
+          </span>
+          <div className={styles.headerCopy}>
+            <span className={styles.headerEyebrow}>MARKETING ASSISTANT</span>
+            <span className={styles.headerTitle}>ผู้ช่วยการตลาดร้าน</span>
+            <span className={styles.headerStatus}>
+              <i aria-hidden="true" /> อิงจากเมนูและยอดขายในระบบ
+            </span>
+          </div>
+        </div>
+        <div className={styles.headerActions}>
+          <button
+            type="button"
+            className={styles.headerAction}
+            aria-label="เริ่มบทสนทนาใหม่"
+            disabled={turns.length === 0 && !error}
+            onClick={() => {
+              reset();
+              setDraft("");
+              setLastSubmitted("");
+            }}
+          >
+            <Icon src="/icon/regular/arrow-clockwise.svg" size={16} />
+          </button>
+          <button
+            type="button"
+            className={styles.closeButton}
+            aria-label="ปิดผู้ช่วยการตลาด"
+            onClick={(event) => {
+              event.currentTarget.blur();
+              close();
+            }}
+          >
+            <Icon src="/icon/regular/x.svg" size={18} />
+          </button>
+        </div>
       </div>
 
       <ScrollArea className={styles.body} viewportRef={viewportRef}>
@@ -79,7 +107,9 @@ export default function Chatbot({ visible }: { visible: boolean }) {
             <ChatbotWelcome onSelect={submit} />
           )}
 
-          {turns.map((turn) => <ChatbotMessage key={turn.id} turn={turn} />)}
+          {turns.map((turn) => (
+            <ChatbotMessage key={turn.id} turn={turn} onAsk={submit} />
+          ))}
 
           {pending && <ChatbotLoading />}
 

@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "status": "analyzed",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-13T13:34:55.282+07:00",
+  "updatedAt": "2026-08-13T15:10:00+07:00",
   "intent": "adapt",
   "projectDna": "`.whipui/project-dna.json`",
   "sources": {
-    "prompt": "Site header / navbar for \"KKP Better\" — logo and language switcher explicitly excluded, wording is placeholder.",
-    "screenshot": "user-supplied navbar reference (logo mark, 5 nav links with one dropdown, TH language pill, purple download pill, thin gradient rule under the bar)",
+    "prompt": "Thai breakfast restaurant menu board adapted from a Jira board: dynamic category columns, compact dish thumbnails, and a right-hand detail panel.",
+    "screenshot": "user-supplied Jira board reference (light utility shell, compact cards, column headers with counts, white detail panel on the right)",
     "figma": null,
     "url": null,
     "existingRepo": {
@@ -17,34 +17,34 @@
     }
   },
   "identity": {
-    "oneThingToRemember": "Calm white bank header: wordmark left, flat text nav center, one purple pill CTA right — no logo art, no language switcher.",
-    "productType": "fintech / consumer banking app marketing site",
-    "audience": "Thai retail banking customers evaluating/downloading the app",
-    "artDirection": "clean corporate-fintech, generous whitespace, single purple accent, no gradients or glass",
-    "keywords": ["banking", "trustworthy", "minimal", "single-accent"],
-    "antiReferences": ["default purple-gradient SaaS hero", "glassmorphism", "dense enterprise toolbar"]
+    "oneThingToRemember": "A calm, Jira-like menu board: pale utility canvas, compact white cards with small dish thumbnails, and a focused right detail panel.",
+    "productType": "restaurant operations dashboard",
+    "audience": "Thai breakfast restaurant owners and front-of-house staff",
+    "artDirection": "flat project-management utility UI with compact density, clear dividers, category color dots, and yellow reserved for the restaurant's primary action",
+    "keywords": ["Jira-like", "board", "scannable", "Thai-first", "compact"],
+    "antiReferences": ["large photo tile grid", "glassmorphism", "gradient dashboard", "fixed scroll behavior changes in the detail panel"]
   },
   "composition": {
-    "symmetry": "asymmetric 3-zone header: brand / nav / actions",
-    "density": "low — 72px bar height, wide inter-item gaps",
-    "dominantAxis": "horizontal",
-    "contentWidth": "max-width 1280px centered, 24px mobile / 40px desktop side padding",
-    "grid": "flex row, actions pinned right via margin-left:auto",
-    "whitespace": "generous horizontal gaps (24px) between brand/nav/actions",
-    "focalPoint": "purple \"ดาวน์โหลด\" pill, top right"
+    "symmetry": "asymmetric dashboard shell: fixed left navigation, board center, optional right detail panel",
+    "density": "medium-high — 4px card radius, 8-12px board gaps, compact issue-style cards",
+    "dominantAxis": "horizontal board on desktop, single-column board on mobile",
+    "contentWidth": "full available width after the fixed 272px desktop navigation; 16-24px content gutters",
+    "grid": "dynamic CSS grid driven by menu categories; desktop columns can scroll horizontally, mobile columns stack",
+    "whitespace": "tight within cards, 12-16px between task groups and board controls",
+    "focalPoint": "menu board cards and the active right-hand detail panel"
   },
   "typography": {
     "display": {
       "category": "sans",
       "family": "inherits var(--font-geist-sans) from root layout",
-      "scale": "18px",
+      "scale": "22-28px page heading / 13px board card title",
       "weight": "700",
       "leading": "normal"
     },
     "body": {
       "category": "sans",
       "family": "inherits var(--font-geist-sans) from root layout",
-      "scale": "15px nav links / 14px CTA",
+      "scale": "13-14px UI copy / 11-12px metadata",
       "weight": "500-600",
       "leading": "normal"
     },
@@ -52,31 +52,31 @@
     "contrast": "high — dark navy-black text on white surface"
   },
   "color": {
-    "background": "#ffffff (--navbar-surface)",
-    "surface": "#ffffff",
-    "foreground": "#171923 (--navbar-text)",
-    "muted": "#4a4f5c (--navbar-text-muted)",
-    "accent": "#6a5ae0 (--navbar-accent), hover #5847d1",
+    "background": "var(--b-50) board canvas",
+    "surface": "var(--b-0) cards and detail panel",
+    "foreground": "var(--b-900)",
+    "muted": "var(--b-600) / var(--b-500)",
+    "accent": "var(--primary-500) primary action; Mantine blue focus/selected state",
     "semantic": {},
     "usageRules": [
-      "Accent purple is reserved for the primary CTA and active/hover states only.",
-      "No gradient fills anywhere in the bar — screenshot's decorative bottom gradient rule was dropped as brand-specific art, replaced with a plain 1px --navbar-border."
+      "Yellow remains the product action color; category colors only identify food columns and thumbnails.",
+      "No gradients, glass, or large decorative imagery; borders and small shadows establish Jira-like hierarchy."
     ]
   },
   "spacing": {
     "rhythm": "4/8px increments",
     "baseUnit": "8px",
-    "sectionGap": "24px between brand/nav/actions",
-    "layoutPadding": "24px mobile, 40px desktop",
-    "radius": "8-12px controls, 128px pill (matches existing .ctas a convention in app/page.module.css)",
-    "shadow": "dropdown only: 0 12px 24px -8px rgb(0 0 0 / 0.14)"
+    "sectionGap": "12-16px between board regions",
+    "layoutPadding": "16px mobile, 20-24px desktop",
+    "radius": "3-4px Jira-style cards/columns, small control radii",
+    "shadow": "subtle card hover only: 0 2px 6px rgb(9 30 66 / 0.12)"
   },
   "imagery": {
-    "treatment": "none",
-    "subject": "brand mark intentionally omitted per request — text placeholder \"Better\" stands in for the logo slot",
-    "crop": "n/a",
+    "treatment": "compact 40px thumbnail inside each board card; icon fallback until restaurant photos are uploaded",
+    "subject": "dish icon from MenuItem.image, with category tint",
+    "crop": "square, centered, reserved 40px slot",
     "texture": "none",
-    "rules": ["No logo asset until real brand mark is supplied.", "No language switcher — out of scope per request."]
+    "rules": ["Do not turn thumbnails into large hero images.", "Use the existing Phosphor SVG icon set and preserve aspect ratio."]
   },
   "motion": {
     "personality": "subtle, instant-feeling",
@@ -85,10 +85,10 @@
     "rules": ["Icon rotate + color/background transitions only.", "All transitions removed under prefers-reduced-motion."]
   },
   "responsive": {
-    "strategy": "collapse to hamburger + slide-down panel below 1100px; desktop inline nav + CTA at/above 1100px",
-    "preserved": ["brand mark position", "purple CTA as pill", "one-level dropdown becomes inline accordion on mobile"],
-    "allowedToChange": ["nav links move from inline row to stacked panel", "CTA becomes full-width in mobile panel"],
-    "breakpoints": ["mobile < 1100px (hamburger)", "desktop >= 1100px (inline nav)"]
+    "strategy": "fixed 272px left rail + flexible board/right panel on desktop; fixed mobile bar and stacked category columns below 960px",
+    "preserved": ["desktop sidebar reservation", "small thumbnail slot", "right detail panel as an in-flow sibling"],
+    "allowedToChange": ["dynamic category columns can reduce or expand", "desktop board can use horizontal overflow when detail panel is open", "mobile board columns stack"],
+    "breakpoints": ["mobile < 640px", "tablet < 960px", "desktop >= 960px"]
   },
   "webCapture": {
     "status": "not-requested",
@@ -114,11 +114,24 @@
     "src/component/chatbot/chatbot.module.css",
     "src/component/dashboard-sidebar/dashboard-sidebar.tsx",
     "src/component/dashboard-sidebar/dashboard-sidebar.module.css",
-    "src/app/home/page.module.scss"
+    "src/app/home/page.module.scss",
+    "src/app/menu/page.tsx",
+    "src/app/menu/page.module.scss",
+    "src/component/menu-card/menu-card.tsx",
+    "src/component/menu-card/menu-card.module.css",
+    "src/component/menu-detail-panel/menu-detail-panel.tsx",
+    "src/component/menu-detail-panel/menu-detail-panel.module.css",
+    "src/component/sidebar/sidebar-shell.module.css",
+    "src/component/sidebar/sidebar.module.css",
+    "src/component/expense-upload-panel/expense-upload-panel.tsx",
+    "src/component/expense-upload-panel/expense-upload-panel.module.css",
+    "src/lib/expense/types.ts",
+    "src/lib/order-ocr/schema.ts",
+    "src/app/api/order-ocr/route.ts"
   ],
   "chatbotSurface": {
     "mode": "operate",
-    "oneThingToRemember": "A calm, readable property assistant: warm neutral canvas, dark text, and yellow reserved for action and provenance cues.",
+    "oneThingToRemember": "A calm, Thai-first marketing assistant: warm neutral canvas, dark text, yellow identity/action cue, visible provenance, and decision cards that turn data into the next marketing question.",
     "artDirection": "content-first utility panel, flat surfaces, modest 12-16px radii, no gradients or decorative glass",
     "color": {
       "source": "src/styles/_color.scss",
@@ -143,12 +156,28 @@
     "composition": {
       "panelWidth": "min(380px, 100vw)",
       "header": "identity, context, status, reset, close",
-      "body": "neutral scroll canvas with grouped turns, source row, and recovery states",
-      "composer": "visible label, autosizing input, 44px send target, keyboard hint"
+      "body": "neutral scroll canvas with grouped turns, assistant identity row, source row, typed menu/sales/promotion cards, and recovery states",
+      "composer": "visible label, autosizing input, 44px send target, keyboard hint, Enter-to-send"
     },
     "responsive": {
       "mobile": "panel becomes full width below 640px; message text keeps the existing 14px size",
       "safeArea": "composer reserves bottom safe-area inset"
+    },
+    "marketingAssistant": {
+      "role": "operational marketing partner for menu promotions, breakfast bundles, and draft social copy",
+      "dataSources": ["src/lib/menu/mock-data.ts", "src/lib/menu/sales.ts", "src/lib/expense/mock-data.ts"],
+      "tools": ["getRestaurantMenu", "getSalesInsights", "calculateBundlePrice"],
+      "uiBlocks": [
+        "sales insight card with ranked menu items and a draft-post follow-up",
+        "menu catalogue card with configured prices and a bundle follow-up",
+        "bundle draft card with price math and owner-approval status"
+      ],
+      "interaction": "Cards are read-only evidence; action buttons submit a scoped follow-up question back into the same chat session.",
+      "guardrails": [
+        "Prices and popularity claims come from configured restaurant data only.",
+        "Promotions and copy are drafts; the owner approves before publishing.",
+        "No auto-publish, ad spend, customer messaging, or menu-price mutations."
+      ]
     }
   },
   "dashboardMobileDrawer": {
@@ -190,6 +219,44 @@
     "surface": "transparent field with the existing table surface and Mantine selected-value pills",
     "scope": "src/component/team-members-table/team-members-table.tsx and team-members-table.module.css"
   },
+  "expenseUploadPanel": {
+    "mode": "operate",
+    "oneThingToRemember": "A calm, compact expense-entry side sheet: upload first, editable receipt fields second, then a clear review gate before saving.",
+    "artDirection": "flat light utility panel with existing yellow action accent, compact bordered cards, no gradients or decorative glass",
+    "composition": {
+      "desktop": "420px fixed right panel with a matching flex slot that reserves workspace width without allowing the panel to scroll away",
+      "tablet": "fixed right side sheet up to 460px from 960px down to 641px so the expense workspace is not squeezed",
+      "mobile": "full-width fixed slide-in panel below 640px",
+      "flow": "upload receipt → edit expense fields → review and save",
+      "density": "medium-high; two-column field grid, compact controls, and one body scroll region",
+      "progress": "compact two-step progress row with short Thai labels that stay stable at narrow widths",
+      "staging": "after the first upload, add-file and manual-entry actions remain available above the staged cards"
+    },
+    "interaction": {
+      "upload": "JPG/PNG only, max 10 MB, camera input supported",
+      "feedback": "per-file scanning, success confidence, retry error, and inline rejected-file message",
+      "humanReview": "OCR results with a missing unique order number, item quantity, price, date/time, or confidence below 70% cannot continue until staff marks the entry reviewed",
+      "manualFallback": "manual order entry remains available when OCR is unavailable or an order slip cannot be read"
+    },
+    "dataContract": "Panel draft and OCR response share camelCase fields via src/lib/expense/types.ts. The unique orderNumber is the only document identifier; the contract contains no expense or receipt-number fields. Mock rows retain menu lineItems for sales aggregation and add structured topping quantities/prices for order review.",
+    "accessibility": "visible labels, role=alert for upload/OCR errors, keyboard-accessible dropzone, icon buttons labelled, reduced-motion spinner fallback"
+  },
+  "menuBoardSurface": {
+    "mode": "operate",
+    "oneThingToRemember": "Menu items are scanned as board cards first; details open in a Jira-like right panel without changing the existing menu CRUD flow.",
+    "composition": {
+      "board": "dynamic columns from menu categories present in the catalogue; selected category filter narrows to one column",
+      "card": "40px category-tinted thumbnail, two-line dish name, price, id, option count, optional best-seller badge",
+      "panel": "compact item header with 72px thumbnail, metadata, ingredients/options sections, sales chart, and existing edit/delete actions",
+      "layoutRepair": "because DashboardSidebar is fixed after the latest pull, menu content reserves 272px on desktop; SidebarShell is a full-width flex item"
+    },
+    "panelScrollScope": "Intentionally unchanged in this task; keep the current panel scroll implementation until the teammate's pull lands.",
+    "responsive": {
+      "desktop": "board columns stay horizontal and may scroll within the board viewport when the right detail panel is open",
+      "tablet": "fixed desktop rail is replaced by the existing mobile bar at 960px",
+      "mobile": "board columns stack, thumbnails stay compact, detail panel becomes full width"
+    }
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",
@@ -210,10 +277,10 @@
   "analysis": {
     "owner": "agent",
     "status": "complete",
-    "notes": "No existing design system in repo (fresh create-next-app); CSS Modules + component-scoped custom properties chosen to match the repo's only existing convention (app/page.module.css). Reused its 128px pill radius and hover-only media query pattern."
+    "notes": "Existing Mantine + CSS Modules conventions are preserved. Jira reference is adapted as an operate-mode board, not a brand replacement; the menu route also compensates for the fixed dashboard rail introduced by the latest pull."
   },
   "visualQa": {
-    "status": "passed",
+    "status": "partial-static",
     "axes": [
       "identity",
       "composition-and-hierarchy",
@@ -225,10 +292,11 @@
       "accessibility"
     ],
     "findings": [
-      "Mobile accordion sub-items were visually cramped (10px padding, no gap) — fixed with 4px item gap and consistent 8px padding.",
-      "No horizontal overflow confirmed at 1440/1024/390 widths via Playwright.",
-      "Desktop dropdown, mobile menu open/close, and mobile accordion open all verified visually with screenshots."
+      "Expense upload layout scan returned no mechanical findings; targeted ESLint and tsc --noEmit pass.",
+      "The production build compiled the app, but its TypeScript worker hit the environment's EPERM spawn restriction; standalone tsc --noEmit passes.",
+      "The upload panel now keeps one body scroll region, uses a compact two-step progress row, and separates a desktop width-reserving slot from the fixed viewport panel so page scrolling cannot move the form header/footer.",
+      "Browser screenshot QA could not run in this environment because Chromium/Chrome is not installed; do not treat this as a visual pass."
     ],
-    "iterations": 1
+    "iterations": 2
   }
 }

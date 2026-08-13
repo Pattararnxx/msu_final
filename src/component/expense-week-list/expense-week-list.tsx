@@ -5,13 +5,15 @@ import { ActionIcon, Badge, Checkbox, Table } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ExpenseWeekGroup } from "@/lib/expense/group-by-week";
 import { formatCurrency, formatThaiDate } from "@/lib/expense/group-by-week";
+import type { ExpenseItem } from "@/lib/expense/types";
 import styles from "./expense-week-list.module.css";
 
 interface ExpenseWeekListProps {
   groups: ExpenseWeekGroup[];
+  onSelectOrder: (order: ExpenseItem) => void;
 }
 
-export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
+export default function ExpenseWeekList({ groups, onSelectOrder }: ExpenseWeekListProps) {
   // All weeks start expanded, same as the reference design's month groups.
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
@@ -84,8 +86,12 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
 
                 {isOpen &&
                   group.items.map((item) => (
-                    <Table.Tr key={item.id}>
-                      <Table.Td>
+                    <Table.Tr
+                      key={item.id}
+                      className={styles.orderRow}
+                      onClick={() => onSelectOrder(item)}
+                    >
+                      <Table.Td onClick={(event) => event.stopPropagation()}>
                         <Checkbox
                           aria-label={`เลือก ${item.customerName ?? "ไม่ทราบชื่อ"}`}
                           size="xs"
@@ -113,11 +119,11 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                         <ActionIcon
                           variant="subtle"
                           color="gray"
-                          aria-label="ลบรายการ"
+                          aria-label="ดูรายละเอียดออเดอร์"
                           size="sm"
                         >
                           <Icon
-                            src="/icon/regular/trash-simple.svg"
+                            src="/icon/regular/caret-right.svg"
                             size={16}
                           />
                         </ActionIcon>

@@ -44,9 +44,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body>
         <MantineProvider theme={theme} forceColorScheme="light">
-          <ChatbotProvider>
-            <ChatbotShell>{children}</ChatbotShell>
-          </ChatbotProvider>
+          <StoreProvider>
+            <ChatbotProvider>
+              <ChatbotShell>{children}</ChatbotShell>
+            </ChatbotProvider>
+          </StoreProvider>
         </MantineProvider>
       </body>
     </html>

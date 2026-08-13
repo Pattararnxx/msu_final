@@ -5,6 +5,15 @@ import type { Ingredient, MenuItem } from "./types";
 // the shop, never be invented by AI at order time). Quantities are per
 // serving; unit costs are what feeds the cost/profit math throughout this
 // dashboard.
+//
+// `imageUrl` (where present) points at public/thai_food — a generic "thai
+// food" stock-photo batch (Unsplash, credited in that folder's
+// metadata.json) that turned out not to contain actual โจ๊ก/ข้าวต้ม/ก๋วยจั๊บ
+// photos (it's mostly ramen, pad thai, curries). These are the closest
+// visual stand-ins from that set (soup-in-a-bowl, matching toppings where
+// possible) — not real photos of this shop's own cooking. Left unset for
+// the 3 items with no reasonable match at all (the sides/drink) rather
+// than force a wrong photo.
 export const INGREDIENTS: Ingredient[] = [
   // เนื้อสัตว์
   { id: "pork-minced", name: "หมูสับ", category: "เนื้อสัตว์", unit: "กรัม", initialStock: 15000, lowStockThreshold: 3000, initialUnitCost: 0.18 },
@@ -40,6 +49,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "โจ๊กหมู",
     category: "โจ๊ก",
     price: 40,
+    imageUrl: "/thai_food/020_mVZ_gjm_TOk.jpg",
     recipe: [
       { ingredientId: "rice", qtyPerServing: 150 },
       { ingredientId: "pork-minced", qtyPerServing: 80 },
@@ -55,6 +65,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "โจ๊กไข่เยี่ยวม้า",
     category: "โจ๊ก",
     price: 45,
+    imageUrl: "/thai_food/001_rAyCBQTH7ws.jpg",
     recipe: [
       { ingredientId: "rice", qtyPerServing: 150 },
       { ingredientId: "pork-minced", qtyPerServing: 60 },
@@ -70,6 +81,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "ข้าวต้มหมู",
     category: "ข้าวต้ม",
     price: 40,
+    imageUrl: "/thai_food/011_0wn-DdavPa4.jpg",
     recipe: [
       { ingredientId: "rice", qtyPerServing: 180 },
       { ingredientId: "pork-minced", qtyPerServing: 90 },
@@ -85,6 +97,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "ข้าวต้มไก่",
     category: "ข้าวต้ม",
     price: 40,
+    imageUrl: "/thai_food/015_otLqpb9LK70.jpg",
     recipe: [
       { ingredientId: "rice", qtyPerServing: 180 },
       { ingredientId: "chicken-minced", qtyPerServing: 90 },
@@ -100,6 +113,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "ก๋วยจั๊บน้ำข้น",
     category: "ก๋วยจั๊บ",
     price: 45,
+    imageUrl: "/thai_food/014_YpfRCe5lda0.jpg",
     recipe: [
       { ingredientId: "kuaijab-noodle", qtyPerServing: 120 },
       { ingredientId: "pork-offal", qtyPerServing: 100 },
@@ -114,6 +128,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: "ก๋วยจั๊บน้ำใส",
     category: "ก๋วยจั๊บ",
     price: 45,
+    imageUrl: "/thai_food/018_zOlQ7lF-3vs.jpg",
     recipe: [
       { ingredientId: "kuaijab-noodle", qtyPerServing: 120 },
       { ingredientId: "pork-offal", qtyPerServing: 90 },

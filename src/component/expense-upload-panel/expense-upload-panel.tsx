@@ -8,7 +8,6 @@ import {
   NumberInput,
   Select,
   Stack,
-  Stepper,
   TextInput,
   UnstyledButton,
 } from "@mantine/core";
@@ -162,13 +161,14 @@ function simulatedDraft(seed: number): DraftLineItem {
   };
 }
 
-// A two-step flow (upload & fill → confirm) that slides in as a real flex
-// sibling of <main> and squeezes it, rather than a Drawer/overlay — no
-// backdrop, no portal, the main content area just gets narrower while this
-// panel's width animates in. Uploading a file auto-fills its card's fields
+// A two-step flow (upload & fill → confirm). Desktop keeps a flex slot so the
+// expense list reserves room for the panel, while the visible panel itself is
+// fixed to the viewport. That separation is important: a sticky flex item can
+// move with the document when the long expense list scrolls, taking the form
+// header and footer out of view. Uploading a file auto-fills its card's fields
 // (simulated — see MOCK_EXTRACTIONS) right there in step one instead of
-// behind a separate edit step; browsing/editing already-saved expenses
-// still lives on their own page.
+// behind a separate edit step; browsing/editing already-saved expenses still
+// lives on their own page.
 export default function ExpenseUploadPanel({
   opened,
   onClose,
@@ -265,20 +265,21 @@ export default function ExpenseUploadPanel({
   );
   const summaryText =
     entries.length > 0
-      ? `เลือกแล้ว ${entries.length} รายการ • รวม ${formatFileSize(totalFileSize)}`
+      ? `เพิ่มแล้ว ${entries.length} รายการ${
+          fileEntryCount > 0
+            ? ` • ไฟล์ ${fileEntryCount} ไฟล์ (${formatFileSize(totalFileSize)})`
+            : ""
+        }`
       : "";
 
   return (
-    <aside
+    <div className={opened ? `${styles.slot} ${styles.slotOpen}` : styles.slot}>
+      <aside
       className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel}
       aria-label="อัปโหลดค่าใช้จ่าย"
       aria-hidden={!opened}
       inert={!opened}
-    >
-      {/* Fixed-width inner column — the outer <aside> is what animates its
-          width (0 → 420px, needed so main content actually reflows narrower,
-          not just gets covered), so this inner column stays a constant
-          width and its own content never visibly squishes mid-transition. */}
+      >
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
@@ -291,19 +292,33 @@ export default function ExpenseUploadPanel({
           </UnstyledButton>
         </div>
 
-        <div className={styles.stepperHead}>
-          <Stepper
-            active={active}
-            color="dark"
-            size="xs"
-            iconSize={26}
-            allowNextStepsSelect={false}
-            classNames={{ steps: styles.steps }}
+        <div
+          className={styles.progress}
+          aria-label="ขั้นตอนการบันทึกค่าใช้จ่าย"
+        >
+          <div
+            className={
+              active >= 0
+                ? `${styles.progressStep} ${styles.progressStepActive}`
+                : styles.progressStep
+            }
+            aria-current={active === 0 ? "step" : undefined}
           >
-            <Stepper.Step label="อัปโหลดและกรอกข้อมูล" />
-            <Stepper.Step label="ยืนยัน" />
-            <Stepper.Completed>เสร็จสิ้น</Stepper.Completed>
-          </Stepper>
+            <span className={styles.progressNumber}>1</span>
+            <span>เพิ่มข้อมูล</span>
+          </div>
+          <span className={styles.progressLine} aria-hidden="true" />
+          <div
+            className={
+              active >= 1
+                ? `${styles.progressStep} ${styles.progressStepActive}`
+                : styles.progressStep
+            }
+            aria-current={active === 1 ? "step" : undefined}
+          >
+            <span className={styles.progressNumber}>2</span>
+            <span>{active === 2 ? "เสร็จสิ้น" : "ตรวจสอบ"}</span>
+          </div>
         </div>
 
         <div className={styles.body}>
@@ -347,8 +362,10 @@ export default function ExpenseUploadPanel({
                   role="button"
                   tabIndex={0}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ")
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
                       fileInputRef.current?.click();
+                    }
                   }}
                 >
                   <Icon src="/icon/regular/image-square.svg" size={28} />
@@ -363,7 +380,7 @@ export default function ExpenseUploadPanel({
 
               {entries.length === 0 && (
                 <>
-                  <Stack gap={8}>
+                  <div className={styles.quickActions}>
                     <Button
                       variant="default"
                       radius="md"
@@ -388,7 +405,7 @@ export default function ExpenseUploadPanel({
                     >
                       เลือกไฟล์
                     </Button>
-                  </Stack>
+                  </div>
 
                   <Group gap={8} wrap="nowrap" className={styles.tip}>
                     <Icon src="/icon/regular/lightbulb.svg" size={16} />
@@ -409,28 +426,38 @@ export default function ExpenseUploadPanel({
                 </>
               )}
 
-              {/* Once something's staged, the upload chrome (dropzone,
-                  ถ่ายภาพ/เลือกไฟล์) is gone for good — only the staged
-                  data and this one link to add another manual entry
-                  remain, so the panel reads as "your data" instead of
-                  "an upload form" past the first item. */}
+              {/* Keep the add controls available after the first file so
+                  users can build a batch without leaving the staged list. */}
               {entries.length > 0 && (
-                <UnstyledButton
-                  className={styles.manualLink}
-                  onClick={addManualEntry}
-                >
-                  <Icon src="/icon/regular/note-pencil.svg" size={14} />
-                  เพิ่มรายการด้วยตนเอง
-                </UnstyledButton>
+                <div className={styles.stagedToolbar}>
+                  <span className={styles.summary}>{summaryText}</span>
+                  <div className={styles.stagedActions}>
+                    <Button
+                      variant="default"
+                      radius="md"
+                      size="xs"
+                      leftSection={
+                        <Icon src="/icon/regular/upload-simple.svg" size={14} />
+                      }
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      เพิ่มไฟล์
+                    </Button>
+                    <Button
+                      variant="default"
+                      radius="md"
+                      size="xs"
+                      leftSection={
+                        <Icon src="/icon/regular/note-pencil.svg" size={14} />
+                      }
+                      onClick={addManualEntry}
+                    >
+                      เพิ่มเอง
+                    </Button>
+                  </div>
+                </div>
               )}
 
-              {summaryText && (
-                <span className={styles.summary}>{summaryText}</span>
-              )}
-
-              {/* Only this list scrolls — everything above (dropzone/add
-                  buttons/manual-entry link) stays put so it's always
-                  reachable no matter how many entries pile up. */}
               {entries.length > 0 && (
                 <div className={styles.entryScroll}>
                   <Stack gap={10}>
@@ -498,7 +525,7 @@ export default function ExpenseUploadPanel({
                           </Group>
                         )}
 
-                        <Stack gap={10} className={styles.entryCardFields}>
+                        <div className={styles.entryCardFields}>
                           <TextInput
                             label="วันที่"
                             type="date"
@@ -524,6 +551,7 @@ export default function ExpenseUploadPanel({
                             checkIconPosition="right"
                           />
                           <TextInput
+                            className={styles.fieldWide}
                             label="ร้านค้า"
                             size="sm"
                             placeholder="ชื่อร้านค้า/ผู้รับเงิน"
@@ -536,6 +564,7 @@ export default function ExpenseUploadPanel({
                             }
                           />
                           <TextInput
+                            className={styles.fieldWide}
                             label="รายละเอียด"
                             size="sm"
                             value={entry.draft.description}
@@ -586,6 +615,7 @@ export default function ExpenseUploadPanel({
                             leftSection="฿"
                             min={0}
                             decimalScale={2}
+                            hideControls
                             value={entry.draft.amount}
                             onChange={(value) =>
                               updateDraft(entry.id, {
@@ -593,7 +623,7 @@ export default function ExpenseUploadPanel({
                               })
                             }
                           />
-                        </Stack>
+                        </div>
                       </div>
                     ))}
                   </Stack>
@@ -702,6 +732,7 @@ export default function ExpenseUploadPanel({
           )}
         </Group>
       </div>
-    </aside>
+      </aside>
+    </div>
   );
 }
