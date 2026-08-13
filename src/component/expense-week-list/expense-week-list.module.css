@@ -77,6 +77,16 @@
   transform: rotate(180deg);
 }
 
+.orderRow {
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .orderRow:hover {
+    background: var(--b-50);
+  }
+}
+
 .dateCell,
 .uploadedAtCell {
   white-space: nowrap;
