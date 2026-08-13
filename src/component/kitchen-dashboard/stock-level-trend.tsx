@@ -56,7 +56,10 @@ export default function StockLevelTrend({ history, forecast = false }: StockLeve
           data={chartData}
           dataKey="label"
           series={[
-            { name: "มูลค่าวัตถุดิบคงเหลือ", color: "var(--primary-900)" },
+            {
+              name: "มูลค่าวัตถุดิบคงเหลือ",
+              color: forecast ? "var(--forecast-accent-strong)" : "var(--primary-900)",
+            },
           ]}
           curveType="linear"
           strokeWidth={2}

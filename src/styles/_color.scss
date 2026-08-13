@@ -106,8 +106,18 @@
 
   /* Forecast surfaces and accents — intentionally cool so estimates are
      visually distinct from the warm, live operational palette. */
-  --forecast-accent: #4f6fd8;
-  --forecast-accent-strong: #334da5;
-  --forecast-accent-soft: #dfe6ff;
-  --forecast-accent-muted: #8ca84b;
+  --forecast-blue-50: #eff6ff;
+  --forecast-blue-100: #dbeafe;
+  --forecast-blue-200: #bfdbfe;
+  --forecast-blue-300: #93c5fd;
+  --forecast-blue-400: #60a5fa;
+  --forecast-blue-500: #3b82f6;
+  --forecast-blue-600: #2563eb;
+  --forecast-blue-700: #1d4ed8;
+  --forecast-blue-800: #1e40af;
+  --forecast-blue-900: #1e3a8a;
+  --forecast-accent: var(--forecast-blue-600);
+  --forecast-accent-strong: var(--forecast-blue-800);
+  --forecast-accent-soft: var(--forecast-blue-100);
+  --forecast-accent-muted: var(--forecast-blue-400);
 }

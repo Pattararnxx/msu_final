@@ -15,6 +15,7 @@ export interface StatTileData {
 
 interface StatRowProps {
   stats: StatTileData[];
+  forecast?: boolean;
 }
 
 // Five live-computed headline numbers — see use-live-dashboard.ts. Every
@@ -22,13 +23,13 @@ interface StatRowProps {
 // so this row is the dashboard's stat-tile contract: label, value, and an
 // optional trend sparkline in place of a delta (no fixed prior period to
 // diff against in a same-session demo feed).
-export default function StatRow({ stats }: StatRowProps) {
+export default function StatRow({ stats, forecast = false }: StatRowProps) {
   return (
     <div className={styles.grid}>
       {stats.map((stat) => (
         <div key={stat.key} className={styles.card}>
           <div className={styles.head}>
-            <span className={styles.iconWrap}>
+            <span className={`${styles.iconWrap} ${forecast ? styles.forecastIcon : ""}`}>
               <Icon src={stat.icon} size={16} />
             </span>
             <span className={styles.label}>{stat.label}</span>
@@ -40,7 +41,7 @@ export default function StatRow({ stats }: StatRowProps) {
               h={28}
               data={stat.sparkline}
               curveType="linear"
-              color="var(--chart-cat-1)"
+              color={forecast ? "blue" : "var(--chart-cat-1)"}
               fillOpacity={0.12}
               strokeWidth={2}
               className={styles.sparkline}

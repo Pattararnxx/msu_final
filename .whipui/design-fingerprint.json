@@ -190,6 +190,21 @@
     "surface": "transparent field with the existing table surface and Mantine selected-value pills",
     "scope": "src/component/team-members-table/team-members-table.tsx and team-members-table.module.css"
   },
+  "menuBoardCards": {
+    "mode": "operate",
+    "oneThingToRemember": "Menu cards use a compact Kanban hierarchy without thumbnails or icons so dish identity and price scan first.",
+    "cardStructure": "Status badge and menu code sit on the first row, followed by the dish name, one-line ingredient summary, price row, and compact ingredient/option metadata.",
+    "interaction": "Cards remain full-width keyboard-focusable controls; selected cards use a blue outline and open the existing detail sidebar.",
+    "scope": "src/component/menu-card/menu-card.tsx and src/component/menu-card/menu-card.module.css"
+  },
+  "dashboardForecast": {
+    "mode": "operate",
+    "oneThingToRemember": "Forecast is a frozen seven-day snapshot created when the user activates it; it does not follow the live order feed.",
+    "interaction": "The header toggle sits beside AI chat. Live mode keeps the existing warm palette; forecast mode uses cool blue-violet-teal accents and labels the seven-day range.",
+    "revenueCostChart": "Forecast uses a daily two-line chart for revenue versus ingredient cost, with the range control replaced by a non-interactive seven-day badge.",
+    "donutPalette": "Forecast donut segments use a cool categorical palette distinct from the live warm palette.",
+    "scope": "src/app/dashboard/page.tsx, src/lib/kitchen-dashboard/forecast.ts, and kitchen-dashboard chart components"
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",
