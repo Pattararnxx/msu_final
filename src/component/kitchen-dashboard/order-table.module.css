@@ -9,7 +9,7 @@
 }
 
 .forecastReference {
-  border-color: var(--b-200);
+  border-color: var(--forecast-accent);
 }
 
 .head {

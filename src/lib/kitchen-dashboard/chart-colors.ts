@@ -22,17 +22,17 @@ export const CHART_CATEGORICAL = [
 // Cool forecast palette: visually separates estimates from the warm live
 // dashboard while keeping enough contrast between donut segments.
 export const FORECAST_CATEGORICAL = [
-  "#4f6fd8",
-  "#7a58b5",
-  "#2f9b8f",
-  "#8ca84b",
+  "#1e3a8a",
+  "#1d4ed8",
+  "#2563eb",
+  "#60a5fa",
 ] as const;
 
 export const DONUT_CATEGORICAL = [
-  "#2f7f8f",
-  "#d97745",
-  "#6d5bb5",
-  "#8aa64a",
+'#E6C521',
+'#F5A623',
+'#F97316',
+'#FDBA74',
 ] as const;
 
 export const CHART_STATUS = {
@@ -40,4 +40,11 @@ export const CHART_STATUS = {
   warning: "#fab219",
   serious: "#ec835a",
   critical: "#d03b3b",
+} as const;
+
+export const FORECAST_STATUS = {
+  good: "#1d4ed8",
+  warning: "#2563eb",
+  serious: "#60a5fa",
+  critical: "#1e3a8a",
 } as const;

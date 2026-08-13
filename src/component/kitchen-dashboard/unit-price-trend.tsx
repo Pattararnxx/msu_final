@@ -4,7 +4,10 @@ import { useMemo, useState } from "react";
 import { LineChart } from "@mantine/charts";
 import { Select } from "@mantine/core";
 import { INGREDIENTS } from "@/lib/kitchen-dashboard/catalog";
-import { CHART_CATEGORICAL } from "@/lib/kitchen-dashboard/chart-colors";
+import {
+  CHART_CATEGORICAL,
+  FORECAST_CATEGORICAL,
+} from "@/lib/kitchen-dashboard/chart-colors";
 import type { UnitPricePoint } from "@/lib/kitchen-dashboard/types";
 import styles from "./unit-price-trend.module.css";
 
@@ -81,7 +84,10 @@ export default function UnitPriceTrend({
           h={200}
           data={chartData}
           dataKey="label"
-          series={[{ name: seriesName, color: CHART_CATEGORICAL[1] }]}
+          series={[{
+            name: seriesName,
+            color: forecast ? FORECAST_CATEGORICAL[1] : CHART_CATEGORICAL[1],
+          }]}
           curveType="step"
           strokeWidth={2}
           withDots={chartData.length <= 20}

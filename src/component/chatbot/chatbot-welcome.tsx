@@ -31,7 +31,7 @@ export default function ChatbotWelcome({ onSelect }: ChatbotWelcomeProps) {
             height={64}
           />
           <Text component="h1" className={styles.welcomeTitle}>
-            แชทบอท
+            ถามแมวไอรีนแชทบอทของคุณ
           </Text>
         </div>
         <Text component="p" className={styles.welcomeDescription}>
