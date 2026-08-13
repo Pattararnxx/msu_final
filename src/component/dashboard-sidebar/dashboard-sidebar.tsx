@@ -44,6 +44,28 @@ interface UsageStat {
   value: string;
 }
 
+const THAI_MONTHS = [
+  "มกราคม",
+  "กุมภาพันธ์",
+  "มีนาคม",
+  "เมษายน",
+  "พฤษภาคม",
+  "มิถุนายน",
+  "กรกฎาคม",
+  "สิงหาคม",
+  "กันยายน",
+  "ตุลาคม",
+  "พฤศจิกายน",
+  "ธันวาคม",
+];
+
+// Gregorian year (not Buddhist era) to match the "2026" used elsewhere in
+// this dashboard (e.g. the yearly expense total) — Intl's th-TH locale
+// would otherwise silently switch to พ.ศ. and read inconsistently.
+function formatThaiDate(date: Date): string {
+  return `${date.getDate()} ${THAI_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+}
+
 // Wording is placeholder — swap for the real business name, plan, and route
 // hrefs once account switching and routing exist. Structure (usage summary →
 // to-dos → primary nav → business-management nav) mirrors the reference
@@ -173,14 +195,18 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
   return (
     <>
       <UnstyledButton className={styles.businessCard}>
-        <Image src="/logo/cat_logo.svg" width={32} height={32} fit="contain" />
-        <Stack gap={0} className={styles.businessInfo}>
-          <span className={styles.businessName}>โจ๊กป้าแดง</span>
-          <Group gap={4} className={styles.businessPhone}>
-            58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม
-          </Group>
-        </Stack>
-        {/* <Icon src="/icon/regular/caret-down.svg" size={14} /> */}
+        <Image
+          src="/logo/init_logo.svg"
+          alt="โจ๊กป้าแดง"
+          h={36}
+          w="auto"
+          fit="contain"
+          mb={2}
+          className={styles.businessLogo}
+        />
+        <span className={styles.businessDate}>
+          {formatThaiDate(new Date())}
+        </span>
       </UnstyledButton>
 
       <Group gap={8} className={styles.usageRow}>
@@ -225,7 +251,11 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           <span className={styles.sectionLabel}>เมนูลัด</span>
           <Stack gap={2}>
             {PRIMARY_NAV.map((item) => (
-              <NavRow key={item.label} item={item} afterNavigate={afterNavigate} />
+              <NavRow
+                key={item.label}
+                item={item}
+                afterNavigate={afterNavigate}
+              />
             ))}
           </Stack>
         </div>
@@ -234,7 +264,11 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           <span className={styles.sectionLabel}>จัดการธุรกิจ</span>
           <Stack gap={2}>
             {BUSINESS_NAV.map((item) => (
-              <NavRow key={item.label} item={item} afterNavigate={afterNavigate} />
+              <NavRow
+                key={item.label}
+                item={item}
+                afterNavigate={afterNavigate}
+              />
             ))}
           </Stack>
         </div>
@@ -276,9 +310,7 @@ export default function DashboardSidebar(): ReactNode {
         onClose={closeMobile}
         position="top"
         size="auto"
-        title={
-          <span className={styles.mobileDrawerBrandName}>โจ๊กป้าแดง</span>
-        }
+        title={<span className={styles.mobileDrawerBrandName}>โจ๊กป้าแดง</span>}
         zIndex={1000}
         classNames={{
           content: styles.mobileDrawerContent,

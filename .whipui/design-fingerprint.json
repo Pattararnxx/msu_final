@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "analyzed",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-13T01:00:00.000Z",
+  "updatedAt": "2026-08-13T02:00:00.000Z",
   "intent": "adapt",
   "projectDna": "`.whipui/project-dna.json`",
   "sources": {
@@ -170,10 +170,18 @@
       "activeAccent": "var(--primary-500) (text color only, no fill — reuses navbar.tsx's .mobileLinkActive convention instead of a filled highlight bar)"
     },
     "uxFix": "Fixed a pre-existing bug surfaced by this change: the shared SidebarContent's scroll container closed the drawer (afterNavigate) on any click inside it, including the accordion expand toggle. afterNavigate is now wired only to actual <Link> clicks (top-level and child), not to the expand/collapse button.",
-    "desktopUnchanged": "The >=960px persistent rail (SidebarContent inside .sidebar) keeps its logo, section headers, icons, and light theme — only the mobile Drawer presentation changed.",
+    "desktopUnchanged": "The >=960px persistent rail (SidebarContent inside .sidebar) keeps its section headers, icons, and light theme — only the mobile Drawer presentation changed. (Its logo/date row was later reworked — see businessCard below.)",
     "openQuestions": [
-      "Real logo asset (public/logo/cat_logo.svg) was intentionally left out of the mobile drawer per explicit request — revisit if a small brand mark is wanted back in the mobile header."
+      "Real logo asset (public/logo/init_logo.svg) was intentionally left out of the mobile drawer per explicit request — revisit if a small brand mark is wanted back in the mobile header."
     ]
+  },
+  "businessCard": {
+    "mode": "operate",
+    "oneThingToRemember": "Desktop rail's business-identity row is now the init_logo.svg wordmark + today's date — not a name/address block.",
+    "bugFixed": "The row previously rendered <Image src=\"/logo/cat_logo.svg\" width={32} height={32} .../> using raw HTML width/height attributes. Mantine's Image component ships its own width: 100% CSS that overrides plain HTML attributes, so the logo rendered at native SVG size (huge) and blotted out the name/address text next to it. Fixed by sizing through Mantine's h/w style props instead (h={36} w=\"auto\" fit=\"contain\") — apply the same h/w (not width/height) convention to any future Image usage in this codebase.",
+    "change": "Replaced the cat_logo.svg + shop name + address block with /logo/init_logo.svg (h=36, w=auto, fit=contain) + a today's-date label, per explicit request (\"เอา...ที่ตั้ง...เปลี่ยนทั้งหมดเป็น init_logo.svg แล้วก็วันที่\"). Name/address were judged redundant here since ExpenseHeader already shows them prominently at the top of main content.",
+    "dateFormat": "Manual Thai month-name array + date.getFullYear() (Gregorian), not Intl th-TH — that locale defaults to พ.ศ. (Buddhist era) which would read inconsistently against the \"2026\" used elsewhere in this dashboard (e.g. the yearly expense total).",
+    "scope": "Desktop rail only (.sidebar > SidebarContent > .businessCard). The mobile Drawer already hides .businessCard entirely (see dashboardMobileDrawer above) and keeps its separate text-only brand treatment untouched."
   },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",

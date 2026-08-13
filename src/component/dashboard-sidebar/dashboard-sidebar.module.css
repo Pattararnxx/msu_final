@@ -27,37 +27,21 @@
   }
 }
 
-.businessAvatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Mantine's Image defaults to width: 100% via its own CSS, which
+   overrides plain width/height HTML attributes — that's what was
+   stretching the old logo across the whole sidebar. Sizing must go
+   through the h/w style props (set in the component) instead; this class
+   only stops it from growing past its intrinsic ratio. */
+.businessLogo {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--mantine-radius-md);
-  background: var(--yellow);
-  color: var(--b-900);
-  font-weight: 700;
-  font-size: 15px;
 }
 
-.businessInfo {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-}
-
-.businessName {
+.businessDate {
   overflow: hidden;
-  font-weight: 600;
-  font-size: 1.2rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.businessPhone {
   color: var(--b-600);
   font-size: 0.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .usageRow {
