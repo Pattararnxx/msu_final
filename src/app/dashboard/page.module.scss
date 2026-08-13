@@ -17,7 +17,26 @@
   gap: 20px;
   flex: 1;
   min-width: 0;
+  /* DashboardSidebar and AnnouncementBar are both position: fixed (see
+     dashboard-sidebar.module.css / announcement-bar.module.css), so
+     neither claims space in normal flow — .content has to reserve it
+     explicitly, same as home/page.module.scss. Keep both values in sync
+     with those two files: 272px is .sidebar's width, and
+     --announcement-bar-height is the shared variable both the bar and
+     the sidebar's own top offset read (dismissing the bar zeroes it
+     everywhere at once). */
+  margin-top: var(--announcement-bar-height);
+  margin-left: 272px;
   padding: 24px 32px 48px;
+}
+
+@media (max-width: 960px) {
+  .content {
+    /* Below 960px DashboardSidebar switches to its own fixed mobile bar
+       (accounted for via .page's padding-top below), so this margin
+       isn't needed here. */
+    margin-left: 0;
+  }
 }
 
 .pageHead {
