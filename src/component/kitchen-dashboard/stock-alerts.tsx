@@ -1,7 +1,10 @@
 "use client";
 
 import Icon from "@/component/icon/icon";
-import { CHART_STATUS } from "@/lib/kitchen-dashboard/chart-colors";
+import {
+  CHART_STATUS,
+  FORECAST_STATUS,
+} from "@/lib/kitchen-dashboard/chart-colors";
 import type { StockAlert } from "@/lib/kitchen-dashboard/engine";
 import styles from "./stock-alerts.module.css";
 
@@ -24,6 +27,8 @@ const SEVERITY_WORD: Record<StockAlert["severity"], string> = {
 // a computed number recalculated on every order, never a hand-set
 // "ใกล้หมด/หมดแล้ว" flag.
 export default function StockAlerts({ alerts, forecast = false }: StockAlertsProps) {
+  const status = forecast ? FORECAST_STATUS : CHART_STATUS;
+
   return (
     <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <h3 className={styles.title}>วัตถุดิบใกล้หมด</h3>
@@ -35,7 +40,7 @@ export default function StockAlerts({ alerts, forecast = false }: StockAlertsPro
             <li key={alert.ingredientId} className={styles.row}>
               <span
                 className={styles.icon}
-                style={{ color: CHART_STATUS[alert.severity] }}
+                style={{ color: status[alert.severity] }}
                 aria-hidden="true"
               >
                 <Icon src={SEVERITY_ICON[alert.severity]} size={16} />

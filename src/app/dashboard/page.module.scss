@@ -5,6 +5,14 @@
   background: var(--b-50);
 }
 
+.forecastMode {
+  background: var(--forecast-blue-50);
+}
+
+.forecastMode .pageTitle {
+  color: var(--forecast-accent-strong);
+}
+
 .shell {
   display: flex;
   align-items: stretch;
@@ -77,7 +85,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
-
 .chartLoading {
   display: flex;
   flex-direction: column;
@@ -105,10 +112,11 @@
   flex: 1;
   min-height: 170px;
 }
-.headActions{
+
+.headActions {
   display: flex;
-  gap:10px;
-  align-items:center;
+  gap: 10px;
+  align-items: center;
 }
 
 .forecastContext {
@@ -122,6 +130,7 @@
 .forecastButton {
   --button-bg: var(--forecast-accent);
   --button-hover: var(--forecast-accent-strong);
+  --button-color: var(--b-0);
 }
 
 @media (max-width: 960px) {

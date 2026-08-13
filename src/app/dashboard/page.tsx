@@ -235,7 +235,7 @@ const DashboardPage = () => {
             )}
           </div>
 
-          <StatRow stats={stats} />
+          <StatRow stats={stats} forecast={forecastMode} />
           <CostRevenueDonuts
             costByCategory={costByCategory}
             revenueByCategory={revenueByCategory}
