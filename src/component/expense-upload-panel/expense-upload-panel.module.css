@@ -1,32 +1,33 @@
-/* This element is both the flex item that pushes <main> over AND the
-   position: sticky element that keeps the panel pinned to the viewport
-   while the page scrolls. Those need to be the same element — an
-   overflow-hidden *ancestor* breaks a descendant's sticky positioning,
-   which is what happened with the earlier wrap/panel split. clip-path
-   (rather than overflow: hidden) clips this element's own content
-   (.inner, held at a constant 420px) while .panel's own width animates
-   0 → 420px — same visual clip, but it can never register as a scroll
-   container the way an overflow value can, which ruled it out as a
-   second possible cause of the sticky-not-following-scroll report.
-   top/height read --announcement-bar-height (same variable
-   DashboardSidebar's fixed offset uses, see globals.scss) so the panel
-   starts below the fixed yellow AnnouncementBar instead of sticking to
-   the literal viewport top, where the banner's higher z-index would
-   paint over its header. */
-.panel {
+.slot {
+  align-self: flex-start;
   flex-shrink: 0;
   width: 0;
-  height: calc(100dvh - var(--announcement-bar-height));
-  position: sticky;
-  top: var(--announcement-bar-height);
-  clip-path: inset(0);
-  background: var(--b-0);
-  border-left: 1px solid var(--b-100);
   transition: width 260ms ease;
 }
 
-.panelOpen {
+.slotOpen {
   width: 420px;
+}
+
+.panel {
+  position: fixed;
+  top: var(--announcement-bar-height);
+  right: 0;
+  z-index: 40;
+  width: 420px;
+  height: calc(100dvh - var(--announcement-bar-height));
+  overflow: hidden;
+  background: var(--b-0);
+  border-left: 1px solid var(--b-100);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 260ms ease, visibility 0s linear 260ms;
+}
+
+.panelOpen {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 260ms ease;
 }
 
 .inner {
@@ -41,41 +42,94 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  min-height: 68px;
+  padding: 12px 20px;
   border-bottom: 1px solid var(--b-100);
 }
 
 .title {
   color: var(--b-900);
-  font-weight: 700;
   font-size: var(--mantine-font-size-md);
+  font-weight: 700;
 }
 
-.closeButton {
+.closeButton,
+.fileRowRemove {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--mantine-radius-md);
   color: var(--b-600);
-  transition: background-color 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.closeButton:focus-visible,
+.fileRowRemove:focus-visible,
+.dropzone:focus-visible,
+.manualLink:focus-visible {
+  outline: 2px solid var(--primary-800);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .closeButton:hover {
+  .closeButton:hover,
+  .fileRowRemove:hover {
+    color: var(--b-900);
     background: var(--b-50);
   }
 }
 
-.stepperHead {
+.progress {
+  display: flex;
   flex-shrink: 0;
-  padding: 16px 20px 0;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px 16px;
   border-bottom: 1px solid var(--b-100);
 }
 
-.steps {
-  padding-bottom: 16px;
+.progressStep {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 7px;
+  color: var(--b-500);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.progressStepActive {
+  color: var(--b-900);
+}
+
+.progressNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--b-200);
+  border-radius: 50%;
+  color: var(--b-500);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.progressStepActive .progressNumber {
+  border-color: var(--b-900);
+  background: var(--b-900);
+  color: var(--b-0);
+}
+
+.progressLine {
+  flex: 1;
+  min-width: 16px;
+  height: 1px;
+  background: var(--b-200);
 }
 
 .body {
@@ -83,18 +137,24 @@
   min-height: 0;
   padding: 20px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .footer {
   flex-shrink: 0;
-  padding: 16px 20px;
+  padding: 12px 20px calc(16px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--b-100);
+}
+
+.footer > button {
+  min-height: 44px;
 }
 
 .stepHint {
   margin: 0;
   color: var(--b-600);
   font-size: 12.5px;
+  line-height: 1.5;
 }
 
 /* Step 0 — upload */
@@ -105,9 +165,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 36px 20px;
-  border-radius: var(--mantine-radius-lg);
-  border: 1.5px dashed var(--mantine-color-gray-4);
+  min-height: 184px;
+  padding: 28px 18px;
+  border: 1.5px dashed var(--b-300);
+  border-radius: var(--mantine-radius-md);
   background: var(--b-50);
   color: var(--b-700);
   text-align: center;
@@ -128,17 +189,31 @@
 }
 
 .dropzoneTitle {
-  font-weight: 700;
   font-size: 14px;
+  font-weight: 700;
 }
 
 .dropzoneHint {
+  max-width: 32ch;
   color: var(--b-500);
   font-size: 12px;
+  line-height: 1.5;
 }
 
 .hiddenInput {
   display: none;
+}
+
+.quickActions,
+.stagedActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.quickActions > button,
+.stagedActions > button {
+  min-height: 44px;
 }
 
 .tip {
@@ -151,7 +226,7 @@
   line-height: 1.5;
 }
 
-.tip span:first-child {
+.tip > :first-child {
   flex-shrink: 0;
   margin-top: 1px;
   color: var(--primary-800);
@@ -162,63 +237,66 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  min-height: 44px;
   padding: 6px;
   color: var(--b-600);
   font-size: 12.5px;
   font-weight: 600;
   text-align: center;
-  transition: color 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .manualLink:hover {
+    border-radius: var(--mantine-radius-md);
+    background: var(--b-50);
     color: var(--b-900);
   }
 }
 
-.summary {
-  display: block;
-  color: var(--b-500);
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
+.stagedToolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--b-100);
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
 }
 
-/* Only the entry cards scroll — the add-photo/camera buttons and the
-   manual-entry link stay outside this container so they're always
-   reachable, no matter how many receipts pile up. */
+.summary {
+  color: var(--b-600);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* The panel owns one scroll region. Entry cards flow naturally inside it so
+   long batches do not create a second scroll container inside the form. */
 .entryScroll {
-  max-height: 46vh;
-  overflow-y: auto;
-  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
 .entryBadge {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   width: 36px;
   height: 36px;
   border-radius: var(--mantine-radius-sm);
   background: var(--b-50);
   color: var(--b-600);
-  font-size: 12.5px;
-  font-weight: 600;
-  text-align: center;
-  transition: color 150ms ease;
 }
 
-/* One card per staged entry — fields sit directly below the thumbnail/
-   remove row, always expanded (no accordion) so they're visible the
-   moment a file lands, per the "fill in right below" requirement. */
 .entryCard {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   padding: 12px;
-  border-radius: var(--mantine-radius-lg);
   border: 1px solid var(--b-100);
+  border-radius: var(--mantine-radius-md);
   background: var(--b-0);
 }
 
@@ -234,6 +312,7 @@
 }
 
 .entryCardTitle {
+  display: block;
   overflow: hidden;
   color: var(--b-800);
   font-size: 12.5px;
@@ -243,17 +322,30 @@
 }
 
 .entryCardMeta {
+  display: block;
+  margin-top: 2px;
   color: var(--b-500);
   font-size: 11px;
 }
 
 .entryCardFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 8px;
   padding-top: 2px;
 }
 
+.entryCardFields > * {
+  min-width: 0;
+}
+
+.fieldWide {
+  grid-column: 1 / -1;
+}
+
 .autoFillNote {
   align-items: flex-start;
-  padding: 6px 8px;
+  padding: 7px 8px;
   border-radius: var(--mantine-radius-sm);
   background: var(--primary-50);
   color: var(--primary-800);
@@ -261,54 +353,7 @@
   line-height: 1.4;
 }
 
-.fileRowRemove {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--mantine-radius-md);
-  color: var(--b-500);
-  transition: color 150ms ease, background-color 150ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .entryCardRemove:hover {
-    color: var(--b-800);
-    background: var(--b-50);
-  }
-}
-
-.pdfPreview {
-  padding: 10px 12px;
-  border-radius: var(--mantine-radius-md);
-  background: var(--b-50);
-  color: var(--b-700);
-  font-size: 12.5px;
-  font-weight: 600;
-}
-
-.manualCardLabel {
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-md);
-  background: var(--primary-50);
-  color: var(--primary-800);
-  font-size: 12.5px;
-  font-weight: 700;
-}
-
-.autoFillNote {
-  align-items: flex-start;
-  padding: 6px 8px;
-  border-radius: var(--mantine-radius-sm);
-  background: var(--primary-50);
-  color: var(--primary-800);
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-/* Step 2 — confirm */
+/* Step 1 — confirm */
 
 .reviewRow {
   display: flex;
@@ -326,15 +371,18 @@
 }
 
 .reviewVendor {
+  display: block;
   overflow: hidden;
   color: var(--b-800);
-  font-weight: 600;
   font-size: 13px;
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .reviewMeta {
+  display: block;
+  margin-top: 2px;
   color: var(--b-500);
   font-size: 11.5px;
 }
@@ -342,28 +390,31 @@
 .reviewAmount {
   flex-shrink: 0;
   color: var(--b-900);
-  font-weight: 700;
   font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .reviewTotal {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 12px 14px;
   border-radius: var(--mantine-radius-md);
   background: var(--b-900);
   color: var(--b-0);
-  font-weight: 600;
   font-size: 13px;
+  font-weight: 600;
 }
 
 .reviewTotalAmount {
   font-size: 16px;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Step 3 — done */
+/* Step 2 — done */
 
 .doneState {
   padding: 32px 12px;
@@ -376,34 +427,72 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  border-radius: 999px;
+  border-radius: 50%;
   background: var(--primary-100);
   color: var(--primary-800);
 }
 
 .doneTitle {
   color: var(--b-900);
-  font-weight: 700;
   font-size: 15px;
+  font-weight: 700;
 }
 
-/* Below 640px there's no room to squeeze main content, so the panel just
-   takes the full screen instead — already fixed + transform above, this
-   only needs to widen it to match. */
-@media (max-width: 640px) {
+/* A 420px squeeze leaves too little room for the expense list on tablet.
+   Switch to a fixed side sheet before that happens; the main page keeps its
+   width and the upload task gets a stable reading surface. */
+@media (max-width: 960px) {
+  .slot,
+  .slotOpen {
+    width: 0;
+  }
+
   .panel {
+    position: fixed;
     top: 0;
-    width: 100vw;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    width: min(100vw, 460px);
+    height: 100dvh;
     transform: translateX(100%);
     transition: transform 260ms ease;
   }
 
   .panelOpen {
-    width: 100vw;
+    width: min(100vw, 460px);
     transform: translateX(0);
   }
 
   .inner {
-    width: 100vw;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .header,
+  .progress {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .body {
+    padding: 16px;
+  }
+
+  .footer {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot,
+  .panel,
+  .closeButton,
+  .fileRowRemove,
+  .dropzone,
+  .manualLink {
+    transition: none;
   }
 }
