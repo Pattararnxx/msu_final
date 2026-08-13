@@ -3,49 +3,50 @@
   flex-direction: column;
   flex-shrink: 0;
 
-  width: min(380px, 100vw);
+  width: min(420px, 100vw);
   height: 100vh;
 
   position: sticky;
   top: 0;
 
-  background: var(--mantine-color-white);
-  border-left: 1px solid var(--mantine-color-gray-2);
+  background: var(--b-0);
+  border-left: 1px solid var(--b-100);
 }
 
 .header {
   flex-shrink: 0;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
+  min-height: 56px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--b-100);
 }
 
 .title {
   font-weight: 700;
-  font-size: var(--mantine-font-size-md);
-  color: var(--mantine-color-black);
+  font-size: 14px;
+  color: var(--b-900);
 }
 
 .closeButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   margin-left: auto;
   border-radius: var(--mantine-radius-md);
-  color: var(--mantine-color-gray-6);
+  color: var(--b-600);
   cursor: pointer;
   transition: background-color 150ms ease;
 }
 
 .closeButton:hover {
-  background: var(--mantine-color-gray-0);
+  background: var(--b-50);
 }
 
 .body {
   flex: 1;
   min-height: 0;
-  padding: 20px;
+  padding: 20px 24px 28px;
   overflow-y: auto;
 }
 
