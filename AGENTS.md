@@ -1,3 +1,6 @@
+
+# Topic to do this project in @docs\Hackathon_MSU_2026_Restaurant_Operations.md
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
