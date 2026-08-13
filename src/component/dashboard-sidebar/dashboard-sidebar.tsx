@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Badge,
   Box,
@@ -28,7 +29,6 @@ interface NavItem {
   href: string;
   icon: string;
   badge?: string;
-  active?: boolean;
   children?: NavChild[];
 }
 
@@ -95,10 +95,14 @@ const USAGE_STATS: UsageStat[] = [
 
 const PRIMARY_NAV: NavItem[] = [
   {
+    label: "ภาพรวมสด",
+    href: "/dashboard",
+    icon: "/icon/regular/gauge.svg",
+  },
+  {
     label: "รายจ่าย",
     href: "/home",
     icon: "/icon/regular/receipt.svg",
-    active: true,
   },
   {
     label: "รายรับ",
@@ -133,9 +137,14 @@ function NavRow({
       the mobile Drawer's onClick note on SidebarContent below. */
   afterNavigate?: () => void;
 }) {
-  const [opened, setOpened] = useState(Boolean(item.active && item.children));
+  // Real routes only — "#" placeholders (รายรับ's sub-items, business nav)
+  // never match and so never claim the active state.
+  const pathname = usePathname();
+  const isActive = item.href !== "#" && pathname === item.href;
 
-  const rowClassName = item.active
+  const [opened, setOpened] = useState(Boolean(isActive && item.children));
+
+  const rowClassName = isActive
     ? `${styles.navRow} ${styles.navRowActive}`
     : styles.navRow;
 

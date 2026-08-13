@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.subtitle {
+  color: var(--b-600);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaUp {
+  color: var(--chart-status-critical);
+}
+
+.deltaDown {
+  color: var(--chart-status-good);
+}
+
+.empty {
+  margin: 0;
+  padding: 48px 0;
+  color: var(--b-500);
+  font-size: 13px;
+  text-align: center;
+}

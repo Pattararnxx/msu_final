@@ -72,4 +72,35 @@
   --b-800: var(--black-800);
   --b-900: var(--black-900);
   --b-1000: var(--black-1000);
+
+
+  /* =========================
+     Data-viz palette — warm-only (red/orange/gold/brown) to match this
+     brand's single warm accent, per explicit request. NOT the dataviz
+     skill's own documented 8-hue default (that set leans cool — blue,
+     aqua, violet, green); this is a from-scratch warm-hue search
+     re-validated with the skill's own validator/method (all 4 checks pass
+     — see .whipui/design-fingerprint.json for the run and the accepted
+     accessibility trade-off). This app is light-only today (no component
+     ships a dark variant), so only the light-surface steps are defined —
+     categorical order is fixed, assign in sequence, never cycle or
+     re-map by value.
+     ========================= */
+  --chart-cat-1: #dba843; /* amber/gold */
+  --chart-cat-2: #932825; /* deep brick red */
+  --chart-cat-3: #e29d28; /* orange-gold */
+  --chart-cat-4: #833e21; /* dark rust/brown */
+
+  /* Reserved meaning — never reused as "series N"; always icon + label. */
+  --chart-status-good: #0ca30c;
+  --chart-status-warning: #fab219;
+  --chart-status-serious: #ec835a;
+  --chart-status-critical: #d03b3b;
+
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+
+  /* Signed-delta TEXT color (not a mark/series color) — safe to put
+     directly on a number, unlike the categorical/status hues above. */
+  --chart-delta-good-text: #006300;
 }

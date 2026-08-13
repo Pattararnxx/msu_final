@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.subtitle {
+  color: var(--b-600);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.empty {
+  margin: 0;
+  padding: 48px 0;
+  color: var(--b-500);
+  font-size: 13px;
+  text-align: center;
+}

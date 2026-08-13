@@ -1,0 +1,100 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.subtitle {
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.table th {
+  padding: 8px 12px;
+  color: var(--b-500);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  border-bottom: 1px solid var(--b-100);
+}
+
+.table td {
+  padding: 10px 12px;
+  color: var(--b-800);
+  border-bottom: 1px solid var(--b-50);
+  font-variant-numeric: tabular-nums;
+}
+
+.numCol {
+  text-align: right;
+}
+
+.orderId {
+  color: var(--b-900);
+  font-weight: 700;
+}
+
+.menuCell {
+  max-width: 220px;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+
+.usageCell {
+  max-width: 320px;
+  overflow: hidden;
+  color: var(--b-500);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profitPositive {
+  color: var(--chart-delta-good-text);
+  font-weight: 700;
+}
+
+.profitNegative {
+  color: var(--chart-status-critical);
+  font-weight: 700;
+}
+
+.empty {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--b-500);
+  font-size: 13px;
+  text-align: center;
+}
