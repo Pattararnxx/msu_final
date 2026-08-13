@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { UnstyledButton } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import OrderImagePanel from "@/component/order-detail/order-image-panel";
@@ -24,54 +25,91 @@ interface OrderDetailPanelProps {
 // deliberately left alone.
 export default function OrderDetailPanel({ order, onClose }: OrderDetailPanelProps) {
   const opened = order !== null;
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!opened) return;
+
+    previousFocusRef.current = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      previousFocusRef.current?.focus();
+    };
+  }, [opened, onClose]);
 
   return (
-    <aside
-      className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel}
-      aria-label="รายละเอียดออเดอร์"
-      aria-hidden={!opened}
-      inert={!opened}
-    >
-      <div className={styles.inner}>
-        {order && (
-          <>
-            <div className={styles.header}>
-              <div className={styles.headerLeft}>
-                <Icon src="/icon/regular/check-square.svg" size={18} />
-                <span className={styles.kicker}>{order.orderNumber}</span>
-              </div>
-              <div className={styles.headerActions}>
-                <span className={styles.headerIconButton} aria-hidden="true">
-                  <Icon src="/icon/regular/arrow-square-out.svg" size={16} />
-                </span>
+    <>
+      <div className={opened ? `${styles.slot} ${styles.slotOpen}` : styles.slot} />
+      <button
+        type="button"
+        className={opened ? `${styles.scrim} ${styles.scrimOpen}` : styles.scrim}
+        aria-label="ปิดรายละเอียดออเดอร์"
+        tabIndex={opened ? 0 : -1}
+        onClick={onClose}
+      />
+      <aside
+        className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={order ? `order-detail-title-${order.id}` : undefined}
+        aria-hidden={!opened}
+        inert={!opened}
+      >
+        <div className={styles.inner}>
+          {order && (
+            <>
+              <div className={styles.header}>
+                <div className={styles.headerLeft}>
+                  <Icon src="/icon/regular/receipt.svg" size={18} />
+                  <div>
+                    <span className={styles.headerLabel}>รายละเอียดออเดอร์</span>
+                    <span className={styles.kicker}>{order.orderNumber}</span>
+                  </div>
+                </div>
                 <UnstyledButton
+                  ref={closeButtonRef}
                   onClick={onClose}
-                  aria-label="ปิด"
-                  className={`${styles.headerIconButton} ${styles.closeButton}`}
+                  aria-label="ปิดรายละเอียดออเดอร์"
+                  className={styles.closeButton}
                 >
-                  <Icon src="/icon/regular/x.svg" size={16} />
+                  <Icon src="/icon/regular/x.svg" size={18} />
                 </UnstyledButton>
               </div>
-            </div>
 
-            <div className={styles.body}>
-              <h2 className={styles.orderTitle}>{order.description}</h2>
+              <div className={styles.body}>
+                <h2 id={`order-detail-title-${order.id}`} className={styles.orderTitle}>
+                  {order.description || `ออเดอร์ ${order.orderNumber}`}
+                </h2>
 
-              <OrderImagePanel orderNumber={order.orderNumber} />
+                <OrderImagePanel
+                  orderNumber={order.orderNumber}
+                  imageUrl={order.imageUrl}
+                />
 
-              <div className={styles.section}>
-                <span className={styles.sectionLabel}>ข้อมูลออเดอร์</span>
-                <OrderInfoPanel order={order} />
+                <section className={styles.section} aria-labelledby="order-info-heading">
+                  <h3 id="order-info-heading" className={styles.sectionLabel}>ข้อมูลออเดอร์</h3>
+                  <OrderInfoPanel order={order} />
+                </section>
+
+                <section className={styles.section} aria-labelledby="order-items-heading">
+                  <h3 id="order-items-heading" className={styles.sectionLabel}>
+                    รายการอาหารและสรุปยอด
+                  </h3>
+                  <OrderItemsPanel order={order} />
+                </section>
               </div>
-
-              <div className={styles.section}>
-                <span className={styles.sectionLabel}>รายการอาหารและสรุปยอด</span>
-                <OrderItemsPanel order={order} />
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </aside>
+            </>
+          )}
+        </div>
+      </aside>
+    </>
   );
 }

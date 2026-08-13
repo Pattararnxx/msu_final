@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 16px;
+  padding: 12px;
+  border: 1px solid var(--b-100);
   border-radius: var(--mantine-radius-lg);
   background: var(--b-0);
 }
@@ -12,7 +13,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 180px;
+  height: 220px;
   overflow: hidden;
   border-radius: var(--mantine-radius-md);
   background: var(--b-50);
@@ -21,27 +22,13 @@
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 32px 20px;
+.fallbackNote {
+  margin: 0;
   color: var(--b-400);
-  text-align: center;
-}
-
-.emptyTitle {
-  color: var(--b-600);
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.emptyHint {
-  color: var(--b-400);
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
+  text-align: center;
 }

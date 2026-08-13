@@ -339,38 +339,18 @@ function toppingsForLine(source: LegacyOrder, lineId: string, lineIndex: number)
   return toppings;
 }
 
-function allocateLineTotals(weights: number[], amount: number): number[] {
-  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-  let allocated = 0;
-
-  return weights.map((weight, index) => {
-    const total = index === weights.length - 1
-      ? amount - allocated
-      : Math.round((amount * weight) / totalWeight);
-    allocated += total;
-    return total;
-  });
-}
-
 function enrichOrder(source: LegacyOrder): ExpenseItem {
   const lineDetails = source.lineItems.map((line, index) => {
     const lineId = `${source.id}-line-${index + 1}`;
     const menuItem = MENU_ITEM_BY_ID.get(line.menuItemId);
     const toppings = toppingsForLine(source, lineId, index);
     const toppingTotal = toppings.reduce((sum, item) => sum + (item.totalPrice ?? 0), 0);
-    const menuTotal = (menuItem?.price ?? 0) * line.quantity;
-
-    return { line, lineId, menuItem, toppings, toppingTotal, weight: menuTotal + toppingTotal };
+    return { line, lineId, menuItem, toppings, toppingTotal };
   });
 
-  const lineTotals = allocateLineTotals(
-    lineDetails.map((detail) => detail.weight),
-    source.amount,
-  );
-
-  const items: OrderItem[] = lineDetails.map((detail, index) => {
-    const totalPrice = lineTotals[index];
-    const baseTotal = Math.max(totalPrice - detail.toppingTotal, 0);
+  const items: OrderItem[] = lineDetails.map((detail) => {
+    const unitPrice = detail.menuItem?.price ?? 0;
+    const totalPrice = unitPrice * detail.line.quantity + detail.toppingTotal;
 
     return {
       lineId: detail.lineId,
@@ -379,7 +359,7 @@ function enrichOrder(source: LegacyOrder): ExpenseItem {
       quantity: detail.line.quantity,
       unit: itemUnit(detail.line.menuItemId),
       toppings: detail.toppings,
-      unitPrice: baseTotal / detail.line.quantity,
+      unitPrice,
       totalPrice,
       notes: "",
       confidence: 1,
@@ -389,6 +369,7 @@ function enrichOrder(source: LegacyOrder): ExpenseItem {
   });
 
   const staffIndex = Number(source.id.match(/\d+$/)?.[0] ?? 0) % UPLOAD_STAFF.length;
+  const amount = items.reduce((sum, item) => sum + (item.totalPrice ?? 0), 0);
 
   return {
     id: source.id,
@@ -403,7 +384,7 @@ function enrichOrder(source: LegacyOrder): ExpenseItem {
     description: source.description,
     uploadedAt: source.uploadedAt,
     uploadedBy: source.uploadedBy ?? UPLOAD_STAFF[staffIndex],
-    amount: source.amount,
+    amount,
   };
 }
 

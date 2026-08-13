@@ -64,7 +64,7 @@ const TeamPage = () => {
       trend: { direction: "down", label: "-1 จากสัปดาห์ที่แล้ว" },
     },
     {
-      label: "ใบเสร็จที่อัปโหลดสัปดาห์นี้",
+      label: "ใบออร์เดอร์ที่อัปโหลดสัปดาห์นี้",
       value: uploadsThisWeek,
       trend: { direction: "up", label: "+15% จากสัปดาห์ที่แล้ว" },
     },

@@ -9,729 +9,408 @@ import {
   Select,
   Stack,
   TextInput,
+  Textarea,
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import type { PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
+import {
+  orderDraftNeedsReview,
+  orderDraftToExpenseItem,
+  orderDraftTotal,
+} from "@/lib/expense/order-draft";
+import {
+  ORDER_TYPE_LABELS,
+  type ExpenseItem,
+  type OrderDraft,
+  type OrderItemDraft,
+  type OrderOcrFields,
+  type OrderType,
+} from "@/lib/expense/types";
+import { MOCK_MENU_ITEMS } from "@/lib/menu/mock-data";
+import type { OrderOcrPayload } from "@/lib/order-ocr/schema";
 import styles from "./expense-upload-panel.module.css";
 
-interface ExpenseUploadPanelProps {
+export interface ExpenseUploadPanelProps {
   opened: boolean;
   onClose: () => void;
+  /** Confirmed mock orders are returned so the page can update list and summary in-session. */
+  onSave?: (orders: ExpenseItem[]) => void;
 }
 
-interface PickedFile {
-  file: File;
-  kind: "image" | "pdf";
-  /** Object URL — only created for images; PDFs render an icon tile instead. */
-  previewUrl?: string;
-}
+type ScanStatus = "scanning" | "ready" | "error";
 
-// What kind of proof-of-payment this expense receipt is — unrelated to
-// FoodType (src/lib/expense/types.ts), which tags a customer *order's*
-// dishes. This panel uploads the shop's own costs (rent, utilities,
-// ingredient purchases — see CATEGORIES below), so there's no dish here.
-type DocumentType = "ใบเสร็จรับเงิน" | "สลิปโอนเงิน" | "ใบกำกับภาษี" | "อื่นๆ";
-
-interface DraftLineItem {
-  date: string;
-  documentType: DocumentType;
-  vendor: string;
-  description: string;
-  category: string;
-  payer: string;
-  status: PaymentStatus;
-  amount: number | "";
-}
-
-interface StagedEntry {
+interface StagedOrder {
   id: string;
-  file?: PickedFile;
-  draft: DraftLineItem;
+  file?: File;
+  previewUrl?: string;
+  status: ScanStatus;
+  draft?: OrderDraft;
+  provider?: "opentyphoon" | "mock";
+  error?: string;
 }
 
-const DOCUMENT_TYPES: DocumentType[] = [
-  "ใบเสร็จรับเงิน",
-  "สลิปโอนเงิน",
-  "ใบกำกับภาษี",
-  "อื่นๆ",
-];
-const CATEGORIES = [
-  "วัตถุดิบ",
-  "ค่าเช่าร้าน",
-  "ค่าสาธารณูปโภค",
-  "อุปกรณ์ครัว",
-  "ค่าจ้างพนักงาน",
-  "อื่นๆ",
-];
-const PAYERS = ["แม่ครัวใหญ่ สมศรี", "ผู้จัดการร้าน อนัญญา"];
-const PAYMENT_STATUSES: PaymentStatus[] = ["จ่ายแล้ว", "รอจ่าย", "ยกเลิก"];
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+const ACCEPTED_TYPES = new Set(["image/jpeg", "image/png"]);
+const MENU_OPTIONS = MOCK_MENU_ITEMS.map((item) => ({ value: item.id, label: `${item.name} · ฿${item.price}` }));
+const ORDER_TYPE_OPTIONS = Object.entries(ORDER_TYPE_LABELS).map(([value, label]) => ({ value, label }));
 
-// Stand-ins for a real receipt-scanning/OCR service — cycled through as
-// files come in so each upload looks freshly "read" instead of identical.
-// Swap for an actual extraction call once one exists; until then this is
-// what makes "upload a photo → fields fill themselves" demonstrable.
-const MOCK_EXTRACTIONS: Array<{
-  vendor: string;
-  documentType: DocumentType;
-  category: string;
-  description: string;
-  amountRange: [number, number];
-}> = [
-  {
-    vendor: "ตลาดสดเช้าสี่มุมเมือง",
-    documentType: "ใบเสร็จรับเงิน",
-    category: "วัตถุดิบ",
-    description: "ค่าวัตถุดิบสด",
-    amountRange: [800, 4500],
-  },
-  {
-    vendor: "ร้านกาแฟคั่วบ้านๆ",
-    documentType: "สลิปโอนเงิน",
-    category: "วัตถุดิบ",
-    description: "ค่าเมล็ดกาแฟและนมสด",
-    amountRange: [500, 2000],
-  },
-  {
-    vendor: "ร้านแก๊สหุงต้มบุญมี",
-    documentType: "ใบเสร็จรับเงิน",
-    category: "ค่าสาธารณูปโภค",
-    description: "ค่าแก๊สหุงต้ม",
-    amountRange: [900, 1800],
-  },
-  {
-    vendor: "ร้านข้าวสารบุญมี",
-    documentType: "ใบเสร็จรับเงิน",
-    category: "วัตถุดิบ",
-    description: "ค่าข้าวสารและเส้นก๋วยเตี๋ยว",
-    amountRange: [1000, 3000],
-  },
-  {
-    vendor: "บมจ. การไฟฟ้า",
-    documentType: "ใบเสร็จรับเงิน",
-    category: "ค่าสาธารณูปโภค",
-    description: "ค่าไฟฟ้าร้าน",
-    amountRange: [1500, 4000],
-  },
-];
+function localDateTime() {
+  const date = new Date();
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
+}
 
-function fileKind(file: File): "image" | "pdf" | null {
-  if (file.type.startsWith("image/")) return "image";
-  if (file.type === "application/pdf") return "pdf";
+function blankItem(index: number): OrderItemDraft {
+  return {
+    lineId: `manual-line-${index + 1}`,
+    menuItemId: null,
+    menuItemName: "",
+    quantity: 1,
+    unit: "ที่",
+    toppings: [],
+    unitPrice: "",
+    totalPrice: "",
+    notes: "",
+    confidence: 1,
+    needsReview: true,
+    humanReviewed: false,
+    rawText: "กรอกด้วยตนเอง",
+    ocrUnitPrice: null,
+    ocrTotalPrice: null,
+  };
+}
+
+function blankDraft(): OrderDraft {
+  return {
+    orderNumber: `MANUAL-${Date.now().toString().slice(-6)}`,
+    customerName: "",
+    orderedAt: localDateTime(),
+    orderType: "unknown",
+    items: [blankItem(0)],
+    notes: "",
+    totalAmount: "",
+    confidence: 1,
+    needsReview: true,
+    reviewReasons: ["รายการนี้กรอกด้วยตนเอง กรุณาตรวจทานก่อนบันทึก"],
+    humanReviewed: false,
+    rawText: "",
+  };
+}
+
+function fieldsToDraft(fields: OrderOcrFields): OrderDraft {
+  return {
+    orderNumber: fields.orderNumber,
+    customerName: fields.customerName ?? "",
+    orderedAt: fields.orderedAt?.slice(0, 16) ?? "",
+    orderType: fields.orderType,
+    items: fields.items.map((item) => ({
+      ...item,
+      unitPrice: item.unitPrice ?? "",
+      totalPrice: item.totalPrice ?? "",
+      toppings: item.toppings.map((topping) => ({
+        ...topping,
+        unitPrice: topping.unitPrice ?? "",
+        totalPrice: topping.totalPrice ?? "",
+      })),
+    })),
+    notes: fields.notes ?? "",
+    totalAmount: fields.totalAmount ?? "",
+    confidence: fields.confidence,
+    needsReview: fields.needsReview,
+    reviewReasons: fields.reviewReasons,
+    humanReviewed: false,
+    rawText: fields.rawText,
+  };
+}
+
+function confidenceLabel(value: number) {
+  return `${Math.round(value * 100)}%`;
+}
+
+function fileError(file: File): string | null {
+  if (!ACCEPTED_TYPES.has(file.type)) return "รองรับเฉพาะภาพ JPG หรือ PNG";
+  if (file.size > MAX_FILE_BYTES) return "ไฟล์ต้องมีขนาดไม่เกิน 10 MB";
   return null;
 }
 
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+function recalculateItem(item: OrderItemDraft): OrderItemDraft {
+  const unitPrice = typeof item.unitPrice === "number" ? item.unitPrice : 0;
+  const toppingTotal = item.toppings.reduce(
+    (sum, topping) => sum + (typeof topping.totalPrice === "number" ? topping.totalPrice : 0),
+    0,
+  );
+  return { ...item, totalPrice: unitPrice * item.quantity + toppingTotal };
 }
 
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10);
+function comparableName(value: string) {
+  return value.toLocaleLowerCase("th-TH").replace(/[\s()+/._-]/g, "");
 }
 
-function blankDraft(): DraftLineItem {
-  return {
-    date: todayIso(),
-    documentType: "อื่นๆ",
-    vendor: "",
-    description: "",
-    category: CATEGORIES[0],
-    payer: PAYERS[0],
-    status: "รอจ่าย",
-    amount: "",
-  };
+function toppingsForMenu(item: OrderItemDraft, menuItemId: string) {
+  const choices = MOCK_MENU_ITEMS
+    .find((menu) => menu.id === menuItemId)
+    ?.optionGroups.flatMap((group) => group.choices) ?? [];
+  return item.toppings.map((topping) => {
+    const comparable = comparableName(topping.name);
+    const choice = choices.find((candidate) => {
+      if (!comparable) return false;
+      const configured = comparableName(candidate.label);
+      return configured === comparable || configured.includes(comparable) || comparable.includes(configured);
+    });
+    const unitPrice: number | "" = choice?.priceDelta ?? "";
+    const totalPrice: number | "" = typeof unitPrice === "number" ? unitPrice * topping.quantity : "";
+    return {
+      ...topping,
+      unitPrice,
+      totalPrice,
+      needsReview: !choice || topping.confidence < 0.7,
+      humanReviewed: false,
+    };
+  });
 }
 
-function simulatedDraft(seed: number): DraftLineItem {
-  const preset = MOCK_EXTRACTIONS[seed % MOCK_EXTRACTIONS.length];
-  const [min, max] = preset.amountRange;
-  const amount = Math.round((min + Math.random() * (max - min)) * 100) / 100;
-  return {
-    date: todayIso(),
-    documentType: preset.documentType,
-    vendor: preset.vendor,
-    description: preset.description,
-    category: preset.category,
-    payer: PAYERS[0],
-    status: "รอจ่าย",
-    amount,
-  };
-}
-
-// A two-step flow (upload & fill → confirm). Desktop keeps a flex slot so the
-// expense list reserves room for the panel, while the visible panel itself is
-// fixed to the viewport. That separation is important: a sticky flex item can
-// move with the document when the long expense list scrolls, taking the form
-// header and footer out of view. Uploading a file auto-fills its card's fields
-// (simulated — see MOCK_EXTRACTIONS) right there in step one instead of
-// behind a separate edit step; browsing/editing already-saved expenses still
-// lives on their own page.
-export default function ExpenseUploadPanel({
-  opened,
-  onClose,
-}: ExpenseUploadPanelProps) {
+export default function ExpenseUploadPanel({ opened, onClose, onSave }: ExpenseUploadPanelProps) {
   const [active, setActive] = useState(0);
-  const [entries, setEntries] = useState<StagedEntry[]>([]);
+  const [entries, setEntries] = useState<StagedOrder[]>([]);
   const [dragActive, setDragActive] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const fileEntryCount = entries.filter((entry) => entry.file).length;
+  function updateEntry(id: string, updater: (entry: StagedOrder) => StagedOrder) {
+    setEntries((current) => current.map((entry) => (entry.id === id ? updater(entry) : entry)));
+  }
 
-  const addFiles = (fileList: FileList | null) => {
+  async function scanEntry(id: string, file: File) {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileLastModified", String(file.lastModified));
+      // This project is intentionally a mock-data prototype. The endpoint can
+      // still use Typhoon for other callers, while the panel demo stays local
+      // and deterministic even when a developer has a key configured.
+      formData.append("mode", "mock");
+      const response = await fetch("/api/order-ocr", { method: "POST", body: formData });
+      const data = (await response.json()) as OrderOcrPayload | { error?: string };
+      if (!response.ok || !("extraction" in data)) {
+        throw new Error("error" in data && data.error ? data.error : "OCR ไม่สำเร็จ");
+      }
+      updateEntry(id, (entry) => ({
+        ...entry,
+        status: "ready",
+        draft: fieldsToDraft(data.extraction),
+        provider: data.source.provider,
+        error: undefined,
+      }));
+    } catch (error) {
+      updateEntry(id, (entry) => ({
+        ...entry,
+        status: "error",
+        error: error instanceof Error ? error.message : "OCR ไม่สำเร็จ กรุณาลองอีกครั้ง",
+      }));
+    }
+  }
+
+  function addFiles(fileList: FileList | null) {
     if (!fileList) return;
-    let seed = fileEntryCount;
-    const next: StagedEntry[] = Array.from(fileList).flatMap((file) => {
-      const kind = fileKind(file);
-      if (!kind) return [];
-      const entry: StagedEntry = {
-        id: `${file.name}-${file.lastModified}-${file.size}`,
-        file: {
-          file,
-          kind,
-          previewUrl: kind === "image" ? URL.createObjectURL(file) : undefined,
-        },
-        draft: simulatedDraft(seed),
-      };
-      seed += 1;
-      return [entry];
-    });
-    if (next.length === 0) return;
-    setEntries((prev) => [...prev, ...next]);
-  };
+    const selected = Array.from(fileList);
+    const invalid = selected.map(fileError).find(Boolean);
+    if (invalid) {
+      setUploadError(invalid);
+      return;
+    }
+    setUploadError(null);
+    const now = Date.now();
+    const next = selected.map((file, index): StagedOrder => ({
+      id: `scan-${now}-${index}-${file.name}`,
+      file,
+      previewUrl: URL.createObjectURL(file),
+      status: "scanning",
+    }));
+    setEntries((current) => [...current, ...next]);
+    next.forEach((entry) => void scanEntry(entry.id, entry.file!));
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (cameraInputRef.current) cameraInputRef.current.value = "";
+  }
 
-  const addManualEntry = () => {
-    setEntries((prev) => [
-      ...prev,
-      { id: `manual-${Date.now()}-${prev.length}`, draft: blankDraft() },
+  function addManualEntry() {
+    setEntries((current) => [
+      ...current,
+      { id: `manual-${Date.now()}`, status: "ready", draft: blankDraft(), provider: "mock" },
     ]);
-  };
+  }
 
-  const removeEntry = (id: string) => {
-    setEntries((prev) => {
-      const target = prev.find((entry) => entry.id === id);
-      if (target?.file?.previewUrl) URL.revokeObjectURL(target.file.previewUrl);
-      return prev.filter((entry) => entry.id !== id);
+  function removeEntry(id: string) {
+    setEntries((current) => {
+      const removed = current.find((entry) => entry.id === id);
+      if (removed?.previewUrl) URL.revokeObjectURL(removed.previewUrl);
+      return current.filter((entry) => entry.id !== id);
     });
-  };
+  }
 
-  const updateDraft = (id: string, patch: Partial<DraftLineItem>) => {
-    setEntries((prev) =>
-      prev.map((entry) =>
-        entry.id === id
-          ? { ...entry, draft: { ...entry.draft, ...patch } }
-          : entry,
-      ),
-    );
-  };
+  function patchDraft(id: string, patch: Partial<OrderDraft>) {
+    updateEntry(id, (entry) => entry.draft
+      ? { ...entry, draft: { ...entry.draft, ...patch, humanReviewed: false } }
+      : entry);
+  }
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+  function patchItem(entryId: string, lineId: string, patch: Partial<OrderItemDraft>) {
+    updateEntry(entryId, (entry) => {
+      if (!entry.draft) return entry;
+      const items = entry.draft.items.map((item) =>
+        item.lineId === lineId ? recalculateItem({ ...item, ...patch, humanReviewed: false }) : item,
+      );
+      return {
+        ...entry,
+        draft: { ...entry.draft, items, totalAmount: items.reduce((sum, item) => sum + (typeof item.totalPrice === "number" ? item.totalPrice : 0), 0), humanReviewed: false },
+      };
+    });
+  }
+
+  function selectMenu(entryId: string, item: OrderItemDraft, menuItemId: string | null) {
+    const menu = MOCK_MENU_ITEMS.find((candidate) => candidate.id === menuItemId);
+    const toppings = menu ? toppingsForMenu(item, menu.id) : item.toppings;
+    patchItem(entryId, item.lineId, menu
+      ? { menuItemId: menu.id, menuItemName: menu.name, unitPrice: menu.price, toppings, needsReview: toppings.some((topping) => topping.needsReview) }
+      : { menuItemId: null, menuItemName: "", unitPrice: "", totalPrice: "", needsReview: true });
+  }
+
+  function confirmHumanReview(id: string) {
+    updateEntry(id, (entry) => entry.draft ? {
+      ...entry,
+      draft: {
+        ...entry.draft,
+        needsReview: false,
+        humanReviewed: true,
+        items: entry.draft.items.map((item) => ({
+          ...item,
+          needsReview: false,
+          humanReviewed: true,
+          toppings: item.toppings.map((topping) => ({ ...topping, needsReview: false, humanReviewed: true })),
+        })),
+      },
+    } : entry);
+  }
+
+  function resetAndClose(revoke = true) {
+    if (revoke) entries.forEach((entry) => entry.previewUrl && URL.revokeObjectURL(entry.previewUrl));
+    setEntries([]);
+    setActive(0);
+    setUploadError(null);
+    onClose();
+  }
+
+  function saveOrders() {
+    const orders = entries.flatMap((entry) => entry.draft
+      ? [orderDraftToExpenseItem(entry.draft, { id: entry.id, imageUrl: entry.previewUrl })]
+      : []);
+    onSave?.(orders);
+    setActive(2);
+  }
+
+  const readyEntries = entries.filter((entry) => entry.status === "ready" && entry.draft);
+  const canContinue = entries.length > 0 && readyEntries.length === entries.length && readyEntries.every(({ draft }) => {
+    if (!draft) return false;
+    const requiredComplete = draft.orderNumber.trim() && draft.orderedAt && draft.items.length > 0 && draft.items.every((item) => item.menuItemId && item.quantity > 0 && typeof item.totalPrice === "number");
+    return Boolean(requiredComplete) && (!orderDraftNeedsReview(draft) || draft.humanReviewed);
+  });
+  const total = readyEntries.reduce((sum, entry) => sum + orderDraftTotal(entry.draft!), 0);
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
     setDragActive(false);
     addFiles(event.dataTransfer.files);
-  };
-
-  const resetAndClose = () => {
-    entries.forEach(
-      (entry) =>
-        entry.file?.previewUrl && URL.revokeObjectURL(entry.file.previewUrl),
-    );
-    setEntries([]);
-    setActive(0);
-    onClose();
-  };
-
-  const canConfirm =
-    entries.length > 0 &&
-    entries.every(
-      (entry) =>
-        entry.draft.vendor.trim() !== "" &&
-        typeof entry.draft.amount === "number" &&
-        entry.draft.amount > 0,
-    );
-
-  const totalAmount = entries.reduce(
-    (sum, entry) =>
-      sum + (typeof entry.draft.amount === "number" ? entry.draft.amount : 0),
-    0,
-  );
-
-  const totalFileSize = entries.reduce(
-    (sum, entry) => sum + (entry.file?.file.size ?? 0),
-    0,
-  );
-  const summaryText =
-    entries.length > 0
-      ? `เพิ่มแล้ว ${entries.length} รายการ${
-          fileEntryCount > 0
-            ? ` • ไฟล์ ${fileEntryCount} ไฟล์ (${formatFileSize(totalFileSize)})`
-            : ""
-        }`
-      : "";
+  }
 
   return (
     <div className={opened ? `${styles.slot} ${styles.slotOpen}` : styles.slot}>
-      <aside
-      className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel}
-      aria-label="อัปโหลดค่าใช้จ่าย"
-      aria-hidden={!opened}
-      inert={!opened}
-      >
-      <div className={styles.inner}>
-        <div className={styles.header}>
-          <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
-          <UnstyledButton
-            onClick={resetAndClose}
-            aria-label="ปิด"
-            className={styles.closeButton}
-          >
-            <Icon src="/icon/regular/x.svg" size={16} />
-          </UnstyledButton>
-        </div>
-
-        <div
-          className={styles.progress}
-          aria-label="ขั้นตอนการบันทึกค่าใช้จ่าย"
-        >
-          <div
-            className={
-              active >= 0
-                ? `${styles.progressStep} ${styles.progressStepActive}`
-                : styles.progressStep
-            }
-            aria-current={active === 0 ? "step" : undefined}
-          >
-            <span className={styles.progressNumber}>1</span>
-            <span>เพิ่มข้อมูล</span>
+      <aside className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel} aria-label="อัปโหลดใบออร์เดอร์" aria-hidden={!opened} inert={!opened}>
+        <div className={styles.inner}>
+          <div className={styles.header}>
+            <div><span className={styles.title}>อัปโหลดใบออร์เดอร์</span><span className={styles.headerSubtitle}>อ่านใบออร์เดอร์ลูกค้าด้วย OCR</span></div>
+            <UnstyledButton onClick={() => resetAndClose()} aria-label="ปิด" className={styles.closeButton}><Icon src="/icon/regular/x.svg" size={16} /></UnstyledButton>
           </div>
-          <span className={styles.progressLine} aria-hidden="true" />
-          <div
-            className={
-              active >= 1
-                ? `${styles.progressStep} ${styles.progressStepActive}`
-                : styles.progressStep
-            }
-            aria-current={active === 1 ? "step" : undefined}
-          >
-            <span className={styles.progressNumber}>2</span>
-            <span>{active === 2 ? "เสร็จสิ้น" : "ตรวจสอบ"}</span>
+
+          <div className={styles.progress} aria-label="ขั้นตอนการบันทึกออร์เดอร์">
+            <div className={`${styles.progressStep} ${styles.progressStepActive}`} aria-current={active === 0 ? "step" : undefined}><span className={styles.progressNumber}>1</span><span>สแกนและแก้ไข</span></div>
+            <span className={styles.progressLine} aria-hidden="true" />
+            <div className={active >= 1 ? `${styles.progressStep} ${styles.progressStepActive}` : styles.progressStep} aria-current={active === 1 ? "step" : undefined}><span className={styles.progressNumber}>2</span><span>{active === 2 ? "เสร็จสิ้น" : "ตรวจสอบ"}</span></div>
           </div>
-        </div>
 
-        <div className={styles.body}>
-          {active === 0 && (
-            <Stack gap={16}>
-              {/* Hidden pickers live outside the conditional dropzone below
-                  so the persistent "เพิ่มรูป"/"ถ่ายภาพ" buttons can always
-                  trigger them, even once the dropzone itself is replaced by
-                  the entry cards. */}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*,application/pdf"
-                multiple
-                className={styles.hiddenInput}
-                onChange={(event) => addFiles(event.target.files)}
-              />
-              <input
-                ref={cameraInputRef}
-                type="file"
-                accept="image/*"
-                capture="environment"
-                className={styles.hiddenInput}
-                onChange={(event) => addFiles(event.target.files)}
-              />
-
-              {entries.length === 0 && (
-                <div
-                  className={
-                    dragActive
-                      ? `${styles.dropzone} ${styles.dropzoneActive}`
-                      : styles.dropzone
-                  }
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                    setDragActive(true);
-                  }}
-                  onDragLeave={() => setDragActive(false)}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      fileInputRef.current?.click();
-                    }
-                  }}
-                >
-                  <Icon src="/icon/regular/image-square.svg" size={28} />
-                  <span className={styles.dropzoneTitle}>
-                    ลากไฟล์ใบเสร็จมาวางที่นี่
-                  </span>
-                  <span className={styles.dropzoneHint}>
-                    หรือคลิกเพื่อเลือกไฟล์ — JPG, PNG, PDF ไม่เกิน 10MB
-                  </span>
+          <div className={styles.body}>
+            {active === 0 && <Stack gap={16}>
+              <input ref={fileInputRef} type="file" accept="image/jpeg,image/png" multiple className={styles.hiddenInput} onChange={(event) => addFiles(event.target.files)} />
+              <input ref={cameraInputRef} type="file" accept="image/jpeg,image/png" capture="environment" className={styles.hiddenInput} onChange={(event) => addFiles(event.target.files)} />
+              {entries.length === 0 && <>
+                <div className={dragActive ? `${styles.dropzone} ${styles.dropzoneActive}` : styles.dropzone} onDragOver={(event) => { event.preventDefault(); setDragActive(true); }} onDragLeave={() => setDragActive(false)} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()} role="button" tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); fileInputRef.current?.click(); } }}>
+                  <Icon src="/icon/regular/scan.svg" size={28} />
+                  <span className={styles.dropzoneTitle}>อัปโหลดใบออร์เดอร์ของลูกค้า</span>
+                  <span className={styles.dropzoneHint}>รองรับภาพตัวพิมพ์และลายมือ JPG/PNG ไม่เกิน 10 MB</span>
                 </div>
-              )}
-
-              {entries.length === 0 && (
-                <>
-                  <div className={styles.quickActions}>
-                    <Button
-                      variant="default"
-                      radius="md"
-                      size="sm"
-                      fullWidth
-                      leftSection={
-                        <Icon src="/icon/regular/camera.svg" size={16} />
-                      }
-                      onClick={() => cameraInputRef.current?.click()}
-                    >
-                      ถ่ายภาพ
-                    </Button>
-                    <Button
-                      variant="default"
-                      radius="md"
-                      size="sm"
-                      fullWidth
-                      leftSection={
-                        <Icon src="/icon/regular/upload-simple.svg" size={16} />
-                      }
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      เลือกไฟล์
-                    </Button>
+                <div className={styles.quickActions}>
+                  <Button variant="default" onClick={() => cameraInputRef.current?.click()} leftSection={<Icon src="/icon/regular/camera.svg" size={16} />}>ถ่ายภาพ</Button>
+                  <Button variant="default" onClick={() => fileInputRef.current?.click()} leftSection={<Icon src="/icon/regular/upload-simple.svg" size={16} />}>เลือกไฟล์</Button>
+                </div>
+                <Group gap={8} wrap="nowrap" className={styles.tip}><Icon src="/icon/regular/lightbulb.svg" size={16} /><span>ระบบอ่านเมนู จำนวน ท็อปปิ้ง และคำสั่งพิเศษ แล้วคิดราคาจากเมนูที่ร้านตั้งไว้</span></Group>
+                <UnstyledButton className={styles.manualLink} onClick={addManualEntry}><Icon src="/icon/regular/note-pencil.svg" size={14} />กรอกออร์เดอร์เองเมื่อภาพอ่านไม่ได้</UnstyledButton>
+              </>}
+              {uploadError && <div className={styles.errorMessage} role="alert"><Icon src="/icon/regular/warning-circle.svg" size={16} />{uploadError}</div>}
+              {entries.length > 0 && <div className={styles.stagedToolbar}>
+                <span className={styles.summary}>{entries.length} ใบออร์เดอร์ · OCR สำเร็จ {readyEntries.length}</span>
+                <div className={styles.stagedActions}><Button variant="default" size="xs" onClick={() => fileInputRef.current?.click()}>เพิ่มภาพ</Button><Button variant="default" size="xs" onClick={addManualEntry}>เพิ่มเอง</Button></div>
+              </div>}
+              <Stack gap={10}>
+                {entries.map((entry) => <div key={entry.id} className={styles.entryCard}>
+                  <div className={styles.entryCardHeader}>
+                    {entry.previewUrl ? <Image src={entry.previewUrl} alt={`ใบออร์เดอร์ ${entry.file?.name ?? "ที่อัปโหลด"}`} w={44} h={44} radius="sm" fit="cover" /> : <span className={styles.entryBadge}><Icon src="/icon/regular/note-pencil.svg" size={16} /></span>}
+                    <div className={styles.entryCardInfo}><span className={styles.entryCardTitle}>{entry.file?.name ?? "กรอกออร์เดอร์เอง"}</span><span className={styles.entryCardMeta}>{entry.status === "scanning" ? "กำลังอ่าน OCR…" : entry.status === "error" ? "อ่านไม่สำเร็จ" : `${entry.provider === "mock" ? "Mock OCR" : "Typhoon OCR"} · ความมั่นใจ ${confidenceLabel(entry.draft?.confidence ?? 0)}`}</span></div>
+                    <UnstyledButton onClick={() => removeEntry(entry.id)} aria-label="ลบใบออร์เดอร์นี้" className={styles.fileRowRemove}><Icon src="/icon/regular/x-circle.svg" size={16} /></UnstyledButton>
                   </div>
-
-                  <Group gap={8} wrap="nowrap" className={styles.tip}>
-                    <Icon src="/icon/regular/lightbulb.svg" size={16} />
-                    <span>
-                      ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน —
-                      ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ
-                      แก้ไขเพิ่มเติมได้ทีหลัง
-                    </span>
-                  </Group>
-
-                  <UnstyledButton
-                    className={styles.manualLink}
-                    onClick={addManualEntry}
-                  >
-                    <Icon src="/icon/regular/note-pencil.svg" size={14} />
-                    หรือกรอกข้อมูลเองแทน ไม่ต้องอัปโหลดไฟล์
-                  </UnstyledButton>
-                </>
-              )}
-
-              {/* Keep the add controls available after the first file so
-                  users can build a batch without leaving the staged list. */}
-              {entries.length > 0 && (
-                <div className={styles.stagedToolbar}>
-                  <span className={styles.summary}>{summaryText}</span>
-                  <div className={styles.stagedActions}>
-                    <Button
-                      variant="default"
-                      radius="md"
-                      size="xs"
-                      leftSection={
-                        <Icon src="/icon/regular/upload-simple.svg" size={14} />
-                      }
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      เพิ่มไฟล์
-                    </Button>
-                    <Button
-                      variant="default"
-                      radius="md"
-                      size="xs"
-                      leftSection={
-                        <Icon src="/icon/regular/note-pencil.svg" size={14} />
-                      }
-                      onClick={addManualEntry}
-                    >
-                      เพิ่มเอง
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {entries.length > 0 && (
-                <div className={styles.entryScroll}>
-                  <Stack gap={10}>
-                    {entries.map((entry) => (
-                      <div key={entry.id} className={styles.entryCard}>
-                        <div className={styles.entryCardHeader}>
-                          {entry.file?.kind === "image" && (
-                            <Image
-                              src={entry.file.previewUrl}
-                              alt={entry.file.file.name}
-                              w={36}
-                              h={36}
-                              radius="sm"
-                              fit="cover"
-                            />
-                          )}
-                          {entry.file?.kind === "pdf" && (
-                            <span className={styles.entryBadge}>
-                              <Icon
-                                src="/icon/regular/file-pdf.svg"
-                                size={16}
-                              />
-                            </span>
-                          )}
-                          {!entry.file && (
-                            <span className={styles.entryBadge}>
-                              <Icon
-                                src="/icon/regular/note-pencil.svg"
-                                size={16}
-                              />
-                            </span>
-                          )}
-                          <Stack gap={0} className={styles.entryCardInfo}>
-                            <span className={styles.entryCardTitle}>
-                              {entry.file
-                                ? entry.file.file.name
-                                : "กรอกข้อมูลเอง"}
-                            </span>
-                            {entry.file && (
-                              <span className={styles.entryCardMeta}>
-                                {formatFileSize(entry.file.file.size)}
-                              </span>
-                            )}
-                          </Stack>
-                          <UnstyledButton
-                            onClick={() => removeEntry(entry.id)}
-                            aria-label="ลบรายการนี้"
-                            className={styles.fileRowRemove}
-                          >
-                            <Icon src="/icon/regular/x-circle.svg" size={16} />
-                          </UnstyledButton>
+                  {entry.status === "scanning" && <div className={styles.scanning} role="status"><span className={styles.spinner} />กำลังแยกเมนู จำนวน และคำสั่งพิเศษ</div>}
+                  {entry.status === "error" && <div className={styles.errorMessage} role="alert"><Icon src="/icon/regular/warning-circle.svg" size={16} /><span>{entry.error}</span><Button size="compact-xs" variant="subtle" onClick={() => entry.file && scanEntry(entry.id, entry.file)}>ลองใหม่</Button></div>}
+                  {entry.draft && <>
+                    <div className={styles.entryCardFields}>
+                      <TextInput label="เลขออร์เดอร์" value={entry.draft.orderNumber} onChange={(event) => patchDraft(entry.id, { orderNumber: event.currentTarget.value })} />
+                      <TextInput label="วันและเวลา" type="datetime-local" value={entry.draft.orderedAt} onChange={(event) => patchDraft(entry.id, { orderedAt: event.currentTarget.value })} />
+                      <TextInput className={styles.fieldWide} label="ชื่อลูกค้า / โต๊ะ" value={entry.draft.customerName} onChange={(event) => patchDraft(entry.id, { customerName: event.currentTarget.value })} />
+                      <Select className={styles.fieldWide} label="ประเภทออร์เดอร์" data={ORDER_TYPE_OPTIONS} value={entry.draft.orderType} onChange={(value) => value && patchDraft(entry.id, { orderType: value as OrderType })} />
+                    </div>
+                    <Stack gap={8}>
+                      {entry.draft.items.map((item, index) => <div key={item.lineId} className={styles.menuItemCard}>
+                        <div className={styles.menuItemHead}><span>รายการ {index + 1}</span><span className={item.confidence < 0.7 ? styles.confidenceLow : styles.confidenceGood}>OCR {confidenceLabel(item.confidence)}</span></div>
+                        <Select searchable label="เมนู" data={MENU_OPTIONS} value={item.menuItemId} error={!item.menuItemId ? "กรุณาจับคู่กับเมนูของร้าน" : undefined} onChange={(value) => selectMenu(entry.id, item, value)} />
+                        <div className={styles.itemGrid}>
+                          <NumberInput label="จำนวน" min={1} value={item.quantity} onChange={(value) => patchItem(entry.id, item.lineId, { quantity: typeof value === "number" ? Math.max(1, value) : 1 })} />
+                          <TextInput label="ราคาจากร้าน" value={typeof item.unitPrice === "number" ? `฿${formatCurrency(item.unitPrice)}` : "-"} readOnly />
                         </div>
-
-                        {entry.file && (
-                          <Group
-                            gap={6}
-                            wrap="nowrap"
-                            className={styles.autoFillNote}
-                          >
-                            <Icon src="/icon/regular/sparkle.svg" size={13} />
-                            <span>
-                              กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว
-                              กรุณาตรวจสอบก่อนบันทึก
-                            </span>
-                          </Group>
-                        )}
-
-                        <div className={styles.entryCardFields}>
-                          <TextInput
-                            label="วันที่"
-                            type="date"
-                            size="sm"
-                            value={entry.draft.date}
-                            onChange={(event) =>
-                              updateDraft(entry.id, {
-                                date: event.currentTarget.value,
-                              })
-                            }
-                          />
-                          <Select
-                            label="ประเภทเอกสาร"
-                            size="sm"
-                            data={DOCUMENT_TYPES}
-                            value={entry.draft.documentType}
-                            onChange={(value) =>
-                              value &&
-                              updateDraft(entry.id, {
-                                documentType: value as DocumentType,
-                              })
-                            }
-                            checkIconPosition="right"
-                          />
-                          <TextInput
-                            className={styles.fieldWide}
-                            label="ร้านค้า"
-                            size="sm"
-                            placeholder="ชื่อร้านค้า/ผู้รับเงิน"
-                            withAsterisk
-                            value={entry.draft.vendor}
-                            onChange={(event) =>
-                              updateDraft(entry.id, {
-                                vendor: event.currentTarget.value,
-                              })
-                            }
-                          />
-                          <TextInput
-                            className={styles.fieldWide}
-                            label="รายละเอียด"
-                            size="sm"
-                            value={entry.draft.description}
-                            onChange={(event) =>
-                              updateDraft(entry.id, {
-                                description: event.currentTarget.value,
-                              })
-                            }
-                          />
-                          <Select
-                            label="หมวดหมู่"
-                            size="sm"
-                            data={CATEGORIES}
-                            value={entry.draft.category}
-                            onChange={(value) =>
-                              value &&
-                              updateDraft(entry.id, { category: value })
-                            }
-                            checkIconPosition="right"
-                          />
-                          <Select
-                            label="ผู้จ่ายเงิน"
-                            size="sm"
-                            data={PAYERS}
-                            value={entry.draft.payer}
-                            onChange={(value) =>
-                              value && updateDraft(entry.id, { payer: value })
-                            }
-                            checkIconPosition="right"
-                          />
-                          <Select
-                            label="สถานะจ่าย"
-                            size="sm"
-                            data={PAYMENT_STATUSES}
-                            value={entry.draft.status}
-                            onChange={(value) =>
-                              value &&
-                              updateDraft(entry.id, {
-                                status: value as PaymentStatus,
-                              })
-                            }
-                            checkIconPosition="right"
-                          />
-                          <NumberInput
-                            label="จำนวนเงิน"
-                            size="sm"
-                            withAsterisk
-                            leftSection="฿"
-                            min={0}
-                            decimalScale={2}
-                            hideControls
-                            value={entry.draft.amount}
-                            onChange={(value) =>
-                              updateDraft(entry.id, {
-                                amount: typeof value === "number" ? value : "",
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </Stack>
-                </div>
-              )}
-            </Stack>
-          )}
-
-          {active === 1 && (
-            <Stack gap={12}>
-              <p className={styles.stepHint}>ตรวจสอบรายการก่อนบันทึก</p>
-              <Stack gap={8}>
-                {entries.map((entry) => (
-                  <div key={entry.id} className={styles.reviewRow}>
-                    <Stack gap={0} className={styles.reviewInfo}>
-                      <span className={styles.reviewVendor}>
-                        {entry.draft.vendor || "-"}
-                      </span>
-                      <span className={styles.reviewMeta}>
-                        {entry.draft.category} • {entry.draft.date}
-                      </span>
+                        {item.toppings.length > 0 && <div className={styles.toppingList}><span className={styles.fieldLabel}>ท็อปปิ้งที่อ่านได้</span>{item.toppings.map((topping) => <div key={topping.id} className={styles.toppingRow}><span>{topping.name}</span><span>x{topping.quantity}</span><span>{typeof topping.totalPrice === "number" ? `฿${formatCurrency(topping.totalPrice)}` : "ต้องตรวจราคา"}</span></div>)}</div>}
+                        <Textarea label="คำสั่งพิเศษ" autosize minRows={1} value={item.notes} onChange={(event) => patchItem(entry.id, item.lineId, { notes: event.currentTarget.value })} />
+                        <div className={styles.lineTotal}><span>รวมรายการ</span><strong>{typeof item.totalPrice === "number" ? `฿${formatCurrency(item.totalPrice)}` : "-"}</strong></div>
+                      </div>)}
                     </Stack>
-                    <span className={styles.reviewAmount}>
-                      ฿
-                      {formatCurrency(
-                        typeof entry.draft.amount === "number"
-                          ? entry.draft.amount
-                          : 0,
-                      )}
-                    </span>
-                  </div>
-                ))}
+                    <Textarea label="หมายเหตุทั้งออร์เดอร์" autosize minRows={1} value={entry.draft.notes} onChange={(event) => patchDraft(entry.id, { notes: event.currentTarget.value })} />
+                    {(orderDraftNeedsReview(entry.draft) || entry.draft.reviewReasons.length > 0) && <div className={entry.draft.humanReviewed ? styles.reviewConfirmed : styles.reviewWarning}>
+                      <Icon src={entry.draft.humanReviewed ? "/icon/regular/check-circle.svg" : "/icon/regular/warning-circle.svg"} size={17} />
+                      <div><strong>{entry.draft.humanReviewed ? "พนักงานตรวจทานแล้ว" : "ต้องตรวจทานโดยพนักงาน"}</strong><span>{entry.draft.reviewReasons.join(" · ") || "OCR มีข้อมูลที่ยังไม่มั่นใจ"}</span></div>
+                      {!entry.draft.humanReviewed && <Button size="compact-xs" variant="default" onClick={() => confirmHumanReview(entry.id)}>ยืนยันว่าตรวจแล้ว</Button>}
+                    </div>}
+                    {entry.draft.rawText && <details className={styles.ocrEvidence}><summary>ดูข้อความดิบจาก OCR</summary><pre>{entry.draft.rawText}</pre></details>}
+                  </>}
+                </div>)}
               </Stack>
-              <div className={styles.reviewTotal}>
-                <span>ยอดรวมทั้งหมด</span>
-                <span className={styles.reviewTotalAmount}>
-                  ฿{formatCurrency(totalAmount)}
-                </span>
-              </div>
-            </Stack>
-          )}
+            </Stack>}
 
-          {active === 2 && (
-            <Stack gap={10} align="center" className={styles.doneState}>
-              <span className={styles.doneIcon}>
-                <Icon src="/icon/regular/check-circle.svg" size={32} />
-              </span>
-              <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
-              <span className={styles.stepHint}>
-                บันทึก {entries.length} รายการ รวม ฿
-                {formatCurrency(totalAmount)} เรียบร้อยแล้ว
-              </span>
-            </Stack>
-          )}
+            {active === 1 && <Stack gap={12}><p className={styles.stepHint}>ตรวจยอดที่คิดจากราคาเมนูของร้านก่อนบันทึก</p>{readyEntries.map((entry) => <div key={entry.id} className={styles.reviewRow}><div className={styles.reviewInfo}><span className={styles.reviewVendor}>{entry.draft!.orderNumber}</span><span className={styles.reviewMeta}>{entry.draft!.items.map((item) => `${item.menuItemName} x${item.quantity}`).join(", ")}</span></div><span className={styles.reviewAmount}>฿{formatCurrency(orderDraftTotal(entry.draft!))}</span></div>)}<div className={styles.reviewTotal}><span>ยอดรวมทั้งหมด</span><span className={styles.reviewTotalAmount}>฿{formatCurrency(total)}</span></div></Stack>}
+            {active === 2 && <Stack gap={10} align="center" className={styles.doneState}><span className={styles.doneIcon}><Icon src="/icon/regular/check-circle.svg" size={32} /></span><span className={styles.doneTitle}>บันทึกออร์เดอร์แล้ว</span><span className={styles.stepHint}>{readyEntries.length} ออร์เดอร์ถูกเพิ่มในรายการของ prototype</span></Stack>}
+          </div>
+
+          <Group gap={8} justify="space-between" className={styles.footer}>
+            {active === 0 && <><Button variant="default" onClick={() => resetAndClose()}>ยกเลิก</Button><Button color="dark" disabled={!canContinue} onClick={() => setActive(1)}>ตรวจสอบยอด</Button></>}
+            {active === 1 && <><Button variant="default" onClick={() => setActive(0)} leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}>ย้อนกลับ</Button><Button color="dark" onClick={saveOrders}>ยืนยันและบันทึก</Button></>}
+            {active === 2 && <Button color="dark" fullWidth onClick={() => resetAndClose(false)}>เสร็จสิ้น</Button>}
+          </Group>
         </div>
-
-        <Group gap={8} justify="space-between" className={styles.footer}>
-          {active === 0 && (
-            <>
-              <Button variant="default" radius="md" onClick={resetAndClose}>
-                ยกเลิก
-              </Button>
-              <Button
-                variant="filled"
-                color="dark"
-                radius="md"
-                disabled={!canConfirm}
-                onClick={() => setActive(1)}
-              >
-                ถัดไป
-              </Button>
-            </>
-          )}
-          {active === 1 && (
-            <>
-              <Button
-                variant="default"
-                radius="md"
-                leftSection={
-                  <Icon src="/icon/regular/arrow-left.svg" size={14} />
-                }
-                onClick={() => setActive(0)}
-              >
-                ย้อนกลับ
-              </Button>
-              <Button
-                variant="filled"
-                color="dark"
-                radius="md"
-                onClick={() => setActive(2)}
-              >
-                ยืนยันและบันทึก
-              </Button>
-            </>
-          )}
-          {active === 2 && (
-            <Button
-              variant="filled"
-              color="dark"
-              radius="md"
-              fullWidth
-              onClick={resetAndClose}
-            >
-              เสร็จสิ้น
-            </Button>
-          )}
-        </Group>
-      </div>
       </aside>
     </div>
   );

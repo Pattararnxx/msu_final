@@ -1,6 +1,3 @@
-"use client";
-
-import { Select } from "@mantine/core";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-summary-cards.module.css";
 
@@ -12,8 +9,7 @@ interface ExpenseSummaryCardsProps {
   expenseThisYear: number;
 }
 
-// Three stat tiles — month selectors are static placeholders (single-month
-// mock data) until real period switching is wired up.
+// Three stat tiles backed by the prototype's single mock-data period.
 export default function ExpenseSummaryCards({
   monthLabel,
   yearLabel,
@@ -25,16 +21,8 @@ export default function ExpenseSummaryCards({
     <div className={styles.grid}>
       <div className={styles.card}>
         <div className={styles.cardHead}>
-          <span className={styles.label}>จำนวนใบเสร็จเดือนนี้</span>
-          <Select
-            data={[monthLabel]}
-            defaultValue={monthLabel}
-            size="xs"
-            radius="md"
-            w={148}
-            checkIconPosition="right"
-            aria-label="เลือกเดือน"
-          />
+          <span className={styles.label}>จำนวนใบออร์เดอร์เดือนนี้</span>
+          <span className={styles.periodTag}>{monthLabel}</span>
         </div>
         <span className={styles.value}>{receiptCountThisMonth}</span>
       </div>
@@ -42,15 +30,7 @@ export default function ExpenseSummaryCards({
       <div className={styles.card}>
         <div className={styles.cardHead}>
           <span className={styles.label}>รายได้เดือนนี้</span>
-          <Select
-            data={[monthLabel]}
-            defaultValue={monthLabel}
-            size="xs"
-            radius="md"
-            w={148}
-            checkIconPosition="right"
-            aria-label="เลือกเดือน"
-          />
+          <span className={styles.periodTag}>{monthLabel}</span>
         </div>
         <span className={styles.value}>฿{formatCurrency(expenseThisMonth)}</span>
       </div>

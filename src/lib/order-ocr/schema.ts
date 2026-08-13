@@ -29,6 +29,9 @@ export const orderItemSchema = z.object({
   confidence,
   needsReview: z.boolean(),
   humanReviewed: z.boolean(),
+  rawText: z.string().optional(),
+  ocrUnitPrice: nullablePrice.optional(),
+  ocrTotalPrice: nullablePrice.optional(),
 });
 
 export const orderExtractionSchema = z.object({
@@ -59,7 +62,7 @@ export interface OrderOcrPayload {
   captured_at: string;
   source: {
     type: "order_ocr";
-    provider: "opentyphoon";
+    provider: "opentyphoon" | "mock";
     model: string;
     filename: string;
     mime_type: string;

@@ -236,10 +236,25 @@
       "upload": "JPG/PNG only, max 10 MB, camera input supported",
       "feedback": "per-file scanning, success confidence, retry error, and inline rejected-file message",
       "humanReview": "OCR results with a missing unique order number, item quantity, price, date/time, or confidence below 70% cannot continue until staff marks the entry reviewed",
-      "manualFallback": "manual order entry remains available when OCR is unavailable or an order slip cannot be read"
+      "manualFallback": "manual order entry remains available when OCR is unavailable or an order slip cannot be read",
+      "prototypeMode": "The upload panel explicitly requests deterministic local mock OCR so the prototype works without credentials; typed filenames return a high-confidence example, while handwritten/unclear filenames exercise the human-review gate."
     },
-    "dataContract": "Panel draft and OCR response share camelCase fields via src/lib/expense/types.ts. The unique orderNumber is the only document identifier; the contract contains no expense or receipt-number fields. Mock rows retain menu lineItems for sales aggregation and add structured topping quantities/prices for order review.",
+    "dataContract": "Panel draft and OCR response share camelCase fields via src/lib/expense/types.ts. OCR menu names are reconciled to MOCK_MENU_ITEMS and billing uses configured menu/option prices; OCR text and observed prices remain evidence only. Confirmed drafts emit ExpenseItem[] through onSave so Home can update list, summary, detail, and export from one in-session state.",
     "accessibility": "visible labels, role=alert for upload/OCR errors, keyboard-accessible dropzone, icon buttons labelled, reduced-motion spinner fallback"
+  },
+  "orderDetailPanel": {
+    "mode": "operate",
+    "oneThingToRemember": "Selecting an order on Home opens a focused right-side review panel with the original order-slip evidence and configured-price item breakdown.",
+    "composition": {
+      "desktop": "420px fixed right panel with a flex slot reserving content width below the announcement bar",
+      "tablet": "up to 460px overlay side sheet with a dismiss scrim so the list keeps its width",
+      "mobile": "full-width side sheet with safe-area bottom padding",
+      "flow": "order description → source slip image → order facts → items, toppings, notes, and total"
+    },
+    "imagery": "Use ExpenseItem.imageUrl for in-session uploads. Historical mock rows use /food/bill.jpg, a handwritten order-slip fixture; never substitute random food photography.",
+    "dataContract": "Order detail reads the rich OrderItem shape (menuItemName, quantity, nullable configured prices, structured toppings). Non-finite or absent prices render safely and never produce NaN.",
+    "interaction": "Rows and caret actions open the same selected order; keyboard users can use Enter/Space, the panel focuses its close control, closes with Escape/scrim/button, and restores prior focus.",
+    "accessibility": "dialog semantics, descriptive image alt text, 44px close target, visible focus, labelled sections, and reduced-motion transitions"
   },
   "menuBoardSurface": {
     "mode": "operate",

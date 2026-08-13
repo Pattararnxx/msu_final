@@ -62,15 +62,11 @@ export default function Chatbot({ visible }: { visible: boolean }) {
     >
       <div className={styles.header}>
         <div className={styles.headerIdentity}>
-          <span className={styles.headerMark} aria-hidden="true">
+          {/* <span className={styles.headerMark} aria-hidden="true">
             <Icon src="/icon/regular/megaphone.svg" size={17} />
-          </span>
+          </span> */}
           <div className={styles.headerCopy}>
-            <span className={styles.headerEyebrow}>MARKETING ASSISTANT</span>
-            <span className={styles.headerTitle}>ผู้ช่วยการตลาดร้าน</span>
-            <span className={styles.headerStatus}>
-              <i aria-hidden="true" /> อิงจากเมนูและยอดขายในระบบ
-            </span>
+            <span className={styles.headerEyebrow}>ผู้ช่วยบริหารร้านอาหาร</span>
           </div>
         </div>
         <div className={styles.headerActions}>

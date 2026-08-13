@@ -1,47 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Image } from "@mantine/core";
-import Icon from "@/component/icon/icon";
 import styles from "./order-image-panel.module.css";
 
 interface OrderImagePanelProps {
   imageUrl?: string;
   orderNumber: string;
 }
-//test/////
 export default function OrderImagePanel({
   imageUrl,
   orderNumber,
 }: OrderImagePanelProps) {
-  const [randomImage, setRandomImage] = useState("");
-
-  useEffect(() => {
-    if (!imageUrl) {
-      fetch("/api/random-food")
-        .then((res) => res.json())
-        .then((data) => setRandomImage(data.url));
-    }
-  }, [imageUrl]);
-
-  const displayImage = imageUrl || randomImage;
+  // The historical mock rows predate image upload, so they share the local
+  // handwritten order-slip fixture. Newly uploaded rows keep their own
+  // object URL in `imageUrl`. Never substitute a food photo here: this area
+  // is evidence for human review, not decorative imagery.
+  const displayImage = imageUrl || "/food/bill.jpg";
 
   return (
     <div className={styles.card}>
       <div className={styles.viewport}>
-        {displayImage ? (
-          <Image
-            src={displayImage}
-            alt={`รูปใบสั่งของออเดอร์ ${orderNumber}`}
-            className={styles.image}
-          />
-        ) : (
-          <div className={styles.empty}>
-            <Icon src="/icon/regular/image-square.svg" size={32} />
-            <span className={styles.emptyTitle}>กำลังโหลดรูป...</span>
-          </div>
-        )}
+        <Image
+          src={displayImage}
+          alt={`รูปใบออร์เดอร์ ${orderNumber}`}
+          className={styles.image}
+          fit="contain"
+        />
       </div>
+      {!imageUrl && (
+        <p className={styles.fallbackNote}>
+          ภาพตัวอย่างใบออร์เดอร์สำหรับข้อมูลจำลอง
+        </p>
+      )}
     </div>
   );
 }

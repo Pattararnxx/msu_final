@@ -5,6 +5,7 @@ import {
   type OrderOcrPayload,
 } from "@/lib/order-ocr/schema";
 import { ORDER_TYPE_VALUES, type OrderType } from "@/lib/expense/types";
+import { MOCK_MENU_ITEMS } from "@/lib/menu/mock-data";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -28,7 +29,7 @@ const NORMALIZER_INSTRUCTIONS = `แปลงข้อความ OCR ใบอ
 - orderedAt ต้องเป็น YYYY-MM-DDTHH:mm:ss; แปลง พ.ศ. เป็น ค.ศ. ได้เมื่อเห็นวันชัดเจน
 - items เก็บอาหารทุกบรรทัด; toppings ต้องอยู่ใน item เจ้าของ และ quantity ของ topping แยกจากอาหาร
 - "ไม่ผัก" หรือ "ไม่ใส่ผัก" เป็นคำสั่งพิเศษของเมนู ให้ใส่ใน items[].notes ไม่ใช่ topping
-- unitPrice, totalPrice, totalAmount มาจากภาพเท่านั้น ห้ามคำนวณหรือเดา
+- ราคาในภาพเป็นหลักฐาน OCR เท่านั้น ระบบจะจับคู่ชื่อกับเมนูและคำนวณราคาจากแค็ตตาล็อกร้านภายหลัง
 - orderType ใช้ dine_in, takeaway, delivery หรือ unknown
 - ถ้าข้อมูลสำคัญหายหรือไม่ชัด ให้ needsReview=true พร้อมเหตุผล
 - ตอบ JSON object เดียว ไม่มี markdown หรือคำอธิบาย`;
@@ -181,6 +182,35 @@ function confidence(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0;
 }
 
+function comparableName(value: string) {
+  return value.toLocaleLowerCase("th-TH").replace(/[\s()+/._-]/g, "");
+}
+
+function configuredMenu(name: string, id: string | null) {
+  const byId = id ? MOCK_MENU_ITEMS.find((item) => item.id === id) : undefined;
+  if (byId) return byId;
+  const comparable = comparableName(name);
+  if (!comparable) return undefined;
+  return MOCK_MENU_ITEMS.find((item) => {
+    const candidate = comparableName(item.name);
+    return candidate === comparable || candidate.includes(comparable) || comparable.includes(candidate);
+  });
+}
+
+function configuredToppingPrice(menuItemId: string, toppingName: string): number | null {
+  const menu = MOCK_MENU_ITEMS.find((item) => item.id === menuItemId);
+  if (!menu) return null;
+  const comparable = comparableName(toppingName);
+  if (!comparable) return null;
+  const choice = menu.optionGroups
+    .flatMap((group) => group.choices)
+    .find((item) => {
+      const candidate = comparableName(item.label);
+      return candidate === comparable || candidate.includes(comparable) || comparable.includes(candidate);
+    });
+  return choice?.priceDelta ?? null;
+}
+
 function splitInlineItemNote(menuItemName: string, notes: string) {
   const match = menuItemName.match(/^(.*?)(?:\s+)(ไม่(?:ใส่)?ผัก)$/);
   if (!match) return { menuItemName, notes };
@@ -205,40 +235,49 @@ function normalizeExtraction(value: unknown, metadataDateTime: string | null) {
     const itemNotes = nullableText(item.notes) ?? "";
     const inlineItem = splitInlineItemNote(readMenuItemName, itemNotes);
     const quantity = nullableNumber(item.quantity) ?? 0;
+    const rawMenuItemId = nullableText(item.menuItemId);
+    const matchedMenu = configuredMenu(inlineItem.menuItemName, rawMenuItemId);
     const parsedToppings = (Array.isArray(item.toppings) ? item.toppings : []).map((rawTopping, toppingIndex) => {
       const topping = asRecord(rawTopping);
+      const name = nullableText(topping.name) ?? "";
+      const quantity = nullableNumber(topping.quantity) ?? 0;
+      const configuredPrice = matchedMenu ? configuredToppingPrice(matchedMenu.id, name) : null;
       return {
         id: nullableText(topping.id) ?? `topping-${itemIndex + 1}-${toppingIndex + 1}`,
-        name: nullableText(topping.name) ?? "",
-        quantity: nullableNumber(topping.quantity) ?? 0,
+        name,
+        quantity,
         unit: nullableText(topping.unit) ?? "รายการ",
-        unitPrice: nullableNumber(topping.unitPrice),
-        totalPrice: nullableNumber(topping.totalPrice),
+        unitPrice: configuredPrice,
+        totalPrice: configuredPrice === null ? null : configuredPrice * quantity,
         confidence: confidence(topping.confidence),
-        needsReview: topping.needsReview === true,
+        needsReview: topping.needsReview === true || !name || quantity <= 0 || configuredPrice === null,
         humanReviewed: false,
+        rawText: [name, nullableText(topping.unitPrice), nullableText(topping.totalPrice)].filter(Boolean).join(" "),
       };
     });
     const menuInstructions = parsedToppings
       .filter((topping) => isMenuInstruction(topping.name))
       .map((topping) => topping.name.trim());
     const toppings = parsedToppings.filter((topping) => !isMenuInstruction(topping.name));
-    const menuItemName = inlineItem.menuItemName;
+    const menuItemName = matchedMenu?.name ?? inlineItem.menuItemName;
     const notes = [...new Set([inlineItem.notes, ...menuInstructions].filter(Boolean))].join(" • ");
-    const unitPrice = nullableNumber(item.unitPrice);
-    const totalPrice = nullableNumber(item.totalPrice);
+    const ocrUnitPrice = nullableNumber(item.unitPrice);
+    const ocrTotalPrice = nullableNumber(item.totalPrice);
+    const unitPrice = matchedMenu?.price ?? null;
+    const toppingTotal = toppings.reduce((sum, topping) => sum + (topping.totalPrice ?? 0), 0);
+    const totalPrice = unitPrice === null || quantity <= 0 ? null : unitPrice * quantity + toppingTotal;
     const needsReview =
       item.needsReview === true ||
-      !menuItemName ||
+      !matchedMenu ||
       quantity <= 0 ||
       unitPrice === null ||
       totalPrice === null;
-    if (!menuItemName) reasons.push(`รายการที่ ${itemIndex + 1} อ่านชื่ออาหารไม่ชัดเจน`);
+    if (!matchedMenu) reasons.push(`รายการที่ ${itemIndex + 1} จับคู่กับเมนูของร้านไม่ได้`);
     if (quantity <= 0) reasons.push(`รายการที่ ${itemIndex + 1} ไม่พบจำนวน`);
-    if (unitPrice === null || totalPrice === null) reasons.push(`รายการที่ ${itemIndex + 1} ไม่พบราคา`);
+    if (unitPrice === null || totalPrice === null) reasons.push(`รายการที่ ${itemIndex + 1} ยังคิดราคาจากเมนูร้านไม่ได้`);
     return {
       lineId: nullableText(item.lineId) ?? `line-${itemIndex + 1}`,
-      menuItemId: nullableText(item.menuItemId),
+      menuItemId: matchedMenu?.id ?? null,
       menuItemName,
       quantity,
       unit: nullableText(item.unit) ?? "ที่",
@@ -249,19 +288,24 @@ function normalizeExtraction(value: unknown, metadataDateTime: string | null) {
       confidence: confidence(item.confidence),
       needsReview,
       humanReviewed: false,
+      rawText: [readMenuItemName, nullableText(item.quantity), itemNotes].filter(Boolean).join(" "),
+      ocrUnitPrice,
+      ocrTotalPrice,
     };
   });
 
   const extractedOrderNumber = nullableText(source.orderNumber);
   const imageDateTime = normalizeDateTime(source.orderedAt);
   const orderedAt = imageDateTime ?? metadataDateTime;
-  const totalAmount = nullableNumber(source.totalAmount);
+  const totalAmount = items.length > 0 && items.every((item) => item.totalPrice !== null)
+    ? items.reduce((sum, item) => sum + (item.totalPrice ?? 0), 0)
+    : null;
   if (imageDateTime === null && metadataDateTime !== null) {
     reasons.push("ใช้วันที่เวลาอ้างอิงจาก metadata ของไฟล์ โปรดตรวจสอบ");
   }
   if (!orderedAt) reasons.push("ไม่พบวันที่เวลาที่อ่านได้ชัดเจน");
   if (items.length === 0) reasons.push("ไม่พบรายการอาหาร");
-  if (totalAmount === null) reasons.push("ไม่พบราคาทั้งหมดที่อ่านได้ชัดเจน");
+  if (totalAmount === null) reasons.push("ยังคำนวณยอดจากราคาเมนูของร้านไม่ได้");
 
   const detectedOrderType = orderType(source.orderType);
   const orderTypeFromRawText =
@@ -291,6 +335,104 @@ function validateFile(file: File): string | null {
   if (!ALLOWED_MIME_TYPES.has(file.type)) return "รองรับเฉพาะไฟล์ JPG หรือ PNG";
   if (file.size > MAX_FILE_BYTES) return "ไฟล์ต้องมีขนาดไม่เกิน 10 MB";
   return null;
+}
+
+function filenameSeed(filename: string) {
+  return Array.from(filename.toLocaleLowerCase("th-TH")).reduce(
+    (hash, char) => Math.imul(hash ^ (char.codePointAt(0) ?? 0), 16777619) >>> 0,
+    2166136261,
+  );
+}
+
+function mockOrder(file: File, metadataDateTime: string | null): OrderOcrPayload {
+  const seed = filenameSeed(file.name);
+  const handwritten = /hand|write|ลายมือ|unclear|low/i.test(file.name);
+  const variant = seed % 3;
+  const orderedAt = metadataDateTime ?? `2026-08-13T0${6 + variant}:${String(12 + variant * 11).padStart(2, "0")}:00`;
+  const sampleItems = handwritten
+    ? [
+        {
+          lineId: "line-1",
+          menuItemId: null,
+          menuItemName: "โจ๊กหมู",
+          quantity: 2,
+          unit: "ที่",
+          toppings: [{
+            id: "line-1-topping-1",
+            name: "เพิ่มไข่ลวก",
+            quantity: 1,
+            unit: "ฟอง",
+            unitPrice: null,
+            totalPrice: null,
+            confidence: 0.64,
+            needsReview: true,
+            humanReviewed: false,
+          }],
+          unitPrice: 35,
+          totalPrice: 80,
+          notes: "ไม่ผัก",
+          confidence: 0.62,
+          needsReview: true,
+          humanReviewed: false,
+          rawText: "โจ๊กหมู 2 + ไข่? ไม่ผัก",
+        },
+      ]
+    : [
+        {
+          lineId: "line-1",
+          menuItemId: variant === 1 ? "menu-008" : "menu-001",
+          menuItemName: variant === 1 ? "ก๋วยจั๊บน้ำข้น หมูกรอบ" : "ข้าวต้มหมูสับ",
+          quantity: variant === 2 ? 2 : 1,
+          unit: "ที่",
+          toppings: variant === 0 ? [{
+            id: "line-1-topping-1",
+            name: "เพิ่มไข่ลวก",
+            quantity: 1,
+            unit: "ฟอง",
+            unitPrice: 10,
+            totalPrice: 10,
+            confidence: 0.94,
+            needsReview: false,
+            humanReviewed: false,
+          }] : [],
+          unitPrice: variant === 1 ? 50 : 40,
+          totalPrice: variant === 1 ? 50 : (variant === 2 ? 80 : 50),
+          notes: variant === 2 ? "ไม่ใส่ผงชูรส" : "",
+          confidence: 0.94,
+          needsReview: false,
+          humanReviewed: false,
+          rawText: variant === 1 ? "ก๋วยจั๊บน้ำข้นหมูกรอบ 1" : "ข้าวต้มหมูสับ",
+        },
+      ];
+  const normalized = normalizeExtraction({
+    orderNumber: `MOCK-${String(seed % 10_000).padStart(4, "0")}`,
+    customerName: ["คุณอรุณ", "คุณเมย์", "โต๊ะ 4"][variant],
+    orderedAt,
+    orderType: variant === 1 ? "takeaway" : "dine_in",
+    items: sampleItems,
+    notes: handwritten ? "ตัวอย่างใบสั่งลายมือ ต้องให้พนักงานตรวจ" : "ตัวอย่าง OCR สำหรับ prototype",
+    confidence: handwritten ? 0.62 : 0.94,
+    needsReview: handwritten,
+    reviewReasons: handwritten ? ["ลายมือบริเวณจำนวนไข่ไม่ชัดเจน"] : [],
+    rawText: sampleItems.map((item) => item.rawText).join("\n"),
+  }, metadataDateTime);
+  const extraction = orderExtractionSchema.parse(normalized);
+
+  return {
+    schema_version: "restaurant.order.v2",
+    event: "restaurant.order.extracted",
+    payload_id: `mock-${seed.toString(16)}`,
+    captured_at: orderedAt,
+    source: {
+      type: "order_ocr",
+      provider: "mock",
+      model: handwritten ? "deterministic-handwritten-review" : "deterministic-typed-order",
+      filename: file.name,
+      mime_type: file.type,
+      size_bytes: file.size,
+    },
+    extraction,
+  };
 }
 
 async function extractOrder(
@@ -379,8 +521,6 @@ function clientError(error: unknown) {
 
 export async function POST(request: Request) {
   const apiKey = process.env.TYPHOON_OCR_API_KEY?.trim();
-  if (!apiKey) return errorResponse("ยังไม่ได้ตั้งค่า TYPHOON_OCR_API_KEY บนเซิร์ฟเวอร์", 503);
-
   const formData = await request.formData().catch(() => null);
   const multipleFiles = formData?.getAll("files") ?? [];
   const rawFiles = multipleFiles.length > 0 ? multipleFiles : formData?.getAll("file") ?? [];
@@ -394,6 +534,29 @@ export async function POST(request: Request) {
   const normalizerModel =
     process.env.TYPHOON_NORMALIZER_MODEL?.trim() || "typhoon-v2.5-30b-a3b-instruct";
   const metadataValues = formData?.getAll("fileLastModified") ?? [];
+  const requestedMock = formData?.get("mode") === "mock";
+
+  if (!apiKey || requestedMock) {
+    if (files.length === 1) {
+      const fileError = validateFile(files[0]);
+      if (fileError) return errorResponse(fileError, fileError.includes("ขนาด") ? 413 : 415);
+      return Response.json(mockOrder(files[0], dateTimeFromFileMetadata(metadataValues[0])));
+    }
+    const results = files.map((file, index) => {
+      const fileError = validateFile(file);
+      return fileError
+        ? { index, filename: file.name, error: fileError }
+        : { index, filename: file.name, payload: mockOrder(file, dateTimeFromFileMetadata(metadataValues[index])) };
+    });
+    const payload: OrderOcrBatchPayload = {
+      schema_version: "restaurant.order.batch.v1",
+      event: "restaurant.order.batch.extracted",
+      batch_id: `mock-batch-${files.map((file) => filenameSeed(file.name)).join("-")}`,
+      captured_at: results.find((result) => result.payload)?.payload?.captured_at ?? "2026-08-13T07:00:00",
+      results,
+    };
+    return Response.json(payload);
+  }
 
   if (files.length === 1) {
     const fileError = validateFile(files[0]);

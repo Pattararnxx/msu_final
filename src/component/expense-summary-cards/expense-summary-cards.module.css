@@ -27,6 +27,7 @@
   font-size: 13px;
 }
 
+.periodTag,
 .yearTag {
   padding: 3px 10px;
   border-radius: 999px;

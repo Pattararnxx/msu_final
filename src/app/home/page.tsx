@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Tabs } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useSearchParams } from "next/navigation";
 import Icon from "@/component/icon/icon";
 import DashboardShell from "@/component/dashboard-shell/dashboard-shell";
 import ExpenseHeader from "@/component/expense-header/expense-header";
@@ -22,9 +23,20 @@ import styles from "./page.module.scss";
 // Swap for `new Date()` once this reads a live feed.
 const REFERENCE_DATE = new Date("2026-05-01");
 
-const Home = () => {
-  const weekGroups = groupExpensesByWeek(MOCK_EXPENSES);
-  const summary = computeExpenseSummary(MOCK_EXPENSES, REFERENCE_DATE);
+const HomeContent = () => {
+  const searchParams = useSearchParams();
+  const [orders, setOrders] = useState<ExpenseItem[]>(MOCK_EXPENSES);
+  const reviewMode = searchParams.get("view") === "review";
+  const visibleOrders = reviewMode
+    ? orders.filter(
+        (order) =>
+          !order.humanReviewed ||
+          (order.confidence ?? 1) < 0.7 ||
+          order.items.some((item) => item.needsReview && !item.humanReviewed),
+      )
+    : orders;
+  const weekGroups = groupExpensesByWeek(visibleOrders);
+  const summary = computeExpenseSummary(orders, REFERENCE_DATE);
   const [uploadOpened, { open: openUploadPanel, close: closeUpload }] =
     useDisclosure(false);
   const [selectedOrder, setSelectedOrder] = useState<ExpenseItem | null>(null);
@@ -43,15 +55,31 @@ const Home = () => {
     setSelectedOrder(order);
   };
   const closeOrderDetail = () => setSelectedOrder(null);
+  const saveOrders = (savedOrders: ExpenseItem[]) => {
+    setOrders((current) => {
+      const savedIds = new Set(savedOrders.map((order) => order.id));
+      return [...savedOrders, ...current.filter((order) => !savedIds.has(order.id))];
+    });
+  };
 
   return (
     <DashboardShell
-      asideSlot={<ExpenseUploadPanel opened={uploadOpened} onClose={closeUpload} />}
+      asideSlot={
+        <>
+          <ExpenseUploadPanel
+            opened={uploadOpened}
+            onClose={closeUpload}
+            onSave={saveOrders}
+          />
+          <OrderDetailPanel order={selectedOrder} onClose={closeOrderDetail} />
+        </>
+      }
     >
       <ExpenseHeader
         businessName="โจ๊กป้าแดง"
         phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม"
         onUploadClick={openUpload}
+        orders={orders}
       />
 
       <ExpenseSummaryCards
@@ -62,30 +90,36 @@ const Home = () => {
         expenseThisYear={summary.expenseThisYear}
       />
 
-      <Tabs defaultValue="expenses" className={styles.tabs}>
+      <Tabs defaultValue="orders" className={styles.tabs} id="order-list">
         <Tabs.List>
-          <Tabs.Tab value="expenses" leftSection={<Icon src="/icon/regular/list.svg" size={16} />}>
-            รายการค่าใช้จ่าย
+          <Tabs.Tab value="orders" leftSection={<Icon src="/icon/regular/list.svg" size={16} />}>
+            {reviewMode ? "ใบออร์เดอร์รอตรวจทาน" : "รายการออร์เดอร์"}
           </Tabs.Tab>
           <Tabs.Tab
-            value="vouchers"
+            value="receipts"
             leftSection={<Icon src="/icon/regular/receipt.svg" size={16} />}
           >
-            ใบสำคัญจ่าย
+            ใบเสร็จที่ยืนยันแล้ว
           </Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="expenses" className={styles.tabPanel}>
+        <Tabs.Panel value="orders" className={styles.tabPanel}>
           <ExpenseFilterBar />
-          <ExpenseWeekList groups={weekGroups} />
+          <ExpenseWeekList groups={weekGroups} onSelectOrder={selectOrder} />
         </Tabs.Panel>
 
-        <Tabs.Panel value="vouchers" className={styles.tabPanel}>
-          <div className={styles.emptyState}>ยังไม่มีใบสำคัญจ่ายในระบบ</div>
+        <Tabs.Panel value="receipts" className={styles.tabPanel}>
+          <div className={styles.emptyState}>ใบเสร็จจะสร้างหลังพนักงานยืนยันออร์เดอร์</div>
         </Tabs.Panel>
       </Tabs>
     </DashboardShell>
   );
 };
 
-export default Home;
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
+  );
+}

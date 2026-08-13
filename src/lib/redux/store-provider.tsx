@@ -1,16 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import { Provider } from "react-redux";
-import { makeStore, type AppStore } from "./store";
+import { makeStore } from "./store";
 
-// useRef (not useState) so the store is created exactly once for this
-// component's lifetime without triggering an extra re-render.
+// Lazy state initialization creates one store per mounted provider without
+// reading or mutating a ref during render (which React Compiler rejects).
 export default function StoreProvider({ children }: { children: React.ReactNode }) {
-  const storeRef = useRef<AppStore | null>(null);
-  if (!storeRef.current) {
-    storeRef.current = makeStore();
-  }
+  const [store] = useState(makeStore);
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return <Provider store={store}>{children}</Provider>;
 }

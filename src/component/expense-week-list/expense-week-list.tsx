@@ -89,7 +89,16 @@ export default function ExpenseWeekList({ groups, onSelectOrder }: ExpenseWeekLi
                     <Table.Tr
                       key={item.id}
                       className={styles.orderRow}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`ดูรายละเอียดออเดอร์ ${item.orderNumber}`}
                       onClick={() => onSelectOrder(item)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          onSelectOrder(item);
+                        }
+                      }}
                     >
                       <Table.Td onClick={(event) => event.stopPropagation()}>
                         <Checkbox
@@ -121,6 +130,10 @@ export default function ExpenseWeekList({ groups, onSelectOrder }: ExpenseWeekLi
                           color="gray"
                           aria-label="ดูรายละเอียดออเดอร์"
                           size="sm"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onSelectOrder(item);
+                          }}
                         >
                           <Icon
                             src="/icon/regular/caret-right.svg"

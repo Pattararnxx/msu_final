@@ -1,40 +1,32 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Badge,
   Box,
   Burger,
-  Collapse,
   Drawer,
   Group,
   Image,
   ScrollArea,
   Stack,
-  UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Icon from "@/component/icon/icon";
 import styles from "./dashboard-sidebar.module.css";
 
-interface NavChild {
-  label: string;
-  href: string;
-}
-
 interface NavItem {
   label: string;
   href: string;
   icon: string;
-  badge?: string;
-  children?: NavChild[];
 }
 
 interface TodoItem {
   label: string;
-  count: number;
+  href: string;
+  badge?: string;
   icon: string;
 }
 
@@ -66,23 +58,25 @@ function formatThaiDate(date: Date): string {
   return `${date.getDate()} ${THAI_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-// Wording is placeholder — swap for the real business name, plan, and route
-// hrefs once account switching and routing exist. Structure (usage summary →
-// to-dos → primary nav → business-management nav) mirrors the reference
-// layout; icons are Phosphor, not baked-in art.
+// Every task is a real deep link so the prototype never presents a dead row.
 const TODOS: TodoItem[] = [
-  { label: "งานที่ต้องทำ", count: 0, icon: "/icon/regular/pencil-simple.svg" },
   {
-    label: "งานที่ต้องตรวจสอบ/จัดการ",
-    count: 19,
+    label: "ใบออร์เดอร์รอตรวจทาน",
+    href: "/home?view=review#order-list",
+    badge: "ดู",
     icon: "/icon/regular/list-checks.svg",
+  },
+  {
+    label: "ภาพรวมงานวันนี้",
+    href: "/dashboard#today-orders",
+    icon: "/icon/regular/pencil-simple.svg",
   },
 ];
 
 const USAGE_STATS: UsageStat[] = [
   {
     icon: "/icon/regular/receipt.svg",
-    label: "ใบเสร็จที่ใช้ไป",
+    label: "ใบออร์เดอร์ที่ประมวลผล",
     value: "10/100",
   },
   { icon: "/icon/regular/users.svg", label: "ผู้ใช้งาน", value: "3" },
@@ -100,20 +94,14 @@ const PRIMARY_NAV: NavItem[] = [
     icon: "/icon/regular/gauge.svg",
   },
   {
-    label: "รายจ่าย",
+    label: "ออร์เดอร์ลูกค้า",
     href: "/home",
     icon: "/icon/regular/receipt.svg",
   },
   {
-    label: "รายรับ",
-    href: "#",
-    icon: "/icon/regular/coin.svg",
-    badge: "เวอร์ชันทดลอง",
-    children: [
-      { label: "เอกสารรายงานเงิน", href: "#" },
-      { label: "เมนูอาหารของฉัน", href: "/menu" },
-      { label: "ลูกค้าของฉัน", href: "#" },
-    ],
+    label: "เมนูและวัตถุดิบ",
+    href: "/menu",
+    icon: "/icon/regular/fork-knife.svg",
   },
 ];
 
@@ -123,98 +111,42 @@ const BUSINESS_NAV: NavItem[] = [
     href: "/home/team",
     icon: "/icon/regular/user.svg",
   },
-  {
-    label: "ผู้อนุญาตเบิกจ่าย",
-    href: "#",
-    icon: "/icon/regular/user-check.svg",
-  },
-  { label: "หมวดหมู่", href: "#", icon: "/icon/regular/tag.svg" },
-  { label: "กระเป๋าของฉัน", href: "#", icon: "/icon/regular/wallet.svg" },
 ];
 
 function NavRow({
   item,
-  active,
   afterNavigate,
 }: {
   item: NavItem;
-  /** Computed from the current pathname by SidebarContent, not stored on
-      the nav data itself — one source of truth (the URL) instead of data
-      that could drift out of sync with which page is actually open. */
-  active: boolean;
-  /** Only wired to actual navigation links, not the expand toggle — see
-      the mobile Drawer's onClick note on SidebarContent below. */
+  /** Closes the mobile drawer only after a real navigation link is used. */
   afterNavigate?: () => void;
 }) {
-  // Real routes only — "#" placeholders (รายรับ's sub-items, business nav)
-  // never match and so never claim the active state.
   const pathname = usePathname();
-  const isActive = item.href !== "#" && pathname === item.href;
-
-  const [opened, setOpened] = useState(Boolean(isActive && item.children));
+  const isActive = pathname === item.href;
 
   const rowClassName = isActive
     ? `${styles.navRow} ${styles.navRowActive}`
     : styles.navRow;
 
-  if (!item.children) {
-    return (
-      <Link href={item.href} className={rowClassName} onClick={afterNavigate}>
-        <Icon src={item.icon} size={18} />
-        <span className={styles.navLabel}>{item.label}</span>
-      </Link>
-    );
-  }
-
   return (
-    <Box>
-      <UnstyledButton
-        className={rowClassName}
-        onClick={() => setOpened((v) => !v)}
-        aria-expanded={opened}
-      >
-        <Icon src={item.icon} size={18} />
-        <span className={styles.navLabel}>{item.label}</span>
-        {item.badge && (
-          <Badge
-            size="xs"
-            variant="light"
-            color="brand"
-            className={styles.trialBadge}
-          >
-            {item.badge}
-          </Badge>
-        )}
-        <span className={opened ? styles.caretOpen : styles.caret}>
-          <Icon src="/icon/regular/caret-down.svg" size={14} />
-        </span>
-      </UnstyledButton>
-      <Collapse expanded={opened}>
-        <Stack gap={2} className={styles.navChildren}>
-          {item.children.map((child) => (
-            <Link
-              key={child.label}
-              href={child.href}
-              className={styles.navChildLink}
-              onClick={afterNavigate}
-            >
-              {child.label}
-            </Link>
-          ))}
-        </Stack>
-      </Collapse>
-    </Box>
+    <Link
+      href={item.href}
+      className={rowClassName}
+      onClick={afterNavigate}
+      aria-current={isActive ? "page" : undefined}
+    >
+      <Icon src={item.icon} size={18} />
+      <span className={styles.navLabel}>{item.label}</span>
+    </Link>
   );
 }
 
 // Shared guts, rendered both inside the persistent desktop rail and inside
 // the mobile Drawer — one source of truth for the nav data and markup.
 function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
-  const pathname = usePathname();
-
   return (
     <>
-      <UnstyledButton className={styles.businessCard}>
+      <div className={styles.businessCard}>
         <Image
           src="/logo/init_logo.svg"
           alt="โจ๊กป้าแดง"
@@ -227,7 +159,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
         <span className={styles.businessDate}>
           {formatThaiDate(new Date())}
         </span>
-      </UnstyledButton>
+      </div>
 
       <Group gap={8} className={styles.usageRow}>
         <Badge size="sm" variant="filled" color="dark" radius="sm">
@@ -251,18 +183,20 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           <span className={styles.sectionLabel}>To-do ของฉัน</span>
           <Stack gap={2}>
             {TODOS.map((todo) => (
-              <UnstyledButton key={todo.label} className={styles.todoRow}>
+              <Link
+                key={todo.label}
+                href={todo.href}
+                className={styles.todoRow}
+                onClick={afterNavigate}
+              >
                 <Icon src={todo.icon} size={16} />
                 <span className={styles.navLabel}>{todo.label}</span>
-                <Badge
-                  size="sm"
-                  variant="light"
-                  color={todo.count > 0 ? "red" : "gray"}
-                  circle
-                >
-                  {todo.count}
-                </Badge>
-              </UnstyledButton>
+                {todo.badge && (
+                  <Badge size="sm" variant="light" color="blue" radius="sm">
+                    {todo.badge}
+                  </Badge>
+                )}
+              </Link>
             ))}
           </Stack>
         </div>
@@ -274,7 +208,6 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
               <NavRow
                 key={item.label}
                 item={item}
-                active={pathname === item.href}
                 afterNavigate={afterNavigate}
               />
             ))}
@@ -288,7 +221,6 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
               <NavRow
                 key={item.label}
                 item={item}
-                active={pathname === item.href}
                 afterNavigate={afterNavigate}
               />
             ))}

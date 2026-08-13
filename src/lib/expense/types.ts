@@ -3,10 +3,6 @@ export type FoodType = "ข้าวต้ม" | "โจ๊ก" | "ก๋วย�
 export const ORDER_TYPE_VALUES = ["dine_in", "takeaway", "delivery", "unknown"] as const;
 export type OrderType = (typeof ORDER_TYPE_VALUES)[number];
 
-// Kept for the reverted legacy expense upload form. Order OCR itself does
-// not use payment status.
-export type PaymentStatus = "จ่ายแล้ว" | "รอจ่าย" | "ยกเลิก";
-
 export const ORDER_TYPE_LABELS: Record<OrderType, string> = {
   dine_in: "ทานที่ร้าน",
   takeaway: "รับกลับ",
@@ -29,6 +25,8 @@ export interface OrderTopping {
   confidence: number;
   needsReview: boolean;
   humanReviewed: boolean;
+  /** Text seen by OCR before reconciliation with the configured options. */
+  rawText?: string;
 }
 
 export interface OrderItem {
@@ -44,6 +42,10 @@ export interface OrderItem {
   confidence: number;
   needsReview: boolean;
   humanReviewed: boolean;
+  /** OCR evidence is retained; billing always uses the configured menu price. */
+  rawText?: string;
+  ocrUnitPrice?: number | null;
+  ocrTotalPrice?: number | null;
 }
 
 export interface OrderToppingDraft extends Omit<OrderTopping, "unitPrice" | "totalPrice"> {
@@ -87,6 +89,11 @@ export interface OrderDraft {
   items: OrderItemDraft[];
   notes: string;
   totalAmount: number | "";
+  confidence: number;
+  needsReview: boolean;
+  reviewReasons: string[];
+  humanReviewed: boolean;
+  rawText: string;
 }
 
 export interface ExpenseItem {
@@ -108,10 +115,9 @@ export interface ExpenseItem {
   /** Time the order photo was uploaded, e.g. "07:42". */
   uploadedAt: string;
   uploadedBy: string;
-  /** Order/receipt number as it would appear on the slip, e.g. "OR-014". */
-  orderNumber: string;
-  orderType: OrderType;
-  /** Line items backing `amount` — `amount` is always Σ qty × unitPrice, never a separately hand-set number. */
-  items: OrderLineItem[];
+  /** In-session object URL for the uploaded order slip prototype. */
+  imageUrl?: string;
+  confidence?: number;
+  humanReviewed?: boolean;
   amount: number;
 }
