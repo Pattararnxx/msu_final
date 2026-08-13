@@ -17,7 +17,42 @@
   gap: 20px;
   flex: 1;
   min-width: 0;
+  /* DashboardSidebar and AnnouncementBar are both position: fixed now, so
+     neither one claims space in normal flow the way they used to — .content
+     has to reserve it explicitly instead. Both read the same
+     --announcement-bar-height custom property their fixed offsets use, so
+     dismissing the banner (which zeroes that variable) shrinks this
+     margin-top back down in the same click. 272px matches
+     dashboard-sidebar.module.css's .sidebar width — keep them in sync. */
+  margin-top: var(--announcement-bar-height);
+  margin-left: 272px;
   padding: 24px 32px 48px;
+  transition: margin-right 260ms ease;
+}
+
+@media (max-width: 960px) {
+  .content {
+    /* Below 960px DashboardSidebar switches to its own sticky mobile bar
+       (which sits in normal flow), so this margin isn't needed here. */
+    margin-left: 0;
+  }
+}
+
+/* Applied by Home alongside ExpenseUploadPanel's own `opened` prop — the
+   panel is position: fixed (see expense-upload-panel.module.css), so it
+   no longer pushes .content over on its own the way an in-flow flex
+   sibling would; this reserves the matching space instead, in lockstep
+   with the panel's own 420px width and slide transition. */
+.contentSqueezed {
+  margin-right: 420px;
+}
+
+@media (max-width: 640px) {
+  .contentSqueezed {
+    /* The panel takes over the full screen below 640px instead of
+       pushing — nothing to reserve space for. */
+    margin-right: 0;
+  }
 }
 
 .tabs {

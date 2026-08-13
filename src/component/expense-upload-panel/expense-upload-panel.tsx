@@ -13,7 +13,6 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import Accordion, { type AccordionItem } from "@/component/accordion/accordion";
 import type { FoodType, PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
@@ -24,7 +23,6 @@ interface ExpenseUploadPanelProps {
 }
 
 interface PickedFile {
-  id: string;
   file: File;
   kind: "image" | "pdf";
   /** Object URL — only created for images; PDFs render an icon tile instead. */
@@ -32,7 +30,6 @@ interface PickedFile {
 }
 
 interface DraftLineItem {
-  fileId: string;
   date: string;
   documentType: FoodType;
   vendor: string;
@@ -41,6 +38,15 @@ interface DraftLineItem {
   payer: string;
   status: PaymentStatus;
   amount: number | "";
+}
+
+// One staged expense: either backed by an uploaded file (auto-filled on
+// add) or a manual, fileless placeholder — both carry the same editable
+// draft, shown inline on step one instead of behind a separate edit step.
+interface StagedEntry {
+  id: string;
+  file?: PickedFile;
+  draft: DraftLineItem;
 }
 
 const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
@@ -54,6 +60,54 @@ const CATEGORIES = [
 ];
 const PAYERS = ["แม่ครัวใหญ่ สมศรี", "ผู้จัดการร้าน อนัญญา"];
 const PAYMENT_STATUSES: PaymentStatus[] = ["จ่ายแล้ว", "รอจ่าย", "ยกเลิก"];
+
+// Stand-ins for a real receipt-scanning/OCR service — cycled through as
+// files come in so each upload looks freshly "read" instead of identical.
+// Swap for an actual extraction call once one exists; until then this is
+// what makes "upload a photo → fields fill themselves" demonstrable.
+const MOCK_EXTRACTIONS: Array<{
+  vendor: string;
+  documentType: FoodType;
+  category: string;
+  description: string;
+  amountRange: [number, number];
+}> = [
+  {
+    vendor: "โต๊ะ 2",
+    documentType: "ข้าวต้ม",
+    category: "วัตถุดิบ",
+    description: "ข้าวต้มหมูสับ 2 ที่, ไข่ลวก 1 ฟอง",
+    amountRange: [70, 140],
+  },
+  {
+    vendor: "เดลิเวอรี่ #Grab",
+    documentType: "โจ๊ก",
+    category: "วัตถุดิบ",
+    description: "โจ๊กไก่ฉีก 1, น้ำเปล่า 1",
+    amountRange: [50, 90],
+  },
+  {
+    vendor: "โต๊ะ 5",
+    documentType: "ก๋วยจั๊บ",
+    category: "วัตถุดิบ",
+    description: "ก๋วยจั๊บน้ำข้น หมูกรอบ 1 ที่",
+    amountRange: [50, 70],
+  },
+  {
+    vendor: "คุณลูกค้า",
+    documentType: "ข้าวต้ม",
+    category: "วัตถุดิบ",
+    description: "ข้าวต้มปลากะพง 1 ที่",
+    amountRange: [65, 100],
+  },
+  {
+    vendor: "เดลิเวอรี่ #LINEMAN",
+    documentType: "อื่นๆ",
+    category: "อื่นๆ",
+    description: "ปาท่องโก๋ 4 ชิ้น, น้ำเต้าหู้ 1",
+    amountRange: [40, 60],
+  },
+];
 
 function fileKind(file: File): "image" | "pdf" | null {
   if (file.type.startsWith("image/")) return "image";
@@ -71,9 +125,8 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-function draftForFile(fileId: string): DraftLineItem {
+function blankDraft(): DraftLineItem {
   return {
-    fileId,
     date: todayIso(),
     documentType: "อื่นๆ",
     vendor: "",
@@ -85,45 +138,79 @@ function draftForFile(fileId: string): DraftLineItem {
   };
 }
 
-// A three-step wizard (upload → edit → confirm) that slides in as a real
-// flex sibling of <main> and squeezes it, rather than a Drawer/overlay —
-// no backdrop, no portal, the main content area just gets narrower while
-// this panel's width animates in. Detail entry here only tags the files
-// that were just uploaded; browsing/editing already-saved expenses still
-// lives on their own page.
+function simulatedDraft(seed: number): DraftLineItem {
+  const preset = MOCK_EXTRACTIONS[seed % MOCK_EXTRACTIONS.length];
+  const [min, max] = preset.amountRange;
+  const amount = Math.round((min + Math.random() * (max - min)) * 100) / 100;
+  return {
+    date: todayIso(),
+    documentType: preset.documentType,
+    vendor: preset.vendor,
+    description: preset.description,
+    category: preset.category,
+    payer: PAYERS[0],
+    status: "รอจ่าย",
+    amount,
+  };
+}
+
+// A two-step flow (upload & fill → confirm) that slides in as a fixed
+// panel and squeezes <main> over via .contentSqueezed (see
+// page.module.scss). Uploading a photo auto-fills its card's fields
+// (simulated — see MOCK_EXTRACTIONS) right there on step one, no separate
+// edit step; a manual "fill it in myself" entry gets the same card, just
+// blank. Browsing/editing already-saved expenses still lives on its own
+// page.
 export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPanelProps) {
   const [active, setActive] = useState(0);
-  const [files, setFiles] = useState<PickedFile[]>([]);
-  const [items, setItems] = useState<DraftLineItem[]>([]);
+  const [entries, setEntries] = useState<StagedEntry[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
+  const fileEntryCount = entries.filter((entry) => entry.file).length;
+
   const addFiles = (fileList: FileList | null) => {
     if (!fileList) return;
-    const next = Array.from(fileList).flatMap((file) => {
+    let seed = fileEntryCount;
+    const next: StagedEntry[] = Array.from(fileList).flatMap((file) => {
       const kind = fileKind(file);
       if (!kind) return [];
-      return [
-        {
-          id: `${file.name}-${file.lastModified}-${file.size}`,
+      const entry: StagedEntry = {
+        id: `${file.name}-${file.lastModified}-${file.size}`,
+        file: {
           file,
           kind,
           previewUrl: kind === "image" ? URL.createObjectURL(file) : undefined,
         },
-      ];
+        draft: simulatedDraft(seed),
+      };
+      seed += 1;
+      return [entry];
     });
     if (next.length === 0) return;
-    setFiles((prev) => [...prev, ...next]);
+    setEntries((prev) => [...prev, ...next]);
   };
 
-  const removeFile = (id: string) => {
-    setFiles((prev) => {
-      const target = prev.find((item) => item.id === id);
-      if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
-      return prev.filter((item) => item.id !== id);
+  const addManualEntry = () => {
+    setEntries((prev) => [
+      ...prev,
+      { id: `manual-${Date.now()}-${prev.length}`, draft: blankDraft() },
+    ]);
+  };
+
+  const removeEntry = (id: string) => {
+    setEntries((prev) => {
+      const target = prev.find((entry) => entry.id === id);
+      if (target?.file?.previewUrl) URL.revokeObjectURL(target.file.previewUrl);
+      return prev.filter((entry) => entry.id !== id);
     });
-    setItems((prev) => prev.filter((item) => item.fileId !== id));
+  };
+
+  const updateDraft = (id: string, patch: Partial<DraftLineItem>) => {
+    setEntries((prev) =>
+      prev.map((entry) => (entry.id === id ? { ...entry, draft: { ...entry.draft, ...patch } } : entry)),
+    );
   };
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
@@ -133,160 +220,157 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
   };
 
   const resetAndClose = () => {
-    files.forEach((item) => item.previewUrl && URL.revokeObjectURL(item.previewUrl));
-    setFiles([]);
-    setItems([]);
+    entries.forEach((entry) => entry.file?.previewUrl && URL.revokeObjectURL(entry.file.previewUrl));
+    setEntries([]);
     setActive(0);
     onClose();
   };
 
-  const goToEdit = () => {
-    setItems(files.map((file) => draftForFile(file.id)));
-    setActive(1);
-  };
-
-  const updateItem = (fileId: string, patch: Partial<DraftLineItem>) => {
-    setItems((prev) =>
-      prev.map((item) => (item.fileId === fileId ? { ...item, ...patch } : item)),
-    );
-  };
-
   const canConfirm =
-    items.length > 0 &&
-    items.every((item) => item.vendor.trim() !== "" && typeof item.amount === "number" && item.amount > 0);
+    entries.length > 0 &&
+    entries.every(
+      (entry) => entry.draft.vendor.trim() !== "" && typeof entry.draft.amount === "number" && entry.draft.amount > 0,
+    );
 
-  const totalAmount = items.reduce(
-    (sum, item) => sum + (typeof item.amount === "number" ? item.amount : 0),
+  const totalAmount = entries.reduce(
+    (sum, entry) => sum + (typeof entry.draft.amount === "number" ? entry.draft.amount : 0),
     0,
   );
 
-  const totalFileSize = files.reduce((sum, item) => sum + item.file.size, 0);
+  const totalFileSize = entries.reduce((sum, entry) => sum + (entry.file?.file.size ?? 0), 0);
+  const manualEntryCount = entries.length - fileEntryCount;
 
-  const accordionItems: AccordionItem[] = items.map((item) => {
-    const file = files.find((f) => f.id === item.fileId);
-    return {
-      value: item.fileId,
-      label: file?.file.name ?? item.fileId,
-      icon:
-        file?.kind === "image" ? (
-          <Image src={file.previewUrl} alt="" w={28} h={28} radius="sm" fit="cover" />
-        ) : (
-          <span className={styles.pdfBadge}>
-            <Icon src="/icon/regular/file-pdf.svg" size={16} />
-          </span>
-        ),
-      content: (
-        <Stack gap={10}>
-          <TextInput
-            label="วันที่"
-            type="date"
-            size="sm"
-            value={item.date}
-            onChange={(event) => updateItem(item.fileId, { date: event.currentTarget.value })}
-          />
-          <Select
-            label="ประเภทอาหาร"
-            size="sm"
-            data={DOCUMENT_TYPES}
-            value={item.documentType}
-            onChange={(value) =>
-              value && updateItem(item.fileId, { documentType: value as FoodType })
-            }
-            checkIconPosition="right"
-          />
-          <TextInput
-            label="ร้านค้า"
-            size="sm"
-            placeholder="ชื่อร้านค้า/ผู้รับเงิน"
-            withAsterisk
-            value={item.vendor}
-            onChange={(event) => updateItem(item.fileId, { vendor: event.currentTarget.value })}
-          />
-          <TextInput
-            label="รายละเอียด"
-            size="sm"
-            value={item.description}
-            onChange={(event) =>
-              updateItem(item.fileId, { description: event.currentTarget.value })
-            }
-          />
-          <Select
-            label="หมวดหมู่"
-            size="sm"
-            data={CATEGORIES}
-            value={item.category}
-            onChange={(value) => value && updateItem(item.fileId, { category: value })}
-            checkIconPosition="right"
-          />
-          <Select
-            label="ผู้จ่ายเงิน"
-            size="sm"
-            data={PAYERS}
-            value={item.payer}
-            onChange={(value) => value && updateItem(item.fileId, { payer: value })}
-            checkIconPosition="right"
-          />
-          <Select
-            label="สถานะจ่าย"
-            size="sm"
-            data={PAYMENT_STATUSES}
-            value={item.status}
-            onChange={(value) =>
-              value && updateItem(item.fileId, { status: value as PaymentStatus })
-            }
-            checkIconPosition="right"
-          />
-          <NumberInput
-            label="จำนวนเงิน"
-            size="sm"
-            withAsterisk
-            leftSection="฿"
-            min={0}
-            decimalScale={2}
-            value={item.amount}
-            onChange={(value) =>
-              updateItem(item.fileId, { amount: typeof value === "number" ? value : "" })
-            }
-          />
-        </Stack>
-      ),
-    };
-  });
+  const summaryParts: string[] = [];
+  if (fileEntryCount > 0) summaryParts.push(`${fileEntryCount} ไฟล์ (${formatFileSize(totalFileSize)})`);
+  if (manualEntryCount > 0) summaryParts.push(`${manualEntryCount} รายการกรอกเอง`);
+  const summaryText = summaryParts.length > 0 ? `เลือกแล้ว ${summaryParts.join(" • ")}` : "";
+
+  // Shared field set for every entry — identical whether it came from a
+  // photo or was added manually, since both just need someone to check or
+  // type the same details in either way.
+  const renderFields = (entry: StagedEntry) => (
+    <Stack gap={10}>
+      <TextInput
+        label="วันที่"
+        type="date"
+        size="sm"
+        value={entry.draft.date}
+        onChange={(event) => updateDraft(entry.id, { date: event.currentTarget.value })}
+      />
+      <Select
+        label="ประเภทอาหาร"
+        size="sm"
+        data={DOCUMENT_TYPES}
+        value={entry.draft.documentType}
+        onChange={(value) => value && updateDraft(entry.id, { documentType: value as FoodType })}
+        checkIconPosition="right"
+      />
+      <TextInput
+        label="ร้านค้า"
+        size="sm"
+        placeholder="ชื่อร้านค้า/ผู้รับเงิน"
+        withAsterisk
+        value={entry.draft.vendor}
+        onChange={(event) => updateDraft(entry.id, { vendor: event.currentTarget.value })}
+      />
+      <TextInput
+        label="รายละเอียด"
+        size="sm"
+        value={entry.draft.description}
+        onChange={(event) => updateDraft(entry.id, { description: event.currentTarget.value })}
+      />
+      <Select
+        label="หมวดหมู่"
+        size="sm"
+        data={CATEGORIES}
+        value={entry.draft.category}
+        onChange={(value) => value && updateDraft(entry.id, { category: value })}
+        checkIconPosition="right"
+      />
+      <Select
+        label="ผู้จ่ายเงิน"
+        size="sm"
+        data={PAYERS}
+        value={entry.draft.payer}
+        onChange={(value) => value && updateDraft(entry.id, { payer: value })}
+        checkIconPosition="right"
+      />
+      <Select
+        label="สถานะจ่าย"
+        size="sm"
+        data={PAYMENT_STATUSES}
+        value={entry.draft.status}
+        onChange={(value) => value && updateDraft(entry.id, { status: value as PaymentStatus })}
+        checkIconPosition="right"
+      />
+      <NumberInput
+        label="จำนวนเงิน"
+        size="sm"
+        withAsterisk
+        leftSection="฿"
+        min={0}
+        decimalScale={2}
+        value={entry.draft.amount}
+        onChange={(value) =>
+          updateDraft(entry.id, { amount: typeof value === "number" ? value : "" })
+        }
+      />
+    </Stack>
+  );
 
   return (
-    <div className={opened ? `${styles.wrap} ${styles.wrapOpen}` : styles.wrap}>
-      <aside
-        className={styles.panel}
-        aria-label="อัปโหลดค่าใช้จ่าย"
-        aria-hidden={!opened}
-        inert={!opened}
-      >
-        <div className={styles.header}>
-          <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
-          <UnstyledButton onClick={resetAndClose} aria-label="ปิด" className={styles.closeButton}>
-            <Icon src="/icon/regular/x.svg" size={16} />
-          </UnstyledButton>
-        </div>
+    <aside
+      className={opened ? `${styles.panel} ${styles.panelOpen}` : styles.panel}
+      aria-label="อัปโหลดค่าใช้จ่าย"
+      aria-hidden={!opened}
+      inert={!opened}
+    >
+      <div className={styles.header}>
+        <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
+        <UnstyledButton onClick={resetAndClose} aria-label="ปิด" className={styles.closeButton}>
+          <Icon src="/icon/regular/x.svg" size={16} />
+        </UnstyledButton>
+      </div>
 
-        <div className={styles.stepperHead}>
-          <Stepper
-            active={active}
-            color="dark"
-            size="xs"
-            iconSize={26}
-            allowNextStepsSelect={false}
-            classNames={{ steps: styles.steps }}
-          >
-            <Stepper.Step label="อัปโหลดข้อมูล" />
-            <Stepper.Step label="แก้ไขข้อมูล" />
-            <Stepper.Step label="ยืนยัน" />
-            <Stepper.Completed>เสร็จสิ้น</Stepper.Completed>
-          </Stepper>
-        </div>
+      <div className={styles.stepperHead}>
+        <Stepper
+          active={active}
+          color="dark"
+          size="xs"
+          iconSize={26}
+          allowNextStepsSelect={false}
+          classNames={{ steps: styles.steps }}
+        >
+          <Stepper.Step label="อัปโหลดและกรอกข้อมูล" />
+          <Stepper.Step label="ยืนยัน" />
+          <Stepper.Completed>เสร็จสิ้น</Stepper.Completed>
+        </Stepper>
+      </div>
 
-        <div className={styles.body}>
-          {active === 0 && (
-            <Stack gap={16}>
+      <div className={styles.body}>
+        {active === 0 && (
+          <Stack gap={16}>
+            {/* Hidden pickers live outside the dropzone/button markup so
+                they're stable refs regardless of which of those is
+                currently rendered. */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,application/pdf"
+              multiple
+              className={styles.hiddenInput}
+              onChange={(event) => addFiles(event.target.files)}
+            />
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className={styles.hiddenInput}
+              onChange={(event) => addFiles(event.target.files)}
+            />
+
+            {entries.length === 0 && (
               <div
                 className={
                   dragActive ? `${styles.dropzone} ${styles.dropzoneActive}` : styles.dropzone
@@ -309,16 +393,10 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                 <span className={styles.dropzoneHint}>
                   หรือคลิกเพื่อเลือกไฟล์ — JPG, PNG, PDF ไม่เกิน 10MB
                 </span>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*,application/pdf"
-                  multiple
-                  className={styles.hiddenInput}
-                  onChange={(event) => addFiles(event.target.files)}
-                />
               </div>
+            )}
 
+            {entries.length === 0 && (
               <Stack gap={8}>
                 <Button
                   variant="default"
@@ -340,173 +418,158 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                 >
                   เลือกไฟล์
                 </Button>
-                <input
-                  ref={cameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  className={styles.hiddenInput}
-                  onChange={(event) => addFiles(event.target.files)}
-                />
               </Stack>
+            )}
 
+            {entries.length === 0 && (
               <Group gap={8} wrap="nowrap" className={styles.tip}>
                 <Icon src="/icon/regular/lightbulb.svg" size={16} />
                 <span>
-                  ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน จะช่วยให้กรอกข้อมูลในขั้นถัดไปได้ง่ายขึ้น
+                  ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน — ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ แก้ไขเพิ่มเติมได้ทันที
                 </span>
               </Group>
+            )}
 
-              {files.length > 0 && (
-                <>
-                  <Stack gap={8}>
-                    {files.map((item) => (
-                      <Group key={item.id} gap={10} wrap="nowrap" className={styles.fileRow}>
-                        {item.kind === "image" ? (
-                          <Image
-                            src={item.previewUrl}
-                            alt={item.file.name}
-                            w={40}
-                            h={40}
-                            radius="sm"
-                            fit="cover"
-                          />
-                        ) : (
-                          <span className={styles.pdfBadge}>
-                            <Icon src="/icon/regular/file-pdf.svg" size={18} />
-                          </span>
-                        )}
-                        <Stack gap={0} className={styles.fileRowInfo}>
-                          <span className={styles.fileRowName}>{item.file.name}</span>
-                          <span className={styles.fileRowSize}>
-                            {formatFileSize(item.file.size)}
-                          </span>
-                        </Stack>
-                        <UnstyledButton
-                          onClick={() => removeFile(item.id)}
-                          aria-label={`นำ ${item.file.name} ออก`}
-                          className={styles.fileRowRemove}
-                        >
-                          <Icon src="/icon/regular/x-circle.svg" size={16} />
-                        </UnstyledButton>
+            {/* Once a photo's staged, the upload chrome (dropzone,
+                ถ่ายภาพ/เลือกไฟล์) is gone for good — the only way to add
+                more from here on is "กรอกข้อมูลเอง", which stays
+                available in both states. */}
+            <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
+              <Icon src="/icon/regular/note-pencil.svg" size={14} />
+              {entries.length === 0 ? "หรือกรอกข้อมูลเองแทน ไม่ต้องอัปโหลดไฟล์" : "เพิ่มรายการกรอกเอง"}
+            </UnstyledButton>
+
+            {summaryText && <span className={styles.summary}>{summaryText}</span>}
+
+            {/* Fields show up right below each entry the moment it's
+                staged — auto-filled for photos, blank for manual — no
+                separate edit step to click into. */}
+            {entries.length > 0 && (
+              <Stack gap={16}>
+                {entries.map((entry) => (
+                  <div key={entry.id} className={styles.entryCard}>
+                    <div className={styles.entryCardHeader}>
+                      {entry.file?.kind === "image" && (
+                        <Image
+                          src={entry.file.previewUrl}
+                          alt={entry.file.file.name}
+                          radius="md"
+                          h={150}
+                          fit="cover"
+                        />
+                      )}
+                      {entry.file?.kind === "pdf" && (
+                        <Group gap={8} className={styles.pdfPreview}>
+                          <Icon src="/icon/regular/file-pdf.svg" size={22} />
+                          <span>{entry.file.file.name}</span>
+                        </Group>
+                      )}
+                      {!entry.file && (
+                        <Group gap={8} className={styles.manualCardLabel}>
+                          <Icon src="/icon/regular/note-pencil.svg" size={16} />
+                          <span>กรอกข้อมูลเอง</span>
+                        </Group>
+                      )}
+                      <UnstyledButton
+                        onClick={() => removeEntry(entry.id)}
+                        aria-label="ลบรายการนี้"
+                        className={styles.entryCardRemove}
+                      >
+                        <Icon src="/icon/regular/x-circle.svg" size={16} />
+                      </UnstyledButton>
+                    </div>
+
+                    {entry.file && (
+                      <Group gap={6} wrap="nowrap" className={styles.autoFillNote}>
+                        <Icon src="/icon/regular/sparkle.svg" size={13} />
+                        <span>กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว กรุณาตรวจสอบก่อนบันทึก</span>
                       </Group>
-                    ))}
-                  </Stack>
-                  <span className={styles.summary}>
-                    เลือกแล้ว {files.length} ไฟล์ • รวม {formatFileSize(totalFileSize)}
-                  </span>
-                </>
-              )}
-            </Stack>
-          )}
+                    )}
 
-          {active === 1 && (
-            <Stack gap={12}>
-              <p className={styles.stepHint}>
-                กรอกรายละเอียดของแต่ละไฟล์ — ช่องที่มี * ต้องกรอกก่อนไปขั้นถัดไป
-              </p>
-              <Accordion items={accordionItems} multiple defaultValue={[items[0]?.fileId ?? ""]} />
-            </Stack>
-          )}
-
-          {active === 2 && (
-            <Stack gap={12}>
-              <p className={styles.stepHint}>ตรวจสอบรายการก่อนบันทึก</p>
-              <Stack gap={8}>
-                {items.map((item) => (
-                  <div key={item.fileId} className={styles.reviewRow}>
-                    <Stack gap={0} className={styles.reviewInfo}>
-                      <span className={styles.reviewVendor}>{item.vendor || "-"}</span>
-                      <span className={styles.reviewMeta}>
-                        {item.category} • {item.date}
-                      </span>
-                    </Stack>
-                    <span className={styles.reviewAmount}>
-                      ฿{formatCurrency(typeof item.amount === "number" ? item.amount : 0)}
-                    </span>
+                    {renderFields(entry)}
                   </div>
                 ))}
               </Stack>
-              <div className={styles.reviewTotal}>
-                <span>ยอดรวมทั้งหมด</span>
-                <span className={styles.reviewTotalAmount}>฿{formatCurrency(totalAmount)}</span>
-              </div>
-            </Stack>
-          )}
+            )}
+          </Stack>
+        )}
 
-          {active === 3 && (
-            <Stack gap={10} align="center" className={styles.doneState}>
-              <span className={styles.doneIcon}>
-                <Icon src="/icon/regular/check-circle.svg" size={32} />
-              </span>
-              <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
-              <span className={styles.stepHint}>
-                บันทึก {items.length} รายการ รวม ฿{formatCurrency(totalAmount)} เรียบร้อยแล้ว
-              </span>
+        {active === 1 && (
+          <Stack gap={12}>
+            <p className={styles.stepHint}>ตรวจสอบรายการก่อนบันทึก</p>
+            <Stack gap={8}>
+              {entries.map((entry) => (
+                <div key={entry.id} className={styles.reviewRow}>
+                  <Stack gap={0} className={styles.reviewInfo}>
+                    <span className={styles.reviewVendor}>{entry.draft.vendor || "-"}</span>
+                    <span className={styles.reviewMeta}>
+                      {entry.draft.category} • {entry.draft.date}
+                    </span>
+                  </Stack>
+                  <span className={styles.reviewAmount}>
+                    ฿{formatCurrency(typeof entry.draft.amount === "number" ? entry.draft.amount : 0)}
+                  </span>
+                </div>
+              ))}
             </Stack>
-          )}
-        </div>
+            <div className={styles.reviewTotal}>
+              <span>ยอดรวมทั้งหมด</span>
+              <span className={styles.reviewTotalAmount}>฿{formatCurrency(totalAmount)}</span>
+            </div>
+          </Stack>
+        )}
 
-        <Group gap={8} justify="space-between" className={styles.footer}>
-          {active === 0 && (
-            <>
-              <Button variant="default" radius="md" onClick={resetAndClose}>
-                ยกเลิก
-              </Button>
-              <Button
-                variant="filled"
-                color="dark"
-                radius="md"
-                disabled={files.length === 0}
-                onClick={goToEdit}
-              >
-                ถัดไป
-              </Button>
-            </>
-          )}
-          {active === 1 && (
-            <>
-              <Button
-                variant="default"
-                radius="md"
-                leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
-                onClick={() => setActive(0)}
-              >
-                ย้อนกลับ
-              </Button>
-              <Button
-                variant="filled"
-                color="dark"
-                radius="md"
-                disabled={!canConfirm}
-                onClick={() => setActive(2)}
-              >
-                ถัดไป
-              </Button>
-            </>
-          )}
-          {active === 2 && (
-            <>
-              <Button
-                variant="default"
-                radius="md"
-                leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
-                onClick={() => setActive(1)}
-              >
-                ย้อนกลับ
-              </Button>
-              <Button variant="filled" color="dark" radius="md" onClick={() => setActive(3)}>
-                ยืนยันและบันทึก
-              </Button>
-            </>
-          )}
-          {active === 3 && (
-            <Button variant="filled" color="dark" radius="md" fullWidth onClick={resetAndClose}>
-              เสร็จสิ้น
+        {active === 2 && (
+          <Stack gap={10} align="center" className={styles.doneState}>
+            <span className={styles.doneIcon}>
+              <Icon src="/icon/regular/check-circle.svg" size={32} />
+            </span>
+            <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
+            <span className={styles.stepHint}>
+              บันทึก {entries.length} รายการ รวม ฿{formatCurrency(totalAmount)} เรียบร้อยแล้ว
+            </span>
+          </Stack>
+        )}
+      </div>
+
+      <Group gap={8} justify="space-between" className={styles.footer}>
+        {active === 0 && (
+          <>
+            <Button variant="default" radius="md" onClick={resetAndClose}>
+              ยกเลิก
             </Button>
-          )}
-        </Group>
-      </aside>
-    </div>
+            <Button
+              variant="filled"
+              color="dark"
+              radius="md"
+              disabled={!canConfirm}
+              onClick={() => setActive(1)}
+            >
+              ถัดไป
+            </Button>
+          </>
+        )}
+        {active === 1 && (
+          <>
+            <Button
+              variant="default"
+              radius="md"
+              leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
+              onClick={() => setActive(0)}
+            >
+              ย้อนกลับ
+            </Button>
+            <Button variant="filled" color="dark" radius="md" onClick={() => setActive(2)}>
+              ยืนยันและบันทึก
+            </Button>
+          </>
+        )}
+        {active === 2 && (
+          <Button variant="filled" color="dark" radius="md" fullWidth onClick={resetAndClose}>
+            เสร็จสิ้น
+          </Button>
+        )}
+      </Group>
+    </aside>
   );
 }

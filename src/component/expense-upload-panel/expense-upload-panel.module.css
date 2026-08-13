@@ -1,23 +1,30 @@
-.wrap {
-  width: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  transition: width 260ms ease;
-}
-
-.wrapOpen {
-  width: 420px;
-}
-
+/* position: fixed rather than a sticky flex sibling — sticky only stays
+   pinned when every ancestor between here and the viewport has
+   overflow: visible, which this layout has repeatedly failed to
+   guarantee (same reasoning as DashboardSidebar's .sidebar). Fixed always
+   tracks the viewport. Slides via transform (not the old width push), so
+   .content has to reserve its own space instead — see .contentSqueezed
+   in page.module.scss, applied by Home based on the same `opened` state
+   this panel gets as a prop. AnnouncementBar is also fixed and always
+   occupies the top --announcement-bar-height of the viewport, so this
+   panel offsets by the same amount to sit below it. */
 .panel {
   display: flex;
   flex-direction: column;
   width: 420px;
-  height: 100dvh;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: var(--announcement-bar-height);
+  right: 0;
+  height: calc(100dvh - var(--announcement-bar-height));
+  z-index: 15;
   background: var(--b-0);
   border-left: 1px solid var(--b-100);
+  transform: translateX(100%);
+  transition: transform 260ms ease;
+}
+
+.panelOpen {
+  transform: translateX(0);
 }
 
 .header {
@@ -141,53 +148,22 @@
   color: var(--primary-800);
 }
 
-.pdfBadge {
+.manualLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--mantine-radius-sm);
-  background: var(--b-50);
+  gap: 6px;
+  padding: 6px;
   color: var(--b-600);
-}
-
-.fileRow {
-  padding: 8px;
-  border-radius: var(--mantine-radius-md);
-  background: var(--b-50);
-}
-
-.fileRowInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.fileRowName {
-  overflow: hidden;
-  color: var(--b-800);
   font-size: 12.5px;
   font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.fileRowSize {
-  color: var(--b-500);
-  font-size: 11px;
-}
-
-.fileRowRemove {
-  display: flex;
-  flex-shrink: 0;
-  color: var(--b-500);
+  text-align: center;
   transition: color 150ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .fileRowRemove:hover {
-    color: var(--b-800);
+  .manualLink:hover {
+    color: var(--b-900);
   }
 }
 
@@ -195,6 +171,76 @@
   color: var(--b-500);
   font-size: 12px;
   text-align: center;
+}
+
+/* Step 1 — edit (per-entry cards, always expanded) */
+
+.entryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--mantine-radius-lg);
+  border: 1px solid var(--b-100);
+  background: var(--b-0);
+}
+
+.entryCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.entryCardHeader > *:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.entryCardRemove {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mantine-radius-md);
+  color: var(--b-500);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .entryCardRemove:hover {
+    color: var(--b-800);
+    background: var(--b-50);
+  }
+}
+
+.pdfPreview {
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
+  color: var(--b-700);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.manualCardLabel {
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.autoFillNote {
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 /* Step 2 — confirm */
@@ -276,25 +322,16 @@
   font-size: 15px;
 }
 
-/* Below 640px there's no room to squeeze main content further, so the
-   panel takes over the full screen instead of pushing — fixed + slide
-   transform rather than the desktop's width-push animation. */
+/* Below 640px there's no room to squeeze main content, so the panel just
+   takes the full screen instead — already fixed + transform above, this
+   only needs to widen it to match. */
 @media (max-width: 640px) {
-  .wrap {
-    width: 0 !important;
-  }
-
   .panel {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
+    top: 0;
     width: 100vw;
     height: 100dvh;
-    transform: translateX(100%);
-    transition: transform 260ms ease;
-  }
-
-  .wrapOpen .panel {
-    transform: translateX(0);
+    /* Above AnnouncementBar's z-index: 30 — a full-screen takeover should
+       cover it too, not have the banner poke through on top. */
+    z-index: 40;
   }
 }

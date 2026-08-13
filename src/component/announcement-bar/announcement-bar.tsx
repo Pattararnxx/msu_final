@@ -9,11 +9,20 @@ interface AnnouncementBarProps {
   message: string;
 }
 
-// Slim full-bleed strip above the sidebar + content shell — same slot as the
-// reference design's top banner, re-themed to the brand yellow instead of
-// its green so it stays inside this project's single-accent palette.
+// Fixed full-bleed strip pinned above the sidebar + content shell — same
+// slot as the reference design's top banner, re-themed to the brand yellow
+// instead of its green so it stays inside this project's single-accent
+// palette. Dismissing it also zeroes --announcement-bar-height globally
+// (see globals.scss) so DashboardSidebar, its mobile bar, and the upload
+// panel — all positioned assuming this bar's height — collapse their own
+// offset in the same click instead of leaving a gap where it used to be.
 export default function AnnouncementBar({ message }: AnnouncementBarProps) {
   const [dismissed, setDismissed] = useState(false);
+
+  const handleDismiss = () => {
+    setDismissed(true);
+    document.body.classList.add("announcement-dismissed");
+  };
 
   if (dismissed) return null;
 
@@ -21,7 +30,7 @@ export default function AnnouncementBar({ message }: AnnouncementBarProps) {
     <div className={styles.bar}>
       <span className={styles.message}>{message}</span>
       <UnstyledButton
-        onClick={() => setDismissed(true)}
+        onClick={handleDismiss}
         aria-label="ปิดข้อความแจ้งเตือน"
         className={styles.close}
       >

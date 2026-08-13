@@ -106,7 +106,7 @@
   padding: 40px 20px;
   border-radius: var(--mantine-radius-lg);
   background: var(--b-0);
-  /* border: 1px solid var(--b-100); */
+  border: 1px solid var(--b-100);
   color: var(--b-500);
   font-size: 14px;
   text-align: center;

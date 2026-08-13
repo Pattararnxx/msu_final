@@ -1,9 +1,21 @@
+/* Fixed rather than a normal in-flow block: DashboardSidebar and
+   ExpenseUploadPanel are positioned assuming this bar always occupies the
+   top --announcement-bar-height of the viewport, so it never scrolling
+   away (unlike a normal in-flow block) is what keeps that assumption
+   true. Dismissing it still needs to zero out --announcement-bar-height
+   everywhere at once — see the body.announcement-dismissed rule in
+   globals.scss and the classList toggle in announcement-bar.tsx. */
 .bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  flex-shrink: 0;
+  min-height: var(--announcement-bar-height);
   width: 100%;
   padding: 8px 40px;
   background: var(--yellow);

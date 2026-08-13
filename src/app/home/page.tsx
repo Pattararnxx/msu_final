@@ -32,7 +32,11 @@ const Home = () => {
       <div className={styles.shell}>
         <DashboardSidebar />
 
-        <main className={styles.content}>
+        <main
+          className={
+            uploadOpened ? `${styles.content} ${styles.contentSqueezed}` : styles.content
+          }
+        >
           <ExpenseHeader
             businessName="iEat"
             phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม"

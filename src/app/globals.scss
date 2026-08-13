@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Fixed height for AnnouncementBar — both it and any fixed/sticky element
+     that needs to sit below it (DashboardSidebar, its mobile bar, the
+     upload panel) read this same value, so they can never drift apart. */
+  --announcement-bar-height: 40px;
+}
+
+/* AnnouncementBar's dismiss button adds this class to <body> instead of
+   just unmounting itself — every offset that depends on the bar's height
+   reads this one variable, so zeroing it here is enough to close the gap
+   everywhere at once (sidebar, its mobile bar, main content, the upload
+   panel) without each of them needing its own dismiss-aware logic. */
+body.announcement-dismissed {
+  --announcement-bar-height: 0px;
 }
 
 @media (prefers-color-scheme: dark) {
