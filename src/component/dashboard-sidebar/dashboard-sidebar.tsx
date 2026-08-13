@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Badge,
   Box,
@@ -28,7 +29,6 @@ interface NavItem {
   href: string;
   icon: string;
   badge?: string;
-  active?: boolean;
   children?: NavChild[];
 }
 
@@ -98,7 +98,6 @@ const PRIMARY_NAV: NavItem[] = [
     label: "รายจ่าย",
     href: "/home",
     icon: "/icon/regular/receipt.svg",
-    active: true,
   },
   {
     label: "รายรับ",
@@ -114,7 +113,11 @@ const PRIMARY_NAV: NavItem[] = [
 ];
 
 const BUSINESS_NAV: NavItem[] = [
-  { label: "ผู้ใช้ในธุรกิจของฉัน", href: "#", icon: "/icon/regular/user.svg" },
+  {
+    label: "ผู้ใช้ในธุรกิจของฉัน",
+    href: "/home/team",
+    icon: "/icon/regular/user.svg",
+  },
   {
     label: "ผู้อนุญาตเบิกจ่าย",
     href: "#",
@@ -126,16 +129,21 @@ const BUSINESS_NAV: NavItem[] = [
 
 function NavRow({
   item,
+  active,
   afterNavigate,
 }: {
   item: NavItem;
+  /** Computed from the current pathname by SidebarContent, not stored on
+      the nav data itself — one source of truth (the URL) instead of data
+      that could drift out of sync with which page is actually open. */
+  active: boolean;
   /** Only wired to actual navigation links, not the expand toggle — see
       the mobile Drawer's onClick note on SidebarContent below. */
   afterNavigate?: () => void;
 }) {
-  const [opened, setOpened] = useState(Boolean(item.active && item.children));
+  const [opened, setOpened] = useState(Boolean(active && item.children));
 
-  const rowClassName = item.active
+  const rowClassName = active
     ? `${styles.navRow} ${styles.navRowActive}`
     : styles.navRow;
 
@@ -192,6 +200,8 @@ function NavRow({
 // Shared guts, rendered both inside the persistent desktop rail and inside
 // the mobile Drawer — one source of truth for the nav data and markup.
 function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
+  const pathname = usePathname();
+
   return (
     <>
       <UnstyledButton className={styles.businessCard}>
@@ -254,6 +264,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
               <NavRow
                 key={item.label}
                 item={item}
+                active={pathname === item.href}
                 afterNavigate={afterNavigate}
               />
             ))}
@@ -267,6 +278,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
               <NavRow
                 key={item.label}
                 item={item}
+                active={pathname === item.href}
                 afterNavigate={afterNavigate}
               />
             ))}

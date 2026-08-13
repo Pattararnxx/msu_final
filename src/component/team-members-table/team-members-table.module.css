@@ -1,0 +1,103 @@
+.scrollContainer {
+  border-radius: var(--mantine-radius-lg);
+  border: 1px solid var(--b-100);
+  background: var(--b-0);
+}
+
+.table thead tr {
+  background: var(--b-50);
+}
+
+.table th {
+  color: var(--b-600);
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.table td {
+  color: var(--b-800);
+  font-size: 13.5px;
+}
+
+.permissionCol {
+  width: 260px;
+}
+
+.permissionSelect {
+  min-width: 220px;
+}
+
+/* Mantine composes its border from the --input-bd variable rather than a
+   literal border-color, so overriding that (not "border") is what
+   actually removes it without fighting Mantine's own cascade. */
+.permissionInput {
+  --input-bd: transparent;
+  --input-bg: transparent;
+  --input-disabled-bg: transparent;
+  background-color: transparent;
+}
+
+.weekCol {
+  text-align: center;
+  width: 80px;
+}
+
+.actionCol {
+  width: 40px;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--yellow);
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--b-900);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.ownerTag {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--primary-100);
+  color: var(--primary-800);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.role {
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.mutedCell {
+  color: var(--b-600);
+  white-space: nowrap;
+}

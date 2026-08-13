@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "analyzed",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-13T02:00:00.000Z",
+  "updatedAt": "2026-08-13T13:34:55.282+07:00",
   "intent": "adapt",
   "projectDna": "`.whipui/project-dna.json`",
   "sources": {
@@ -182,6 +182,13 @@
     "change": "Replaced the cat_logo.svg + shop name + address block with /logo/init_logo.svg (h=36, w=auto, fit=contain) + a today's-date label, per explicit request (\"เอา...ที่ตั้ง...เปลี่ยนทั้งหมดเป็น init_logo.svg แล้วก็วันที่\"). Name/address were judged redundant here since ExpenseHeader already shows them prominently at the top of main content.",
     "dateFormat": "Manual Thai month-name array + date.getFullYear() (Gregorian), not Intl th-TH — that locale defaults to พ.ศ. (Buddhist era) which would read inconsistently against the \"2026\" used elsewhere in this dashboard (e.g. the yearly expense total).",
     "scope": "Desktop rail only (.sidebar > SidebarContent > .businessCard). The mobile Drawer already hides .businessCard entirely (see dashboardMobileDrawer above) and keeps its separate text-only brand treatment untouched."
+  },
+  "teamPermissionMultiSelect": {
+    "mode": "operate",
+    "oneThingToRemember": "Permission selectors stay visually light and keep their affordance after selection: the field is transparent, while selected values remain removable and additional permissions remain selectable.",
+    "interaction": "Show the Thai permission placeholder only while an editable member has no selected permissions; hide it after the first selection without disabling the MultiSelect input.",
+    "surface": "transparent field with the existing table surface and Mantine selected-value pills",
+    "scope": "src/component/team-members-table/team-members-table.tsx and team-members-table.module.css"
   },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
