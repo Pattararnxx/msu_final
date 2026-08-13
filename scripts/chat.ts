@@ -3,7 +3,7 @@
  * the same path a UI would take and needs no bundler aliases.
  *
  * Start the dev server first, then:  node scripts/chat.ts
- * One-shot:                          node scripts/chat.ts "คอนโดแถวอโศกราคาเท่าไหร่"
+ * One-shot:                          node scripts/chat.ts "ช่วยคิดโปรโมชันจากเมนูขายดี"
  */
 
 import { createInterface } from "node:readline/promises";
@@ -86,7 +86,7 @@ async function main() {
     return;
   }
 
-  console.log(`คุยกับบอทอสังหา — ${ENDPOINT}`);
+  console.log(`คุยกับผู้ช่วยการตลาดร้าน — ${ENDPOINT}`);
   console.log("พิมพ์คำถามแล้ว Enter · /reset ล้างบทสนทนา · /exit ออก");
   console.log("─".repeat(60));
 

@@ -1,0 +1,53 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--b-50);
+}
+
+.shell {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+  /* DashboardSidebar and AnnouncementBar are both position: fixed, so
+     neither one claims space in normal flow the way they used to — .content
+     has to reserve it explicitly instead. Both read the same
+     --announcement-bar-height custom property their fixed offsets use, so
+     dismissing the banner (which zeroes that variable) shrinks this
+     margin-top back down in the same click. 272px matches
+     dashboard-sidebar.module.css's .sidebar width — keep them in sync. */
+  margin-top: var(--announcement-bar-height);
+  margin-left: 272px;
+  padding: 24px 32px 48px;
+}
+
+@media (max-width: 960px) {
+  .content {
+    /* Below 960px DashboardSidebar switches to its own sticky mobile bar
+       (which sits in normal flow), so this margin isn't needed here. */
+    margin-left: 0;
+  }
+
+  /* DashboardSidebar's mobile bar is position: fixed at this breakpoint
+     (see dashboard-sidebar.module.css) so it stays pinned above the
+     announcement banner instead of scrolling with it — this padding
+     reserves its 56px height so the banner and shell start below it
+     instead of hiding underneath it. */
+  .page {
+    padding-top: 56px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding: 16px 16px 32px;
+  }
+}

@@ -136,7 +136,7 @@ const DashboardPage = () => {
               onClick={toggleChatbot}
               aria-expanded={chatbotOpened}
             >
-              แชท AI
+              ผู้ช่วยการตลาด
             </Button>
           </div>
 
