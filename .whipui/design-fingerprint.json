@@ -114,7 +114,11 @@
     "src/component/chatbot/chatbot.module.css",
     "src/component/dashboard-sidebar/dashboard-sidebar.tsx",
     "src/component/dashboard-sidebar/dashboard-sidebar.module.css",
-    "src/app/home/page.module.scss"
+    "src/app/home/page.module.scss",
+    "src/app/home/expenses/[id]/page.tsx",
+    "src/app/home/expenses/[id]/page.module.css",
+    "src/component/expense-week-list/expense-week-list.tsx",
+    "src/component/expense-week-list/expense-week-list.module.css"
   ],
   "chatbotSurface": {
     "mode": "operate",
@@ -175,6 +179,17 @@
       "Real logo asset (public/logo/cat_logo.svg) was intentionally left out of the mobile drawer per explicit request — revisit if a small brand mark is wanted back in the mobile header."
     ]
   },
+  "expenseDetailSurface": {
+    "mode": "operate",
+    "intent": "แก้ไขและตรวจทานข้อมูลรายจ่ายจากเอกสารที่อัปโหลดก่อนบันทึก",
+    "oneThingToRemember": "เอกสารทางซ้ายเป็นหลักฐานอ้างอิง ส่วนฟอร์มทางขวาคือข้อมูลที่ต้องตรวจให้พร้อมบันทึก",
+    "composition": "สองคอลัมน์บน desktop: preview เอกสารและ thumbnails ทางซ้าย, tabs + warning + line-item form ทางขวา; stack เป็นลำดับ preview แล้ว form บน mobile",
+    "color": "inherit Home restrained neutral system; yellow is reserved for active tab, review warning, and brand announcement; green communicates reviewed/paid state",
+    "interaction": "แถวรายการใน Home เปิด deep link /home/expenses/[id]; detail supports attachment selection, document zoom, tabs, line-item selection, save-draft feedback, cancel/back",
+    "responsive": "desktop 2-column workspace, tablet stacked workspace at 960px, mobile compact line-item grid and sticky form actions",
+    "assetDecision": "ใช้เอกสารตัวอย่างแบบ CSS เพื่อสื่อ preview ใน prototype และไม่อ้างว่าเป็นใบเสร็จจริง",
+    "qa": "ตรวจ keyboard focus, touch target controls, reduced motion, no horizontal overflow, and readable form labels"
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",
@@ -212,8 +227,10 @@
     "findings": [
       "Mobile accordion sub-items were visually cramped (10px padding, no gap) — fixed with 4px item gap and consistent 8px padding.",
       "No horizontal overflow confirmed at 1440/1024/390 widths via Playwright.",
-      "Desktop dropdown, mobile menu open/close, and mobile accordion open all verified visually with screenshots."
+      "Desktop dropdown, mobile menu open/close, and mobile accordion open all verified visually with screenshots.",
+      "Expense detail rendered at 1440/1024/390; tablet workspace stacks below 1200px and mobile attachments use a four-column grid to avoid sideways scrolling.",
+      "Static detector returned no findings for the new detail page or its clickable expense row."
     ],
-    "iterations": 1
+    "iterations": 2
   }
 }

@@ -19,6 +19,21 @@
   font-size: 13.5px;
 }
 
+.clickableRow {
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.clickableRow:hover,
+.clickableRow:focus-visible {
+  background: var(--primary-50);
+}
+
+.clickableRow:focus-visible {
+  outline: 2px solid var(--b-900);
+  outline-offset: -2px;
+}
+
 .checkboxCol,
 .actionCol {
   width: 40px;

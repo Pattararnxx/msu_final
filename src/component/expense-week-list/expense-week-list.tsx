@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ActionIcon, Badge, Checkbox, Table } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ExpenseWeekGroup } from "@/lib/expense/group-by-week";
@@ -19,6 +20,7 @@ const STATUS_COLOR: Record<PaymentStatus, string> = {
 };
 
 export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
+  const router = useRouter();
   // All weeks start expanded, same as the reference design's month groups.
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
@@ -98,7 +100,20 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
 
                 {isOpen &&
                   group.items.map((item) => (
-                    <Table.Tr key={item.id}>
+                    <Table.Tr
+                      key={item.id}
+                      className={styles.clickableRow}
+                      tabIndex={0}
+                      role="link"
+                      aria-label={`เปิดรายละเอียด ${item.description}`}
+                      onClick={() => router.push(`/home/expenses/${item.id}`)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          router.push(`/home/expenses/${item.id}`);
+                        }
+                      }}
+                    >
                       <Table.Td>
                         <Checkbox
                           aria-label={`เลือก ${item.description}`}
@@ -146,6 +161,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                           color="gray"
                           aria-label="ลบรายการ"
                           size="sm"
+                          onClick={(event) => event.stopPropagation()}
                         >
                           <Icon
                             src="/icon/regular/trash-simple.svg"
