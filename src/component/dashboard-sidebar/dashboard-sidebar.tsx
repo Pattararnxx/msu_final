@@ -9,6 +9,7 @@ import {
   Collapse,
   Drawer,
   Group,
+  Image,
   ScrollArea,
   Stack,
   UnstyledButton,
@@ -43,23 +44,62 @@ interface UsageStat {
   value: string;
 }
 
+const THAI_MONTHS = [
+  "มกราคม",
+  "กุมภาพันธ์",
+  "มีนาคม",
+  "เมษายน",
+  "พฤษภาคม",
+  "มิถุนายน",
+  "กรกฎาคม",
+  "สิงหาคม",
+  "กันยายน",
+  "ตุลาคม",
+  "พฤศจิกายน",
+  "ธันวาคม",
+];
+
+// Gregorian year (not Buddhist era) to match the "2026" used elsewhere in
+// this dashboard (e.g. the yearly expense total) — Intl's th-TH locale
+// would otherwise silently switch to พ.ศ. and read inconsistently.
+function formatThaiDate(date: Date): string {
+  return `${date.getDate()} ${THAI_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+}
+
 // Wording is placeholder — swap for the real business name, plan, and route
 // hrefs once account switching and routing exist. Structure (usage summary →
 // to-dos → primary nav → business-management nav) mirrors the reference
 // layout; icons are Phosphor, not baked-in art.
 const TODOS: TodoItem[] = [
   { label: "งานที่ต้องทำ", count: 0, icon: "/icon/regular/pencil-simple.svg" },
-  { label: "งานที่ต้องตรวจสอบ/จัดการ", count: 19, icon: "/icon/regular/list-checks.svg" },
+  {
+    label: "งานที่ต้องตรวจสอบ/จัดการ",
+    count: 19,
+    icon: "/icon/regular/list-checks.svg",
+  },
 ];
 
 const USAGE_STATS: UsageStat[] = [
-  { icon: "/icon/regular/receipt.svg", label: "ใบเสร็จที่ใช้ไป", value: "10/100" },
+  {
+    icon: "/icon/regular/receipt.svg",
+    label: "ใบเสร็จที่ใช้ไป",
+    value: "10/100",
+  },
   { icon: "/icon/regular/users.svg", label: "ผู้ใช้งาน", value: "3" },
-  { icon: "/icon/regular/files.svg", label: "พื้นที่จัดเก็บ", value: "1/1,000" },
+  {
+    icon: "/icon/regular/files.svg",
+    label: "พื้นที่จัดเก็บ",
+    value: "1/1,000",
+  },
 ];
 
 const PRIMARY_NAV: NavItem[] = [
-  { label: "รายจ่าย", href: "/home", icon: "/icon/regular/receipt.svg", active: true },
+  {
+    label: "รายจ่าย",
+    href: "/home",
+    icon: "/icon/regular/receipt.svg",
+    active: true,
+  },
   {
     label: "รายรับ",
     href: "#",
@@ -75,12 +115,24 @@ const PRIMARY_NAV: NavItem[] = [
 
 const BUSINESS_NAV: NavItem[] = [
   { label: "ผู้ใช้ในธุรกิจของฉัน", href: "#", icon: "/icon/regular/user.svg" },
-  { label: "ผู้อนุญาตเบิกจ่าย", href: "#", icon: "/icon/regular/user-check.svg" },
+  {
+    label: "ผู้อนุญาตเบิกจ่าย",
+    href: "#",
+    icon: "/icon/regular/user-check.svg",
+  },
   { label: "หมวดหมู่", href: "#", icon: "/icon/regular/tag.svg" },
   { label: "กระเป๋าของฉัน", href: "#", icon: "/icon/regular/wallet.svg" },
 ];
 
-function NavRow({ item }: { item: NavItem }) {
+function NavRow({
+  item,
+  afterNavigate,
+}: {
+  item: NavItem;
+  /** Only wired to actual navigation links, not the expand toggle — see
+      the mobile Drawer's onClick note on SidebarContent below. */
+  afterNavigate?: () => void;
+}) {
   const [opened, setOpened] = useState(Boolean(item.active && item.children));
 
   const rowClassName = item.active
@@ -89,7 +141,7 @@ function NavRow({ item }: { item: NavItem }) {
 
   if (!item.children) {
     return (
-      <Link href={item.href} className={rowClassName}>
+      <Link href={item.href} className={rowClassName} onClick={afterNavigate}>
         <Icon src={item.icon} size={18} />
         <span className={styles.navLabel}>{item.label}</span>
       </Link>
@@ -106,7 +158,12 @@ function NavRow({ item }: { item: NavItem }) {
         <Icon src={item.icon} size={18} />
         <span className={styles.navLabel}>{item.label}</span>
         {item.badge && (
-          <Badge size="xs" variant="light" color="brand" className={styles.trialBadge}>
+          <Badge
+            size="xs"
+            variant="light"
+            color="brand"
+            className={styles.trialBadge}
+          >
             {item.badge}
           </Badge>
         )}
@@ -117,7 +174,12 @@ function NavRow({ item }: { item: NavItem }) {
       <Collapse expanded={opened}>
         <Stack gap={2} className={styles.navChildren}>
           {item.children.map((child) => (
-            <Link key={child.label} href={child.href} className={styles.navChildLink}>
+            <Link
+              key={child.label}
+              href={child.href}
+              className={styles.navChildLink}
+              onClick={afterNavigate}
+            >
               {child.label}
             </Link>
           ))}
@@ -133,16 +195,18 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
   return (
     <>
       <UnstyledButton className={styles.businessCard}>
-        <span className={styles.businessAvatar} aria-hidden="true">
-          ร
+        <Image
+          src="/logo/init_logo.svg"
+          alt="โจ๊กป้าแดง"
+          h={36}
+          w="auto"
+          fit="contain"
+          mb={2}
+          className={styles.businessLogo}
+        />
+        <span className={styles.businessDate}>
+          {formatThaiDate(new Date())}
         </span>
-        <Stack gap={0} className={styles.businessInfo}>
-          <span className={styles.businessName}>iEat</span>
-          <Group gap={4} className={styles.businessPhone}>
-             58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม
-          </Group>
-        </Stack>
-        <Icon src="/icon/regular/caret-down.svg" size={14} />
       </UnstyledButton>
 
       <Group gap={8} className={styles.usageRow}>
@@ -150,14 +214,19 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           Pro
         </Badge>
         {USAGE_STATS.map((stat) => (
-          <Group key={stat.label} gap={4} className={styles.usageStat} title={stat.label}>
+          <Group
+            key={stat.label}
+            gap={4}
+            className={styles.usageStat}
+            title={stat.label}
+          >
             <Icon src={stat.icon} size={13} />
             <span>{stat.value}</span>
           </Group>
         ))}
       </Group>
 
-      <Box className={styles.scrollArea} onClick={afterNavigate}>
+      <Box className={styles.scrollArea}>
         <div className={styles.section}>
           <span className={styles.sectionLabel}>To-do ของฉัน</span>
           <Stack gap={2}>
@@ -182,7 +251,11 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           <span className={styles.sectionLabel}>เมนูลัด</span>
           <Stack gap={2}>
             {PRIMARY_NAV.map((item) => (
-              <NavRow key={item.label} item={item} />
+              <NavRow
+                key={item.label}
+                item={item}
+                afterNavigate={afterNavigate}
+              />
             ))}
           </Stack>
         </div>
@@ -191,7 +264,11 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
           <span className={styles.sectionLabel}>จัดการธุรกิจ</span>
           <Stack gap={2}>
             {BUSINESS_NAV.map((item) => (
-              <NavRow key={item.label} item={item} />
+              <NavRow
+                key={item.label}
+                item={item}
+                afterNavigate={afterNavigate}
+              />
             ))}
           </Stack>
         </div>
@@ -215,12 +292,7 @@ export default function DashboardSidebar(): ReactNode {
       </Box>
 
       <Box component="header" className={styles.mobileBar}>
-        <Group gap={8} className={styles.mobileBrand}>
-          <span className={styles.businessAvatar} aria-hidden="true">
-            ร
-          </span>
-          <span className={styles.businessName}>iEat</span>
-        </Group>
+        <span className={styles.mobileBrand}>โจ๊กป้าแดง</span>
         <Burger
           opened={mobileOpened}
           onClick={toggleMobile}
@@ -228,15 +300,26 @@ export default function DashboardSidebar(): ReactNode {
         />
       </Box>
 
+      {/* Slides straight down from the top edge instead of in from the
+          side, and sizes to its content (not the full viewport) so the
+          page underneath stays visible below it — same pattern as the
+          marketing navbar's mobile drawer, see navbar.tsx. No logo mark
+          here — text-only brand, per request. */}
       <Drawer
         opened={mobileOpened}
         onClose={closeMobile}
-        position="left"
-        size={272}
-        title="เมนูหลัก"
-        classNames={{ body: styles.drawerBody }}
+        position="top"
+        size="auto"
+        title={<span className={styles.mobileDrawerBrandName}>โจ๊กป้าแดง</span>}
+        zIndex={1000}
+        classNames={{
+          content: styles.mobileDrawerContent,
+          header: styles.mobileDrawerHeader,
+          close: styles.mobileDrawerClose,
+          body: styles.mobileDrawerBody,
+        }}
       >
-        <ScrollArea.Autosize mah="calc(100dvh - 60px)">
+        <ScrollArea.Autosize mah="calc(100dvh - 72px)">
           <SidebarContent afterNavigate={closeMobile} />
         </ScrollArea.Autosize>
       </Drawer>

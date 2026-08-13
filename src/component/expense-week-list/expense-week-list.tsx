@@ -36,9 +36,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
       <Table verticalSpacing={10} horizontalSpacing="md" className={styles.table}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th className={styles.checkboxCol}>
-              <Checkbox aria-label="เลือกทั้งหมด" size="xs" />
-            </Table.Th>
+            <Table.Th className={styles.checkboxCol}></Table.Th>
             <Table.Th>วันที่</Table.Th>
             <Table.Th>รายการอาหาร</Table.Th>
             <Table.Th>ชื่อผู้สั่ง</Table.Th>
@@ -66,14 +64,18 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                         size="xs"
                         onClick={(event) => event.stopPropagation()}
                       />
-                      <span className={styles.groupLabel}>สัปดาห์ {group.rangeLabel}</span>
+                      <span className={styles.groupLabel}>
+                        สัปดาห์ {group.rangeLabel}
+                      </span>
                       <Badge size="sm" variant="light" color="gray" radius="sm">
                         {group.items.length} รายการ
                       </Badge>
                       <span className={styles.groupTotal}>
                         ยอดรวม ฿{formatCurrency(group.total)}
                       </span>
-                      <span className={isOpen ? styles.caretOpen : styles.caret}>
+                      <span
+                        className={isOpen ? styles.caretOpen : styles.caret}
+                      >
                         <Icon src="/icon/regular/caret-down.svg" size={16} />
                       </span>
                     </button>
@@ -122,7 +124,10 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                           aria-label="ลบรายการ"
                           size="sm"
                         >
-                          <Icon src="/icon/regular/trash-simple.svg" size={16} />
+                          <Icon
+                            src="/icon/regular/trash-simple.svg"
+                            size={16}
+                          />
                         </ActionIcon>
                       </Table.Td>
                     </Table.Tr>

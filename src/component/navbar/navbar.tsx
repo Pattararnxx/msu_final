@@ -92,13 +92,17 @@ function MobileLink({ link }: { link: NavLink }) {
       >
         {link.label}
         <span className={styles.mobileLinkCaret}>
-          <Icon src="/icon/regular/caret-down.svg" size={14} />
+          <Icon src="/icon/regular/caret-down.svg" size={13} />
         </span>
       </UnstyledButton>
       <Collapse expanded={opened}>
         <div className={styles.mobileSubList}>
           {link.items.map((item) => (
-            <Link href={item.href} key={item.label} className={styles.mobileSubLink}>
+            <Link
+              href={item.href}
+              key={item.label}
+              className={styles.mobileSubLink}
+            >
               {item.label}
             </Link>
           ))}
@@ -115,7 +119,12 @@ export default function Navbar() {
 
   return (
     <Box component="header" className={styles.navbar}>
-      <Group justify="space-between" h="100%" wrap="nowrap" className={styles.inner}>
+      <Group
+        justify="space-between"
+        h="100%"
+        wrap="nowrap"
+        className={styles.inner}
+      >
         {/* Logo intentionally left out — placeholder mark until brand assets are ready */}
         <Link href="/" className={styles.brand}>
           Better
