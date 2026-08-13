@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "draft",
   "createdAt": "2026-08-12T06:36:18.591Z",
-  "updatedAt": "2026-08-12T09:00:00.000Z",
+  "updatedAt": "2026-08-13T00:00:00.000Z",
   "project": {
     "name": "msu",
     "root": ".",
@@ -13,21 +13,45 @@
       "React",
       "TypeScript"
     ],
-    "packageDescription": "",
-    "routes": [],
-    "constraints": []
+    "packageDescription": "AI-powered breakfast restaurant operations assistant for handwritten order aggregation, receipts, and ingredient preparation estimates.",
+    "routes": ["/", "/api/order-ocr"],
+    "constraints": [
+      "Thai-first workflow for breakfast restaurants serving congee, rice porridge, and kuai chap.",
+      "OCR output is untrusted until a staff member reviews low-confidence or incomplete fields.",
+      "Prices come from the restaurant menu/price list; the model must not invent prices.",
+      "Ingredient estimates come from restaurant-maintained recipes and safety-stock assumptions.",
+      "Keep source-order traceability when aggregating multiple order images."
+    ]
   },
   "product": {
-    "purpose": "",
-    "audience": "",
-    "primaryJobs": [],
-    "voice": [],
-    "antiReferences": []
+    "purpose": "ช่วยร้านอาหารเช้าจัดการออเดอร์ลายมือหลายใบให้เป็นข้อมูลที่ตรวจสอบได้ รวมยอดออกใบเสร็จ และวางแผนเตรียมวัตถุดิบก่อนช่วงเร่งด่วน",
+    "audience": "เจ้าของร้านและพนักงานหน้าร้าน/ครัวของร้านโจ๊ก ข้าวต้ม ก๋วยจั๊บ และร้านอาหารเช้าขนาดเล็ก",
+    "primaryJobs": [
+      "อ่านและตรวจทานใบออร์เดอร์จากภาพ",
+      "รวมเมนูซ้ำและคำสั่งพิเศษจากหลายใบ",
+      "คำนวณยอดจากข้อมูลราคาของร้านและออกใบเสร็จ",
+      "ประมาณการวัตถุดิบจากสูตรมาตรฐานและ safety stock"
+    ],
+    "voice": [
+      "กระชับและใช้งานได้จริงในช่วงเร่งด่วน",
+      "ชัดเจนเรื่องความไม่แน่นอนและรายการที่ต้องตรวจ",
+      "ภาษาไทยเป็นหลัก ใช้คำเมนูที่พนักงานร้านเข้าใจ"
+    ],
+    "antiReferences": [
+      "เว็บอสังหาริมทรัพย์หรือ dashboard ที่ไม่เกี่ยวกับงานครัว",
+      "AI ที่เดาข้อมูลแล้วแสดงเป็นยอดยืนยันโดยไม่มี human review",
+      "การคำนวณวัตถุดิบแบบกล่องดำที่ไม่แสดงสูตรหรือสมมติฐาน"
+    ]
   },
   "designSystem": {
     "sourceOfTruth": "inspect-existing-repo-first",
     "tokens": ["src/styles/_color.scss", "src/mantine-theme.ts"],
-    "components": ["src/component/navbar", "src/component/chatbot"],
+    "components": [
+      "src/component/navbar",
+      "src/component/chatbot",
+      "src/lib/order-ocr",
+      "src/app/api/order-ocr"
+    ],
     "fonts": [],
     "assets": [],
     "references": []

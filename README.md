@@ -1,35 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MSU Breakfast Restaurant Operations
 
-## แชทบอทอสังหาริมทรัพย์
+ต้นแบบผู้ช่วยจัดการร้านอาหารเช้าด้วย AI สำหรับร้านที่ขายโจ๊ก ข้าวต้ม ก๋วยจั๊บ
+และเมนูใกล้เคียง ช่วยเปลี่ยนภาพใบออร์เดอร์หลายใบให้เป็นข้อมูลออร์เดอร์ที่ตรวจสอบได้
+รวมยอดเพื่อออกใบเสร็จ และประมาณการวัตถุดิบสำหรับเตรียมครัวล่วงหน้า
 
-ชุดข้อมูลจำลอง 4 จังหวัด 24 โซน 160 ประกาศ และดัชนีราคา 72 เส้น ย้อนหลัง 60 เดือน
-(2021-08 ถึง 2026-07) พร้อมแชทบอทที่ตอบจากข้อมูลชุดนี้ผ่าน tool calling เท่านั้น
+## Product context
 
-- `src/data/*.json` — ชุดข้อมูล สร้างจาก `scripts/generate-data.ts` แก้ด้วยมือได้
-- `src/lib/property/` — types, repository, forecast, tools, system prompt
-- `src/app/api/chat/route.ts` — endpoint แบบ stateless รองรับทั้ง stream และ JSON
-- `src/component/chatbot/` — panel ฝั่ง UI
+ผู้ใช้หลักคือเจ้าของร้านและพนักงานหน้าร้าน/ครัวที่ต้องอ่านใบออร์เดอร์ลายมือจำนวนมาก
+ในช่วงเช้าที่มีออเดอร์เข้าพร้อมกัน ระบบควรทำงานตามลำดับนี้:
 
-ตั้งค่า: คัดลอก `.env.example` เป็น `.env.local` แล้วใส่ `DEEPSEEK_API_KEY`
-ถ้าไม่มีคีย์ endpoint ยังตอบได้จากเทมเพลตออฟไลน์ที่อ่านข้อมูลชุดเดียวกัน
+1. อัปโหลดภาพใบออร์เดอร์หลายใบ
+2. OCR อ่านเมนู จำนวน ราคา และคำสั่งพิเศษ พร้อม confidence และรายการที่ต้องตรวจ
+3. รวมเมนูซ้ำจากทุกใบ โดยยังย้อนกลับไปดูออร์เดอร์ต้นทางได้
+4. ให้พนักงานยืนยันข้อมูลก่อนคิดเงิน แล้วสร้างใบเสร็จยอดเงินบาท
+5. ใช้รายการที่ยืนยันแล้วคำนวณวัตถุดิบตามสูตรมาตรฐานและปริมาณสำรองที่ร้านกำหนด
 
-สร้างข้อมูลใหม่ (เขียนทับ `src/data/`):
+กฎสำคัญ: AI ห้ามเดาราคา สูตร หรือข้อความที่อ่านไม่ออก ราคาและสูตรต้องมาจากข้อมูล
+ที่ร้านกำหนดเอง และผล OCR ที่ confidence ต่ำต้องผ่าน human review ก่อนนำไปใช้จริง
 
-```bash
-node scripts/generate-data.ts
-```
+## Current prototype
 
-ทดสอบสูตรพยากรณ์:
+- `src/app/api/order-ocr/route.ts` — endpoint OCR ใบออร์เดอร์ด้วย Gemini รองรับ JPG,
+  PNG และ WebP ไม่เกิน 10 MB
+- `src/lib/order-ocr/schema.ts` — schema `restaurant.order.v1` สำหรับรายการเมนู,
+  modifiers, ยอดรวม และสถานะการตรวจทาน
+- `docs/Hackathon_MSU_2026_Restaurant_Operations.md` — product brief และบริบทการแข่งขัน
+- `.whipui/project-dna.json` — durable context สำหรับงานออกแบบและพัฒนาต่อ
 
-```bash
-node --test scripts/forecast.test.ts
-```
-
-คุยกับบอทในเทอร์มินัล (ต้องรัน dev server ก่อน):
-
-```bash
-node scripts/chat.ts
-```
+ปัจจุบันมีฐานของ OCR และ validation แล้ว ส่วนหน้ารวมหลายใบ ใบเสร็จ และการประมาณการ
+วัตถุดิบต้องต่อยอดจาก schema เดียวกัน โดยต้องเก็บที่มาของรายการและ assumptions ที่ใช้คำนวณ
 
 ## Getting Started
 
