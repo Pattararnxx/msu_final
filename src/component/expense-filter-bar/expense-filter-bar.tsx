@@ -5,14 +5,14 @@ import Icon from "@/component/icon/icon";
 import styles from "./expense-filter-bar.module.css";
 
 const PAYERS = ["ผู้จ่ายเงินทั้งหมด", "แม่ครัวใหญ่ สมศรี", "ผู้จัดการร้าน อนัญญา"];
-const DOCUMENT_TYPES = [
-  "ประเภทเอกสารทั้งหมด",
+const FOOD_TYPES = [
+  "ประเภทอาหาร",
   "สลิปโอนเงิน",
   "ใบเสร็จรับเงิน",
   "ใบกำกับภาษี",
   "อื่นๆ",
 ];
-const PAYMENT_STATUSES = ["สถานะจ่ายทั้งหมด", "จ่ายแล้ว", "รอจ่าย", "ยกเลิก"];
+// const PAYMENT_STATUSES = ["สถานะจ่ายทั้งหมด", "จ่ายแล้ว", "รอจ่าย", "ยกเลิก"];
 const CATEGORIES = [
   "หมวดหมู่ทั้งหมด",
   "วัตถุดิบ",
@@ -53,15 +53,15 @@ export default function ExpenseFilterBar() {
           aria-label="ผู้จ่ายเงิน"
         />
         <Select
-          data={DOCUMENT_TYPES}
-          defaultValue={DOCUMENT_TYPES[0]}
+          data={FOOD_TYPES}
+          defaultValue={FOOD_TYPES[0]}
           leftSection={<Icon src="/icon/regular/file-text.svg" size={14} />}
           radius="md"
           w={180}
           checkIconPosition="right"
-          aria-label="ประเภทเอกสาร"
+          aria-label="ประเภทอาหาร"
         />
-        <Select
+        {/* <Select
           data={PAYMENT_STATUSES}
           defaultValue={PAYMENT_STATUSES[0]}
           leftSection={<Icon src="/icon/regular/check-circle.svg" size={14} />}
@@ -69,8 +69,8 @@ export default function ExpenseFilterBar() {
           w={168}
           checkIconPosition="right"
           aria-label="สถานะจ่าย"
-        />
-        <Select
+        /> */}
+        {/* <Select
           data={CATEGORIES}
           defaultValue={CATEGORIES[0]}
           leftSection={<Icon src="/icon/regular/tag.svg" size={14} />}
@@ -78,7 +78,7 @@ export default function ExpenseFilterBar() {
           w={168}
           checkIconPosition="right"
           aria-label="หมวดหมู่"
-        />
+        /> */}
       </Group>
 
       <SegmentedControl

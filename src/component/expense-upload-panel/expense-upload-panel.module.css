@@ -1,23 +1,34 @@
-.wrap {
-  width: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  transition: width 260ms ease;
-}
-
-.wrapOpen {
-  width: 420px;
-}
-
+/* This element is both the flex item that pushes <main> over AND the
+   position: sticky element that keeps the panel pinned to the viewport
+   while the page scrolls. Those need to be the same element — an
+   overflow-hidden *ancestor* breaks a descendant's sticky positioning,
+   which is what happened with the earlier wrap/panel split. clip-path
+   (rather than overflow: hidden) clips this element's own content
+   (.inner, held at a constant 420px) while .panel's own width animates
+   0 → 420px — same visual clip, but it can never register as a scroll
+   container the way an overflow value can, which ruled it out as a
+   second possible cause of the sticky-not-following-scroll report. */
 .panel {
-  display: flex;
-  flex-direction: column;
-  width: 420px;
+  flex-shrink: 0;
+  width: 0;
   height: 100dvh;
   position: sticky;
   top: 0;
+  clip-path: inset(0);
   background: var(--b-0);
   border-left: 1px solid var(--b-100);
+  transition: width 260ms ease;
+}
+
+.panelOpen {
+  width: 420px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 100%;
 }
 
 .header {
@@ -141,30 +152,71 @@
   color: var(--primary-800);
 }
 
-.pdfBadge {
+.manualLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px;
+  color: var(--b-600);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .manualLink:hover {
+    color: var(--b-900);
+  }
+}
+
+/* Only the entry cards scroll — the add-photo/camera buttons and the
+   manual-entry link stay outside this container so they're always
+   reachable, no matter how many receipts pile up. */
+.entryScroll {
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.entryBadge {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--mantine-radius-sm);
   background: var(--b-50);
   color: var(--b-600);
 }
 
-.fileRow {
-  padding: 8px;
-  border-radius: var(--mantine-radius-md);
-  background: var(--b-50);
+/* One card per staged entry — fields sit directly below the thumbnail/
+   remove row, always expanded (no accordion) so they're visible the
+   moment a file lands, per the "fill in right below" requirement. */
+.entryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--mantine-radius-lg);
+  border: 1px solid var(--b-100);
+  background: var(--b-0);
 }
 
-.fileRowInfo {
+.entryCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.entryCardInfo {
   flex: 1;
   min-width: 0;
 }
 
-.fileRowName {
+.entryCardTitle {
   overflow: hidden;
   color: var(--b-800);
   font-size: 12.5px;
@@ -173,9 +225,23 @@
   white-space: nowrap;
 }
 
-.fileRowSize {
+.entryCardMeta {
   color: var(--b-500);
   font-size: 11px;
+}
+
+.entryCardFields {
+  padding-top: 2px;
+}
+
+.autoFillNote {
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 .fileRowRemove {
@@ -280,21 +346,21 @@
    panel takes over the full screen instead of pushing — fixed + slide
    transform rather than the desktop's width-push animation. */
 @media (max-width: 640px) {
-  .wrap {
-    width: 0 !important;
-  }
-
   .panel {
     position: fixed;
     inset: 0;
     z-index: 100;
     width: 100vw;
-    height: 100dvh;
     transform: translateX(100%);
     transition: transform 260ms ease;
   }
 
-  .wrapOpen .panel {
+  .panelOpen {
+    width: 100vw;
     transform: translateX(0);
+  }
+
+  .inner {
+    width: 100vw;
   }
 }
