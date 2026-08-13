@@ -1,0 +1,300 @@
+.wrap {
+  width: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 260ms ease;
+}
+
+.wrapOpen {
+  width: 420px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 100dvh;
+  position: sticky;
+  top: 0;
+  background: var(--b-0);
+  border-left: 1px solid var(--b-100);
+}
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--b-100);
+}
+
+.title {
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: var(--mantine-font-size-md);
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mantine-radius-md);
+  color: var(--b-600);
+  transition: background-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .closeButton:hover {
+    background: var(--b-50);
+  }
+}
+
+.stepperHead {
+  flex-shrink: 0;
+  padding: 16px 20px 0;
+  border-bottom: 1px solid var(--b-100);
+}
+
+.steps {
+  padding-bottom: 16px;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.footer {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  border-top: 1px solid var(--b-100);
+}
+
+.stepHint {
+  margin: 0;
+  color: var(--b-600);
+  font-size: 12.5px;
+}
+
+/* Step 0 — upload */
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 36px 20px;
+  border-radius: var(--mantine-radius-lg);
+  border: 1.5px dashed var(--mantine-color-gray-4);
+  background: var(--b-50);
+  color: var(--b-700);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dropzone:hover {
+    border-color: var(--primary-600);
+    background: var(--primary-50);
+  }
+}
+
+.dropzoneActive {
+  border-color: var(--primary-600);
+  background: var(--primary-50);
+}
+
+.dropzoneTitle {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.dropzoneHint {
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.tip {
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--primary-50);
+  color: var(--b-700);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.tip span:first-child {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--primary-800);
+}
+
+.pdfBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--b-50);
+  color: var(--b-600);
+}
+
+.fileRow {
+  padding: 8px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
+}
+
+.fileRowInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.fileRowName {
+  overflow: hidden;
+  color: var(--b-800);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileRowSize {
+  color: var(--b-500);
+  font-size: 11px;
+}
+
+.fileRowRemove {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--b-500);
+  transition: color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fileRowRemove:hover {
+    color: var(--b-800);
+  }
+}
+
+.summary {
+  color: var(--b-500);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Step 2 — confirm */
+
+.reviewRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
+}
+
+.reviewInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.reviewVendor {
+  overflow: hidden;
+  color: var(--b-800);
+  font-weight: 600;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reviewMeta {
+  color: var(--b-500);
+  font-size: 11.5px;
+}
+
+.reviewAmount {
+  flex-shrink: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.reviewTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-900);
+  color: var(--b-0);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.reviewTotalAmount {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Step 3 — done */
+
+.doneState {
+  padding: 32px 12px;
+  text-align: center;
+}
+
+.doneIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--primary-100);
+  color: var(--primary-800);
+}
+
+.doneTitle {
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Below 640px there's no room to squeeze main content further, so the
+   panel takes over the full screen instead of pushing — fixed + slide
+   transform rather than the desktop's width-push animation. */
+@media (max-width: 640px) {
+  .wrap {
+    width: 0 !important;
+  }
+
+  .panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100dvh;
+    transform: translateX(100%);
+    transition: transform 260ms ease;
+  }
+
+  .wrapOpen .panel {
+    transform: translateX(0);
+  }
+}

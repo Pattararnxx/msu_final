@@ -1,23 +1,22 @@
 "use client";
 
 import { Button, Group, Stack } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import Icon from "@/component/icon/icon";
-import ExpenseUploadDrawer from "@/component/expense-upload-drawer/expense-upload-drawer";
 import styles from "./expense-header.module.css";
 
 interface ExpenseHeaderProps {
   businessName: string;
   phone: string;
+  onUploadClick: () => void;
 }
 
 // Business identity (left) + primary actions (right, two rows): upload/edit
 // on top, export destinations below — matches the reference's action
 // grouping. Edit + export actions are still non-functional placeholders;
-// upload opens ExpenseUploadDrawer, a real right-side modal panel.
-export default function ExpenseHeader({ businessName, phone }: ExpenseHeaderProps) {
-  const [uploadOpened, { open: openUpload, close: closeUpload }] = useDisclosure(false);
-
+// upload is owned by the page (ExpenseUploadPanel lives beside <main>, not
+// nested in here, since it needs to be a flex sibling of the whole content
+// column to push it over).
+export default function ExpenseHeader({ businessName, phone, onUploadClick }: ExpenseHeaderProps) {
   return (
     <div className={styles.header}>
       <Stack gap={2} className={styles.identity}>
@@ -34,7 +33,7 @@ export default function ExpenseHeader({ businessName, phone }: ExpenseHeaderProp
             color="dark"
             radius="md"
             leftSection={<Icon src="/icon/regular/tray-arrow-up.svg" size={16} />}
-            onClick={openUpload}
+            onClick={onUploadClick}
           >
             อัปโหลดบิล
           </Button>
@@ -74,8 +73,6 @@ export default function ExpenseHeader({ businessName, phone }: ExpenseHeaderProp
           </Button>
         </Group>
       </Stack>
-
-      <ExpenseUploadDrawer opened={uploadOpened} onClose={closeUpload} />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import Icon from "@/component/icon/icon";
 import AnnouncementBar from "@/component/announcement-bar/announcement-bar";
 import DashboardSidebar from "@/component/dashboard-sidebar/dashboard-sidebar";
@@ -8,6 +9,7 @@ import ExpenseHeader from "@/component/expense-header/expense-header";
 import ExpenseSummaryCards from "@/component/expense-summary-cards/expense-summary-cards";
 import ExpenseFilterBar from "@/component/expense-filter-bar/expense-filter-bar";
 import ExpenseWeekList from "@/component/expense-week-list/expense-week-list";
+import ExpenseUploadPanel from "@/component/expense-upload-panel/expense-upload-panel";
 import { MOCK_EXPENSES } from "@/lib/expense/mock-data";
 import { groupExpensesByWeek } from "@/lib/expense/group-by-week";
 import { computeExpenseSummary } from "@/lib/expense/summary";
@@ -21,6 +23,7 @@ const REFERENCE_DATE = new Date("2026-05-01");
 const Home = () => {
   const weekGroups = groupExpensesByWeek(MOCK_EXPENSES);
   const summary = computeExpenseSummary(MOCK_EXPENSES, REFERENCE_DATE);
+  const [uploadOpened, { open: openUpload, close: closeUpload }] = useDisclosure(false);
 
   return (
     <div className={styles.page}>
@@ -30,7 +33,11 @@ const Home = () => {
         <DashboardSidebar />
 
         <main className={styles.content}>
-          <ExpenseHeader businessName="iEat" phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม" />
+          <ExpenseHeader
+            businessName="iEat"
+            phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม"
+            onUploadClick={openUpload}
+          />
 
           <ExpenseSummaryCards
             monthLabel="พฤษภาคม 2026"
@@ -66,6 +73,8 @@ const Home = () => {
             </Tabs.Panel>
           </Tabs>
         </main>
+
+        <ExpenseUploadPanel opened={uploadOpened} onClose={closeUpload} />
       </div>
     </div>
   );
