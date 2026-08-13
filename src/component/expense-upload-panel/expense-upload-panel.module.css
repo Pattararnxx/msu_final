@@ -171,6 +171,14 @@
   }
 }
 
+.summary {
+  display: block;
+  color: var(--b-500);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
 /* Only the entry cards scroll — the add-photo/camera buttons and the
    manual-entry link stay outside this container so they're always
    reachable, no matter how many receipts pile up. */

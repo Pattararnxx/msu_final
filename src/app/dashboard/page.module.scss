@@ -1,0 +1,108 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--b-50);
+}
+
+.shell {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+  /* DashboardSidebar and AnnouncementBar are both position: fixed (see
+     dashboard-sidebar.module.css / announcement-bar.module.css), so
+     neither claims space in normal flow — .content has to reserve it
+     explicitly, same as home/page.module.scss. Keep both values in sync
+     with those two files: 272px is .sidebar's width, and
+     --announcement-bar-height is the shared variable both the bar and
+     the sidebar's own top offset read (dismissing the bar zeroes it
+     everywhere at once). */
+  margin-top: var(--announcement-bar-height);
+  margin-left: 272px;
+  padding: 24px 32px 48px;
+}
+
+@media (max-width: 960px) {
+  .content {
+    /* Below 960px DashboardSidebar switches to its own fixed mobile bar
+       (accounted for via .page's padding-top below), so this margin
+       isn't needed here. */
+    margin-left: 0;
+  }
+}
+
+.pageHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pageHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  margin: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.pageSubtitle {
+  margin: 0;
+  color: var(--b-600);
+  font-size: 13px;
+}
+
+.trendRow {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}
+
+.insightRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .trendRow,
+  .insightRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 960px) {
+  // DashboardSidebar's mobile bar is position: fixed at this breakpoint
+  // (see dashboard-sidebar.module.css) so it stays pinned above the
+  // announcement banner instead of scrolling with it — this padding
+  // reserves its 56px height so the banner and shell start below it
+  // instead of hiding underneath it.
+  .page {
+    padding-top: 56px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding: 16px 16px 32px;
+  }
+
+  .pageHead {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

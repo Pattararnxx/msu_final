@@ -13,7 +13,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import type { FoodType, PaymentStatus } from "@/lib/expense/types";
+import type { PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
 
@@ -29,9 +29,15 @@ interface PickedFile {
   previewUrl?: string;
 }
 
+// What kind of proof-of-payment this expense receipt is — unrelated to
+// FoodType (src/lib/expense/types.ts), which tags a customer *order's*
+// dishes. This panel uploads the shop's own costs (rent, utilities,
+// ingredient purchases — see CATEGORIES below), so there's no dish here.
+type DocumentType = "ใบเสร็จรับเงิน" | "สลิปโอนเงิน" | "ใบกำกับภาษี" | "อื่นๆ";
+
 interface DraftLineItem {
   date: string;
-  documentType: FoodType;
+  documentType: DocumentType;
   vendor: string;
   description: string;
   category: string;
@@ -46,7 +52,12 @@ interface StagedEntry {
   draft: DraftLineItem;
 }
 
-const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
+const DOCUMENT_TYPES: DocumentType[] = [
+  "ใบเสร็จรับเงิน",
+  "สลิปโอนเงิน",
+  "ใบกำกับภาษี",
+  "อื่นๆ",
+];
 const CATEGORIES = [
   "วัตถุดิบ",
   "ค่าเช่าร้าน",
@@ -64,42 +75,42 @@ const PAYMENT_STATUSES: PaymentStatus[] = ["จ่ายแล้ว", "รอ�
 // what makes "upload a photo → fields fill themselves" demonstrable.
 const MOCK_EXTRACTIONS: Array<{
   vendor: string;
-  documentType: FoodType;
+  documentType: DocumentType;
   category: string;
   description: string;
   amountRange: [number, number];
 }> = [
   {
     vendor: "ตลาดสดเช้าสี่มุมเมือง",
-    documentType: "โจ๊ก",
+    documentType: "ใบเสร็จรับเงิน",
     category: "วัตถุดิบ",
     description: "ค่าวัตถุดิบสด",
     amountRange: [800, 4500],
   },
   {
     vendor: "ร้านกาแฟคั่วบ้านๆ",
-    documentType: "ข้าวต้ม",
+    documentType: "สลิปโอนเงิน",
     category: "วัตถุดิบ",
     description: "ค่าเมล็ดกาแฟและนมสด",
     amountRange: [500, 2000],
   },
   {
     vendor: "ร้านแก๊สหุงต้มบุญมี",
-    documentType: "ก๋วยจั๊บ",
+    documentType: "ใบเสร็จรับเงิน",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าแก๊สหุงต้ม",
     amountRange: [900, 1800],
   },
   {
     vendor: "ร้านข้าวสารบุญมี",
-    documentType: "ข้าวต้ม",
+    documentType: "ใบเสร็จรับเงิน",
     category: "วัตถุดิบ",
     description: "ค่าข้าวสารและเส้นก๋วยเตี๋ยว",
     amountRange: [1000, 3000],
   },
   {
     vendor: "บมจ. การไฟฟ้า",
-    documentType: "โจ๊ก",
+    documentType: "ใบเสร็จรับเงิน",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าไฟฟ้าร้าน",
     amountRange: [1500, 4000],
@@ -158,7 +169,10 @@ function simulatedDraft(seed: number): DraftLineItem {
 // (simulated — see MOCK_EXTRACTIONS) right there in step one instead of
 // behind a separate edit step; browsing/editing already-saved expenses
 // still lives on their own page.
-export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPanelProps) {
+export default function ExpenseUploadPanel({
+  opened,
+  onClose,
+}: ExpenseUploadPanelProps) {
   const [active, setActive] = useState(0);
   const [entries, setEntries] = useState<StagedEntry[]>([]);
   const [dragActive, setDragActive] = useState(false);
@@ -206,7 +220,11 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
 
   const updateDraft = (id: string, patch: Partial<DraftLineItem>) => {
     setEntries((prev) =>
-      prev.map((entry) => (entry.id === id ? { ...entry, draft: { ...entry.draft, ...patch } } : entry)),
+      prev.map((entry) =>
+        entry.id === id
+          ? { ...entry, draft: { ...entry.draft, ...patch } }
+          : entry,
+      ),
     );
   };
 
@@ -217,7 +235,10 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
   };
 
   const resetAndClose = () => {
-    entries.forEach((entry) => entry.file?.previewUrl && URL.revokeObjectURL(entry.file.previewUrl));
+    entries.forEach(
+      (entry) =>
+        entry.file?.previewUrl && URL.revokeObjectURL(entry.file.previewUrl),
+    );
     setEntries([]);
     setActive(0);
     onClose();
@@ -226,11 +247,15 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
   const canConfirm =
     entries.length > 0 &&
     entries.every(
-      (entry) => entry.draft.vendor.trim() !== "" && typeof entry.draft.amount === "number" && entry.draft.amount > 0,
+      (entry) =>
+        entry.draft.vendor.trim() !== "" &&
+        typeof entry.draft.amount === "number" &&
+        entry.draft.amount > 0,
     );
 
   const totalAmount = entries.reduce(
-    (sum, entry) => sum + (typeof entry.draft.amount === "number" ? entry.draft.amount : 0),
+    (sum, entry) =>
+      sum + (typeof entry.draft.amount === "number" ? entry.draft.amount : 0),
     0,
   );
 
@@ -257,7 +282,11 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.title}>อัปโหลดค่าใช้จ่าย</span>
-          <UnstyledButton onClick={resetAndClose} aria-label="ปิด" className={styles.closeButton}>
+          <UnstyledButton
+            onClick={resetAndClose}
+            aria-label="ปิด"
+            className={styles.closeButton}
+          >
             <Icon src="/icon/regular/x.svg" size={16} />
           </UnstyledButton>
         </div>
@@ -304,7 +333,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
               {entries.length === 0 && (
                 <div
                   className={
-                    dragActive ? `${styles.dropzone} ${styles.dropzoneActive}` : styles.dropzone
+                    dragActive
+                      ? `${styles.dropzone} ${styles.dropzoneActive}`
+                      : styles.dropzone
                   }
                   onDragOver={(event) => {
                     event.preventDefault();
@@ -316,11 +347,14 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                   role="button"
                   tabIndex={0}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
+                    if (event.key === "Enter" || event.key === " ")
+                      fileInputRef.current?.click();
                   }}
                 >
                   <Icon src="/icon/regular/image-square.svg" size={28} />
-                  <span className={styles.dropzoneTitle}>ลากไฟล์ใบเสร็จมาวางที่นี่</span>
+                  <span className={styles.dropzoneTitle}>
+                    ลากไฟล์ใบเสร็จมาวางที่นี่
+                  </span>
                   <span className={styles.dropzoneHint}>
                     หรือคลิกเพื่อเลือกไฟล์ — JPG, PNG, PDF ไม่เกิน 10MB
                   </span>
@@ -335,7 +369,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                       radius="md"
                       size="sm"
                       fullWidth
-                      leftSection={<Icon src="/icon/regular/camera.svg" size={16} />}
+                      leftSection={
+                        <Icon src="/icon/regular/camera.svg" size={16} />
+                      }
                       onClick={() => cameraInputRef.current?.click()}
                     >
                       ถ่ายภาพ
@@ -345,7 +381,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                       radius="md"
                       size="sm"
                       fullWidth
-                      leftSection={<Icon src="/icon/regular/upload-simple.svg" size={16} />}
+                      leftSection={
+                        <Icon src="/icon/regular/upload-simple.svg" size={16} />
+                      }
                       onClick={() => fileInputRef.current?.click()}
                     >
                       เลือกไฟล์
@@ -355,11 +393,16 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                   <Group gap={8} wrap="nowrap" className={styles.tip}>
                     <Icon src="/icon/regular/lightbulb.svg" size={16} />
                     <span>
-                      ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน — ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ แก้ไขเพิ่มเติมได้ทีหลัง
+                      ถ่ายให้เห็นชื่อร้าน วันที่ และยอดรวมชัดเจน —
+                      ระบบจะกรอกข้อมูลเบื้องต้นให้อัตโนมัติ
+                      แก้ไขเพิ่มเติมได้ทีหลัง
                     </span>
                   </Group>
 
-                  <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
+                  <UnstyledButton
+                    className={styles.manualLink}
+                    onClick={addManualEntry}
+                  >
                     <Icon src="/icon/regular/note-pencil.svg" size={14} />
                     หรือกรอกข้อมูลเองแทน ไม่ต้องอัปโหลดไฟล์
                   </UnstyledButton>
@@ -372,13 +415,18 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                   remain, so the panel reads as "your data" instead of
                   "an upload form" past the first item. */}
               {entries.length > 0 && (
-                <UnstyledButton className={styles.manualLink} onClick={addManualEntry}>
+                <UnstyledButton
+                  className={styles.manualLink}
+                  onClick={addManualEntry}
+                >
                   <Icon src="/icon/regular/note-pencil.svg" size={14} />
                   เพิ่มรายการด้วยตนเอง
                 </UnstyledButton>
               )}
 
-              {summaryText && <span className={styles.summary}>{summaryText}</span>}
+              {summaryText && (
+                <span className={styles.summary}>{summaryText}</span>
+              )}
 
               {/* Only this list scrolls — everything above (dropzone/add
                   buttons/manual-entry link) stays put so it's always
@@ -401,17 +449,25 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                           )}
                           {entry.file?.kind === "pdf" && (
                             <span className={styles.entryBadge}>
-                              <Icon src="/icon/regular/file-pdf.svg" size={16} />
+                              <Icon
+                                src="/icon/regular/file-pdf.svg"
+                                size={16}
+                              />
                             </span>
                           )}
                           {!entry.file && (
                             <span className={styles.entryBadge}>
-                              <Icon src="/icon/regular/note-pencil.svg" size={16} />
+                              <Icon
+                                src="/icon/regular/note-pencil.svg"
+                                size={16}
+                              />
                             </span>
                           )}
                           <Stack gap={0} className={styles.entryCardInfo}>
                             <span className={styles.entryCardTitle}>
-                              {entry.file ? entry.file.file.name : "กรอกข้อมูลเอง"}
+                              {entry.file
+                                ? entry.file.file.name
+                                : "กรอกข้อมูลเอง"}
                             </span>
                             {entry.file && (
                               <span className={styles.entryCardMeta}>
@@ -429,9 +485,16 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                         </div>
 
                         {entry.file && (
-                          <Group gap={6} wrap="nowrap" className={styles.autoFillNote}>
+                          <Group
+                            gap={6}
+                            wrap="nowrap"
+                            className={styles.autoFillNote}
+                          >
                             <Icon src="/icon/regular/sparkle.svg" size={13} />
-                            <span>กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว กรุณาตรวจสอบก่อนบันทึก</span>
+                            <span>
+                              กรอกข้อมูลเบื้องต้นให้อัตโนมัติแล้ว
+                              กรุณาตรวจสอบก่อนบันทึก
+                            </span>
                           </Group>
                         )}
 
@@ -442,7 +505,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             size="sm"
                             value={entry.draft.date}
                             onChange={(event) =>
-                              updateDraft(entry.id, { date: event.currentTarget.value })
+                              updateDraft(entry.id, {
+                                date: event.currentTarget.value,
+                              })
                             }
                           />
                           <Select
@@ -451,7 +516,10 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             data={DOCUMENT_TYPES}
                             value={entry.draft.documentType}
                             onChange={(value) =>
-                              value && updateDraft(entry.id, { documentType: value as FoodType })
+                              value &&
+                              updateDraft(entry.id, {
+                                documentType: value as DocumentType,
+                              })
                             }
                             checkIconPosition="right"
                           />
@@ -462,7 +530,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             withAsterisk
                             value={entry.draft.vendor}
                             onChange={(event) =>
-                              updateDraft(entry.id, { vendor: event.currentTarget.value })
+                              updateDraft(entry.id, {
+                                vendor: event.currentTarget.value,
+                              })
                             }
                           />
                           <TextInput
@@ -470,7 +540,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             size="sm"
                             value={entry.draft.description}
                             onChange={(event) =>
-                              updateDraft(entry.id, { description: event.currentTarget.value })
+                              updateDraft(entry.id, {
+                                description: event.currentTarget.value,
+                              })
                             }
                           />
                           <Select
@@ -478,7 +550,10 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             size="sm"
                             data={CATEGORIES}
                             value={entry.draft.category}
-                            onChange={(value) => value && updateDraft(entry.id, { category: value })}
+                            onChange={(value) =>
+                              value &&
+                              updateDraft(entry.id, { category: value })
+                            }
                             checkIconPosition="right"
                           />
                           <Select
@@ -486,7 +561,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             size="sm"
                             data={PAYERS}
                             value={entry.draft.payer}
-                            onChange={(value) => value && updateDraft(entry.id, { payer: value })}
+                            onChange={(value) =>
+                              value && updateDraft(entry.id, { payer: value })
+                            }
                             checkIconPosition="right"
                           />
                           <Select
@@ -495,7 +572,10 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             data={PAYMENT_STATUSES}
                             value={entry.draft.status}
                             onChange={(value) =>
-                              value && updateDraft(entry.id, { status: value as PaymentStatus })
+                              value &&
+                              updateDraft(entry.id, {
+                                status: value as PaymentStatus,
+                              })
                             }
                             checkIconPosition="right"
                           />
@@ -508,7 +588,9 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                             decimalScale={2}
                             value={entry.draft.amount}
                             onChange={(value) =>
-                              updateDraft(entry.id, { amount: typeof value === "number" ? value : "" })
+                              updateDraft(entry.id, {
+                                amount: typeof value === "number" ? value : "",
+                              })
                             }
                           />
                         </Stack>
@@ -527,20 +609,29 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
                 {entries.map((entry) => (
                   <div key={entry.id} className={styles.reviewRow}>
                     <Stack gap={0} className={styles.reviewInfo}>
-                      <span className={styles.reviewVendor}>{entry.draft.vendor || "-"}</span>
+                      <span className={styles.reviewVendor}>
+                        {entry.draft.vendor || "-"}
+                      </span>
                       <span className={styles.reviewMeta}>
                         {entry.draft.category} • {entry.draft.date}
                       </span>
                     </Stack>
                     <span className={styles.reviewAmount}>
-                      ฿{formatCurrency(typeof entry.draft.amount === "number" ? entry.draft.amount : 0)}
+                      ฿
+                      {formatCurrency(
+                        typeof entry.draft.amount === "number"
+                          ? entry.draft.amount
+                          : 0,
+                      )}
                     </span>
                   </div>
                 ))}
               </Stack>
               <div className={styles.reviewTotal}>
                 <span>ยอดรวมทั้งหมด</span>
-                <span className={styles.reviewTotalAmount}>฿{formatCurrency(totalAmount)}</span>
+                <span className={styles.reviewTotalAmount}>
+                  ฿{formatCurrency(totalAmount)}
+                </span>
               </div>
             </Stack>
           )}
@@ -552,7 +643,8 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
               </span>
               <span className={styles.doneTitle}>บันทึกค่าใช้จ่ายแล้ว</span>
               <span className={styles.stepHint}>
-                บันทึก {entries.length} รายการ รวม ฿{formatCurrency(totalAmount)} เรียบร้อยแล้ว
+                บันทึก {entries.length} รายการ รวม ฿
+                {formatCurrency(totalAmount)} เรียบร้อยแล้ว
               </span>
             </Stack>
           )}
@@ -580,18 +672,31 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
               <Button
                 variant="default"
                 radius="md"
-                leftSection={<Icon src="/icon/regular/arrow-left.svg" size={14} />}
+                leftSection={
+                  <Icon src="/icon/regular/arrow-left.svg" size={14} />
+                }
                 onClick={() => setActive(0)}
               >
                 ย้อนกลับ
               </Button>
-              <Button variant="filled" color="dark" radius="md" onClick={() => setActive(2)}>
+              <Button
+                variant="filled"
+                color="dark"
+                radius="md"
+                onClick={() => setActive(2)}
+              >
                 ยืนยันและบันทึก
               </Button>
             </>
           )}
           {active === 2 && (
-            <Button variant="filled" color="dark" radius="md" fullWidth onClick={resetAndClose}>
+            <Button
+              variant="filled"
+              color="dark"
+              radius="md"
+              fullWidth
+              onClick={resetAndClose}
+            >
               เสร็จสิ้น
             </Button>
           )}

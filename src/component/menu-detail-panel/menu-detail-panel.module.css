@@ -1,0 +1,66 @@
+.panelContent {
+  padding-bottom: 8px;
+}
+
+.itemHero {
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--b-100);
+}
+
+.heroCopy {
+  min-width: 0;
+  flex: 1;
+}
+
+.editMedia {
+  align-items: flex-start;
+  padding: 4px 0 2px;
+}
+
+.imageTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--b-200);
+  border-radius: 3px;
+  background: var(--b-50);
+  color: var(--b-600);
+}
+
+.categoryBadge,
+.ingredientBadge {
+  text-transform: none;
+}
+
+.detailSection {
+  padding-top: 2px;
+}
+
+.optionGroup {
+  padding: 10px;
+  border: 1px solid var(--b-100);
+  border-radius: 3px;
+  background: var(--b-50);
+}
+
+.choiceList {
+  padding-left: 4px;
+  margin-top: 8px;
+}
+
+.optionGroupView {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--b-100);
+  border-radius: 3px;
+  background: var(--b-50);
+}
+
+.footer {
+  padding-top: 12px;
+  border-top: 1px solid var(--b-100);
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
 import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
 import "@/styles/_color.scss";
 import "./globals.scss";
 import { ChatbotProvider } from "@/component/chatbot/chatbot-context";

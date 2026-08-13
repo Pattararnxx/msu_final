@@ -1,0 +1,14 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.empty {
+  padding: 32px 16px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
+  color: var(--b-500);
+  font-size: var(--mantine-font-size-sm);
+  text-align: center;
+}
