@@ -1,12 +1,13 @@
 import Navbar from "@/component/navbar/navbar";
+import OrderOcrWorkspace from "@/component/order-ocr/order-ocr-workspace";
 
-const Home = () => {
+export default function Page() {
   return (
     <>
       <Navbar />
-      <div></div>
+      <main>
+        <OrderOcrWorkspace />
+      </main>
     </>
   );
-};
-
-export default Home;
+}

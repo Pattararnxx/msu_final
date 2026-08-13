@@ -188,5 +188,15 @@
       "Desktop dropdown, mobile menu open/close, and mobile accordion open all verified visually with screenshots."
     ],
     "iterations": 1
+  },
+  "orderOcrSurface": {
+    "mode": "operate",
+    "oneThingToRemember": "A handwritten order becomes an auditable JSON payload, with human review visible before it reaches the kitchen.",
+    "artDirection": "quiet operations workspace: warm paper canvas, ink-black data, yellow action signal, no gradients or glass",
+    "composition": "three-stage vertical flow: input and review split into two columns, payload inspector anchored below",
+    "primaryAction": "เริ่มแปลงเป็น JSON",
+    "qualitySignals": ["confidence per line", "review badge", "human_reviewed state", "schema version tag"],
+    "responsive": "stack upload and result panels below 820px; keep payload readable with horizontal code scroll",
+    "visualQa": "build, targeted lint, TypeScript, and production build passed; browser screenshot QA remains to be run"
   }
 }

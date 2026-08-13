@@ -32,6 +32,73 @@
 
 ## Getting Started
 
+## Handwritten order OCR
+
+หน้า `/` รองรับการอัปโหลดภาพใบออร์เดอร์ลายมือจริง แล้วเรียก `POST /api/order-ocr`
+เพื่อส่งภาพไปยัง Gemini Vision และคืน JSON ที่ validate ด้วย Zod ก่อนแสดงผล
+รายการที่ confidence ต่ำจะต้องกดตรวจยืนยันก่อนนำ payload ไปใช้ต่อ
+
+ตั้งค่าใน `.env.local`:
+
+```bash
+GEMINI_API_KEY=your_google_gemini_api_key
+GEMINI_OCR_MODEL=gemini-2.5-flash
+```
+
+Payload หลักใช้ schema version `restaurant.order.v1`:
+
+```json
+{
+  "schema_version": "restaurant.order.v1",
+  "event": "restaurant.order.extracted",
+  "payload_id": "uuid",
+  "captured_at": "2026-08-13T00:00:00.000Z",
+  "source": {
+    "type": "handwritten_order_ocr",
+    "provider": "google_gemini",
+    "model": "gemini-2.5-flash",
+    "filename": "order.jpg",
+    "mime_type": "image/jpeg",
+    "size_bytes": 123456
+  },
+  "order": {
+    "order_id": null,
+    "restaurant_name": null,
+    "table_number": "A12",
+    "service_type": "dine_in",
+    "ordered_at": null,
+    "currency": "THB",
+    "items": [
+      {
+        "line_id": "1",
+        "menu_item_name": "ผัดกะเพราไก่",
+        "quantity": 2,
+        "unit": "จาน",
+        "modifiers": [{ "name": "เผ็ด", "value": "น้อย", "confidence": 0.91 }],
+        "notes": [],
+        "unit_price": null,
+        "subtotal": null,
+        "confidence": 0.86,
+        "needs_review": false,
+        "human_reviewed": false,
+        "raw_text": "กะเพราไก่ 2 จาน เผ็ดน้อย"
+      }
+    ],
+    "notes": [],
+    "totals": { "subtotal": null, "tax": null, "discount": null, "grand_total": null }
+  },
+  "quality": {
+    "overall_confidence": 0.86,
+    "needs_review": false,
+    "review_reasons": []
+  }
+}
+```
+
+DeepSeek V4 ใช้เป็นตัวอ่านภาพโดยตรงไม่ได้ใน flow นี้ เพราะเป็น text-only; หากต้องการใช้ร่วมกัน ให้ต่อเป็นขั้น normalize/ตรวจ JSON หลัง Gemini OCR
+
+(`ภาพ → Gemini Vision OCR → DeepSeek ตรวจ/normalize → JSON`).
+
 First, run the development server:
 
 ```bash
