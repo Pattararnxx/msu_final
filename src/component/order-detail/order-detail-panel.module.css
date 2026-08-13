@@ -1,0 +1,199 @@
+.slot {
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 0;
+  transition: width 260ms ease;
+}
+
+.slotOpen {
+  width: 420px;
+}
+
+.panel {
+  position: fixed;
+  top: var(--announcement-bar-height);
+  right: 0;
+  z-index: 40;
+  width: 420px;
+  height: calc(100dvh - var(--announcement-bar-height));
+  overflow: hidden;
+  background: var(--b-0);
+  border-left: 1px solid var(--b-100);
+  box-shadow: -8px 0 24px rgb(9 30 66 / 0.08);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 260ms ease, visibility 0s linear 260ms;
+}
+
+.panelOpen {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 260ms ease;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  border: 0;
+  padding: 0;
+  background: rgb(9 30 66 / 0.48);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 0s linear 200ms;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--b-100);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--b-900);
+}
+
+.headerLeft > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.headerLabel {
+  color: var(--b-500);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.kicker {
+  overflow: hidden;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: var(--mantine-font-size-md);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.closeButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--b-200);
+  border-radius: var(--mantine-radius-md);
+  color: var(--b-600);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .closeButton:hover {
+    background: var(--b-50);
+    color: var(--b-900);
+  }
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--primary-800);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+}
+
+.orderTitle {
+  margin: 0;
+  color: var(--b-900);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionLabel {
+  margin: 0;
+  color: var(--b-500);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 960px) {
+  .slot,
+  .slotOpen {
+    width: 0;
+  }
+
+  .panel {
+    top: 0;
+    bottom: 0;
+    width: min(100vw, 460px);
+    height: 100dvh;
+  }
+
+  .inner {
+    width: 100%;
+  }
+
+  .scrimOpen {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition: opacity 200ms ease;
+  }
+}
+
+@media (max-width: 640px) {
+  .panel {
+    width: 100vw;
+  }
+
+  .header,
+  .body {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .body {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot,
+  .panel,
+  .scrim,
+  .closeButton {
+    transition: none;
+  }
+}

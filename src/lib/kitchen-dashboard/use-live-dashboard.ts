@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useReducer, useRef } from "react";
+import { MOCK_EXPENSES } from "@/lib/expense/mock-data";
 import { INGREDIENTS } from "./catalog";
 import { computeOrder, generateOrderLines } from "./engine";
 import type {
@@ -25,83 +26,119 @@ export interface DashboardState {
   stockRemaining: Map<string, number>;
   stockValueHistory: StockValuePoint[];
   orderSeq: number;
+  randomSeed: number;
 }
+
+const MOCK_SEED_ORDER_COUNT = 42;
+const PRICE_HISTORY_SPAN_MS = 5 * 60 * 60 * 1000;
+const DEMO_RANDOM_SEED = 20260813;
+
+function mockOrderTimestamp(order: (typeof MOCK_EXPENSES)[number]): number {
+  const timestamp = new Date(order.orderedAt).getTime();
+  return Number.isFinite(timestamp) ? timestamp : new Date(`${order.date}T${order.uploadedAt}:00`).getTime();
+}
+
+/** Latest confirmed mock orders, adapted from expense `quantity` to kitchen `qty`. */
+export const CONFIRMED_MOCK_KITCHEN_ORDERS: RawOrder[] = MOCK_EXPENSES.flatMap((order) => {
+  if (!order.lineItems || order.lineItems.length === 0) return [];
+  return [{
+    id: order.id,
+    createdAt: mockOrderTimestamp(order),
+    lines: order.lineItems.map((line) => ({
+      menuItemId: line.menuItemId,
+      qty: line.quantity,
+    })),
+  }];
+})
+  .sort((a, b) => a.createdAt - b.createdAt)
+  .slice(-MOCK_SEED_ORDER_COUNT);
 
 function initialState(): DashboardState {
   const sessionStart = Date.now();
   return {
     orders: [],
-    unitCosts: new Map(INGREDIENTS.map((i) => [i.id, i.initialUnitCost])),
-    // Seeded with a baseline point per ingredient so the unit-price trend
-    // chart always has something to draw, even before any supplier update
-    // has fired.
+    unitCosts: new Map(INGREDIENTS.map((ingredient) => [ingredient.id, ingredient.initialUnitCost])),
     unitPriceHistory: new Map(
-      INGREDIENTS.map((i) => [i.id, [{ t: sessionStart, price: i.initialUnitCost }]]),
+      INGREDIENTS.map((ingredient) => [
+        ingredient.id,
+        [{ t: sessionStart, price: ingredient.initialUnitCost }],
+      ]),
     ),
     priceUpdateEvents: [],
-    stockRemaining: new Map(INGREDIENTS.map((i) => [i.id, i.initialStock])),
+    stockRemaining: new Map(INGREDIENTS.map((ingredient) => [ingredient.id, ingredient.initialStock])),
     stockValueHistory: [],
     orderSeq: 0,
+    randomSeed: DEMO_RANDOM_SEED,
   };
 }
 
 type Action =
-  | { type: "ADD_ORDER"; at: number }
-  | { type: "SEED"; count: number; spanMs: number; now: number }
-  | { type: "SUPPLIER_UPDATE"; at: number };
+  | { type: "SEED"; now: number }
+  | { type: "TICK"; at: number };
 
-function applyOneOrder(state: DashboardState, at: number): DashboardState {
-  const orderSeq = state.orderSeq + 1;
-  const raw: RawOrder = {
-    id: `KJ-${String(orderSeq).padStart(4, "0")}`,
-    createdAt: at,
-    lines: generateOrderLines(),
-  };
+function nextRandom(seed: number): { seed: number; value: number } {
+  const nextSeed = (Math.imul(seed, 1_664_525) + 1_013_904_223) >>> 0;
+  return { seed: nextSeed, value: nextSeed / 4_294_967_296 };
+}
+
+function applyRawOrder(state: DashboardState, raw: RawOrder): DashboardState {
   const computed = computeOrder(raw, state.unitCosts);
-
   const stockRemaining = new Map(state.stockRemaining);
+
   for (const usage of computed.ingredientUsage) {
     const remaining = (stockRemaining.get(usage.ingredientId) ?? 0) - usage.qty;
     stockRemaining.set(usage.ingredientId, Math.max(0, remaining));
   }
 
-  let stockValue = 0;
-  for (const ingredient of INGREDIENTS) {
+  const stockValue = INGREDIENTS.reduce((total, ingredient) => {
     const remaining = stockRemaining.get(ingredient.id) ?? 0;
     const unitCost = state.unitCosts.get(ingredient.id) ?? ingredient.initialUnitCost;
-    stockValue += remaining * unitCost;
-  }
+    return total + remaining * unitCost;
+  }, 0);
 
   return {
     ...state,
     orders: [...state.orders, computed],
     stockRemaining,
-    stockValueHistory: [...state.stockValueHistory, { t: at, value: stockValue }],
-    orderSeq,
+    stockValueHistory: [...state.stockValueHistory, { t: raw.createdAt, value: stockValue }],
+    orderSeq: state.orderSeq + 1,
   };
 }
 
-/** Nudges one ingredient's price and records the point — shared by the
- *  random live "a supplier just texted" event and by seeding (below),
- *  which forces one nudge per ingredient so the unit-price chart is never
- *  empty regardless of which ingredient the viewer picks. */
+function applyGeneratedOrder(state: DashboardState, at: number): DashboardState {
+  let randomSeed = state.randomSeed;
+  const rng = () => {
+    const next = nextRandom(randomSeed);
+    randomSeed = next.seed;
+    return next.value;
+  };
+  const orderSeq = state.orderSeq + 1;
+  const raw: RawOrder = {
+    id: `KJ-${String(orderSeq).padStart(4, "0")}`,
+    createdAt: at,
+    lines: generateOrderLines(rng),
+  };
+
+  return applyRawOrder({ ...state, randomSeed }, raw);
+}
+
 function nudgePrice(
   state: DashboardState,
   ingredient: Ingredient,
   at: number,
 ): { state: DashboardState; event: SupplierPriceUpdateEvent } {
+  const directionRoll = nextRandom(state.randomSeed);
+  const magnitudeRoll = nextRandom(directionRoll.seed);
   const fromPrice = state.unitCosts.get(ingredient.id) ?? ingredient.initialUnitCost;
-  const direction = Math.random() < 0.5 ? -1 : 1;
-  const magnitude = 0.04 + Math.random() * 0.1; // 4–14% supplier price move
+  const direction = directionRoll.value < 0.5 ? -1 : 1;
+  const magnitude = 0.04 + magnitudeRoll.value * 0.1;
   const toPrice = Math.max(0.001, Number((fromPrice * (1 + direction * magnitude)).toFixed(4)));
 
   const unitCosts = new Map(state.unitCosts);
   unitCosts.set(ingredient.id, toPrice);
 
   const unitPriceHistory = new Map(state.unitPriceHistory);
-  const history = unitPriceHistory.get(ingredient.id) ?? [
-    { t: at - 1, price: fromPrice },
-  ];
+  const history = unitPriceHistory.get(ingredient.id) ?? [{ t: at - 1, price: fromPrice }];
   unitPriceHistory.set(ingredient.id, [...history, { t: at, price: toPrice }]);
 
   const event: SupplierPriceUpdateEvent = {
@@ -112,15 +149,30 @@ function nudgePrice(
     toPrice,
   };
 
-  return { state: { ...state, unitCosts, unitPriceHistory }, event };
+  return {
+    state: {
+      ...state,
+      unitCosts,
+      unitPriceHistory,
+      randomSeed: magnitudeRoll.seed,
+    },
+    event,
+  };
 }
 
 function applySupplierUpdate(state: DashboardState, at: number): DashboardState {
-  const eligible = INGREDIENTS.filter((i) => (state.stockRemaining.get(i.id) ?? 0) > 0);
+  const eligible = INGREDIENTS.filter(
+    (ingredient) => (state.stockRemaining.get(ingredient.id) ?? 0) > 0,
+  );
   if (eligible.length === 0) return state;
 
-  const ingredient = eligible[Math.floor(Math.random() * eligible.length)];
-  const { state: next, event } = nudgePrice(state, ingredient, at);
+  const selection = nextRandom(state.randomSeed);
+  const ingredient = eligible[Math.floor(selection.value * eligible.length)];
+  const { state: next, event } = nudgePrice(
+    { ...state, randomSeed: selection.seed },
+    ingredient,
+    at,
+  );
 
   return {
     ...next,
@@ -128,42 +180,51 @@ function applySupplierUpdate(state: DashboardState, at: number): DashboardState 
   };
 }
 
+function seedDashboard(state: DashboardState, now: number): DashboardState {
+  const slotMs = PRICE_HISTORY_SPAN_MS / Math.max(CONFIRMED_MOCK_KITCHEN_ORDERS.length, 1);
+  let next = CONFIRMED_MOCK_KITCHEN_ORDERS.reduce(
+    (current, order, index) => applyRawOrder(current, {
+      ...order,
+      // Keep source IDs and lines, but place the historical mock samples in
+      // today's five-hour demo window so "วันนี้" charts remain truthful.
+      createdAt: now - PRICE_HISTORY_SPAN_MS + Math.floor(slotMs * (index + 1)),
+    }),
+    state,
+  );
+  const events: SupplierPriceUpdateEvent[] = [];
+
+  for (const ingredient of INGREDIENTS) {
+    const timestampRoll = nextRandom(next.randomSeed);
+    const at = Math.max(
+      now - PRICE_HISTORY_SPAN_MS + 60_000,
+      now - Math.floor(timestampRoll.value * PRICE_HISTORY_SPAN_MS),
+    );
+    const result = nudgePrice(
+      { ...next, randomSeed: timestampRoll.seed },
+      ingredient,
+      at,
+    );
+    next = result.state;
+    events.push(result.event);
+  }
+
+  return {
+    ...next,
+    priceUpdateEvents: [...events].reverse().slice(0, 20),
+  };
+}
+
 function reducer(state: DashboardState, action: Action): DashboardState {
   switch (action.type) {
-    case "ADD_ORDER":
-      return applyOneOrder(state, action.at);
-    case "SUPPLIER_UPDATE":
-      return applySupplierUpdate(state, action.at);
-    case "SEED": {
-      let next = state;
-      for (let i = 0; i < action.count; i++) {
-        const slot = action.spanMs / action.count;
-        const jitter = Math.floor(Math.random() * slot);
-        const t = Math.min(
-          action.now - action.spanMs + Math.floor(slot * i) + jitter,
-          action.now - 1000,
-        );
-        next = applyOneOrder(next, t);
-      }
-      // One guaranteed nudge per ingredient — so the unit-price chart has
-      // real history no matter which ingredient the viewer selects,
-      // instead of showing "no update yet" until the live 12%-per-tick
-      // chance happens to land on that one.
-      const events: SupplierPriceUpdateEvent[] = [];
-      for (const ingredient of INGREDIENTS) {
-        const t = Math.max(
-          action.now - action.spanMs + 60_000,
-          action.now - Math.floor(Math.random() * action.spanMs),
-        );
-        const result = nudgePrice(next, ingredient, t);
-        next = result.state;
-        events.push(result.event);
-      }
-      next = {
-        ...next,
-        priceUpdateEvents: [...events].reverse().slice(0, 20),
-      };
-      return next;
+    case "SEED":
+      return seedDashboard(state, action.now);
+    case "TICK": {
+      const next = applyGeneratedOrder(state, action.at);
+      // A predictable cadence keeps the prototype repeatable while still
+      // showing the live supplier-price interaction.
+      return next.orderSeq % 8 === 0
+        ? applySupplierUpdate(next, action.at)
+        : next;
     }
     default:
       return state;
@@ -171,17 +232,11 @@ function reducer(state: DashboardState, action: Action): DashboardState {
 }
 
 const ORDER_INTERVAL_MS = 6000;
-const SUPPLIER_UPDATE_CHANCE = 0.12;
-const SEED_ORDER_COUNT = 42;
-const SEED_SPAN_MS = 5 * 60 * 60 * 1000; // pretend the shop opened 5h ago
 
 /**
- * Drives the whole live dashboard. Stands in for a real order-ingestion
- * feed (e.g. an SSE/WebSocket stream off the till) — every order here is
- * already a *confirmed* sale (see the scope note in types.ts), so arrival
- * is what updates every number: no refresh, no "mark as done" click.
- * Orders tick in automatically on an interval, occasionally paired with a
- * simulated supplier price update.
+ * Seeds from confirmed mock expense orders, then continues with a deterministic
+ * local simulation. No API key, external service, or environment variable is
+ * needed for the prototype dashboard.
  */
 export function useLiveKitchenDashboard(): DashboardState {
   const [state, dispatch] = useReducer(reducer, undefined, initialState);
@@ -190,15 +245,12 @@ export function useLiveKitchenDashboard(): DashboardState {
   useEffect(() => {
     if (seededRef.current) return;
     seededRef.current = true;
-    dispatch({ type: "SEED", count: SEED_ORDER_COUNT, spanMs: SEED_SPAN_MS, now: Date.now() });
+    dispatch({ type: "SEED", now: Date.now() });
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch({ type: "ADD_ORDER", at: Date.now() });
-      if (Math.random() < SUPPLIER_UPDATE_CHANCE) {
-        dispatch({ type: "SUPPLIER_UPDATE", at: Date.now() });
-      }
+      dispatch({ type: "TICK", at: Date.now() });
     }, ORDER_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);

@@ -16,12 +16,14 @@ import UnitPriceTrend from "@/component/kitchen-dashboard/unit-price-trend";
 import MarginRanking from "@/component/kitchen-dashboard/margin-ranking";
 import StockAlerts from "@/component/kitchen-dashboard/stock-alerts";
 import OrderTable from "@/component/kitchen-dashboard/order-table";
+import PreparationForecast from "@/component/kitchen-dashboard/preparation-forecast";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import { useLiveKitchenDashboard } from "@/lib/kitchen-dashboard/use-live-dashboard";
 import { buildForecast, FORECAST_DAYS } from "@/lib/kitchen-dashboard/forecast";
 import {
   bucketOrdersByTime,
   computeCostByCategory,
+  computeIngredientPreparationForecast,
   computeMarginRanking,
   computeRemainingStockValue,
   computeRevenueByMenuCategory,
@@ -100,6 +102,10 @@ const DashboardPage = () => {
   const stockAlerts = useMemo(
     () => computeStockAlerts(visibleStockRemaining),
     [visibleStockRemaining],
+  );
+  const preparationForecast = useMemo(
+    () => computeIngredientPreparationForecast(orders, 10),
+    [orders],
   );
 
   // Last 12 minute-buckets feed the stat-tile sparklines — a short trend
@@ -225,7 +231,10 @@ const DashboardPage = () => {
             <StockAlerts alerts={stockAlerts} forecast={forecastMode} />
           </div>
 
-          <OrderTable orders={visibleOrders} forecast={forecastMode} />
+          <PreparationForecast forecast={preparationForecast} />
+          <div id="today-orders">
+            <OrderTable orders={visibleOrders} forecast={forecastMode} />
+          </div>
         </main>
       </div>
     </div>

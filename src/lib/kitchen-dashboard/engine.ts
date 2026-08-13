@@ -207,6 +207,87 @@ export interface StockAlert {
   severity: "warning" | "critical";
 }
 
+export interface PreparationForecastLine {
+  ingredientId: string;
+  ingredientName: string;
+  category: IngredientCategory;
+  unit: string;
+  /** Quantity required by the confirmed source orders before buffer. */
+  sourceQty: number;
+  /** Extra quantity added by the configured safety-stock percentage. */
+  safetyStockQty: number;
+  /** Recommended preparation quantity, including safety stock. */
+  recommendedQty: number;
+}
+
+export interface IngredientPreparationForecast {
+  sourceOrderIds: string[];
+  sourceServingQty: number;
+  safetyStockPercent: number;
+  items: PreparationForecastLine[];
+}
+
+export interface ConfirmedOrderForPreparation {
+  id: string;
+  lines: readonly OrderLine[];
+}
+
+/**
+ * Expands confirmed/mock order lines through the shop-owned recipes and adds
+ * a safety-stock buffer. The result carries its source IDs and serving count
+ * so the prototype never presents an unexplained AI estimate as fact.
+ */
+export function computeIngredientPreparationForecast(
+  orders: readonly ConfirmedOrderForPreparation[],
+  safetyStockPercent = 15,
+): IngredientPreparationForecast {
+  const normalizedSafetyStockPercent = Math.max(0, safetyStockPercent);
+  const sourceQtyByIngredient = new Map<string, number>();
+  let sourceServingQty = 0;
+
+  for (const order of orders) {
+    for (const line of order.lines) {
+      const servingQty = Math.max(0, line.qty);
+      const menuItem = MENU_BY_ID.get(line.menuItemId);
+      if (!menuItem || servingQty === 0) continue;
+
+      sourceServingQty += servingQty;
+      for (const recipeLine of menuItem.recipe) {
+        const sourceQty = recipeLine.qtyPerServing * servingQty;
+        sourceQtyByIngredient.set(
+          recipeLine.ingredientId,
+          (sourceQtyByIngredient.get(recipeLine.ingredientId) ?? 0) + sourceQty,
+        );
+      }
+    }
+  }
+
+  const items = INGREDIENTS.flatMap((ingredient) => {
+    const sourceQty = sourceQtyByIngredient.get(ingredient.id) ?? 0;
+    if (sourceQty === 0) return [];
+
+    const recommendedQty = Math.ceil(
+      sourceQty * (1 + normalizedSafetyStockPercent / 100),
+    );
+    return [{
+      ingredientId: ingredient.id,
+      ingredientName: ingredient.name,
+      category: ingredient.category,
+      unit: ingredient.unit,
+      sourceQty,
+      safetyStockQty: recommendedQty - sourceQty,
+      recommendedQty,
+    }];
+  });
+
+  return {
+    sourceOrderIds: orders.map((order) => order.id),
+    sourceServingQty,
+    safetyStockPercent: normalizedSafetyStockPercent,
+    items,
+  };
+}
+
 /**
  * Below-threshold ingredients, purely from (initial stock − cumulative
  * usage). No one sets an "ใกล้หมด/หมดแล้ว" status by hand — severity is

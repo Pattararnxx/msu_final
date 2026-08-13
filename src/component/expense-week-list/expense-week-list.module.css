@@ -77,6 +77,22 @@
   transform: rotate(180deg);
 }
 
+.orderRow {
+  cursor: pointer;
+}
+
+.orderRow:focus-visible {
+  outline: 2px solid var(--primary-800);
+  outline-offset: -2px;
+  background: var(--primary-50);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .orderRow:hover {
+    background: var(--b-50);
+  }
+}
+
 .dateCell,
 .uploadedAtCell {
   white-space: nowrap;
@@ -111,4 +127,11 @@
   color: var(--b-500);
   font-size: 14px;
   text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret,
+  .caretOpen {
+    transition: none;
+  }
 }

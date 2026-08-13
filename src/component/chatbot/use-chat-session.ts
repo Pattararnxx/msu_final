@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import type { MarketingUiBlock } from "@/lib/marketing/types";
 
 // Mirrors the AI SDK UIMessage shape that /api/chat expects, kept minimal so
 // this hook stays independent of the SDK's client bundle. The route is
@@ -21,6 +22,7 @@ export interface ChatTurn {
   role: "user" | "assistant";
   text: string;
   toolCalls: ToolCallRecord[];
+  ui: MarketingUiBlock[];
   mode?: string;
 }
 
@@ -30,6 +32,7 @@ interface ChatApiResponse {
   text: string;
   toolCalls: ToolCallRecord[];
   steps: number;
+  ui?: MarketingUiBlock[];
   providerError?: string;
 }
 
@@ -56,7 +59,7 @@ export function useChatSession() {
 
       setTurns((current) => [
         ...current,
-        { id: userMessage.id, role: "user", text, toolCalls: [] },
+        { id: userMessage.id, role: "user", text, toolCalls: [], ui: [] },
       ]);
       setPending(true);
       setError(null);
@@ -87,6 +90,7 @@ export function useChatSession() {
             role: "assistant",
             text: data.text,
             toolCalls: data.toolCalls ?? [],
+            ui: data.ui ?? [],
             mode: data.mode,
           },
         ]);
