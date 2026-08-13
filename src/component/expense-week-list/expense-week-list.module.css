@@ -1,0 +1,104 @@
+.scrollContainer {
+  border-radius: var(--mantine-radius-lg);
+  border: 1px solid var(--b-100);
+  background: var(--b-0);
+}
+
+.table thead tr {
+  background: var(--b-50);
+}
+
+.table th {
+  color: var(--b-600);
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.table td {
+  color: var(--b-800);
+  font-size: 13.5px;
+}
+
+.checkboxCol,
+.actionCol {
+  width: 40px;
+}
+
+.amountCol {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.groupRow {
+  background: var(--b-50);
+}
+
+.groupCell {
+  padding: 0 !important;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  color: var(--b-900);
+  text-align: left;
+}
+
+.groupLabel {
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.groupTotal {
+  margin-left: auto;
+  color: var(--b-700);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.caret,
+.caretOpen {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--b-500);
+  transition: transform 150ms ease;
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+.dateCell,
+.payerCell {
+  white-space: nowrap;
+}
+
+.vendorCell {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.descriptionCell {
+  max-width: 200px;
+  overflow: hidden;
+  color: var(--b-600);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  padding: 40px 20px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+  color: var(--b-500);
+  font-size: 14px;
+  text-align: center;
+}

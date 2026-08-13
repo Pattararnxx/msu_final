@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.name {
+  margin: 0;
+  color: var(--b-900);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.phone {
+  color: var(--b-600);
+  font-size: 13px;
+}
+
+.actions {
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+}

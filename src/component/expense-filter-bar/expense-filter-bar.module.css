@@ -1,0 +1,52 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--b-0);
+  border: 1px solid var(--b-100);
+}
+
+.controls {
+  flex-wrap: wrap;
+}
+
+.dateButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-gray-4);
+  background: var(--b-0);
+  color: var(--b-800);
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dateButton:hover {
+    background: var(--b-50);
+    border-color: var(--mantine-color-gray-5);
+  }
+}
+
+.dateModeToggle {
+  flex-shrink: 0;
+}
+
+@media (max-width: 780px) {
+  .bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dateModeToggle {
+    width: 100%;
+  }
+}
