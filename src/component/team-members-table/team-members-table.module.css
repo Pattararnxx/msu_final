@@ -1,23 +1,32 @@
 .scrollContainer {
   border-radius: var(--mantine-radius-lg);
-  border: 1px solid var(--b-100);
-  background: var(--b-0);
+  border: 1px solid var(--blue-100);
+  background: var(--mantine-color-white);
+  overflow: hidden;
 }
 
 .table thead tr {
-  background: var(--b-50);
+  background: var(--blue-50);
 }
 
 .table th {
-  color: var(--b-600);
+  color: var(--blue-700);
   font-weight: 600;
   font-size: 12px;
   white-space: nowrap;
 }
 
 .table td {
-  color: var(--b-800);
+  color: var(--blue-900);
   font-size: 13.5px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--blue-100);
+}
+
+.table tbody tr:hover {
+  background: var(--blue-50);
 }
 
 .permissionCol {
@@ -28,14 +37,13 @@
   min-width: 220px;
 }
 
-/* Mantine composes its border from the --input-bd variable rather than a
-   literal border-color, so overriding that (not "border") is what
-   actually removes it without fighting Mantine's own cascade. */
 .permissionInput {
-  --input-bd: transparent;
-  --input-bg: transparent;
-  --input-disabled-bg: transparent;
-  background-color: transparent;
+  --input-bd: var(--blue-200);
+  --input-bg: var(--blue-50);
+  --input-disabled-bg: var(--blue-100);
+
+  background-color: var(--blue-50);
+  color: var(--blue-900);
 }
 
 .weekCol {
@@ -58,11 +66,15 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+
   width: 32px;
   height: 32px;
+
   border-radius: var(--mantine-radius-md);
-  background: var(--yellow);
-  color: var(--b-900);
+
+  background: var(--blue-100);
+  color: var(--blue-700);
+
   font-weight: 700;
   font-size: 13px;
 }
@@ -78,7 +90,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--b-900);
+
+  color: var(--blue-900);
   font-weight: 600;
   font-size: 13.5px;
 }
@@ -86,18 +99,20 @@
 .ownerTag {
   padding: 1px 7px;
   border-radius: 999px;
-  background: var(--primary-100);
-  color: var(--primary-800);
+
+  background: var(--blue-100);
+  color: var(--blue-700);
+
   font-size: 10.5px;
   font-weight: 700;
 }
 
 .role {
-  color: var(--b-500);
+  color: var(--blue-500);
   font-size: 12px;
 }
 
 .mutedCell {
-  color: var(--b-600);
+  color: var(--blue-600);
   white-space: nowrap;
 }

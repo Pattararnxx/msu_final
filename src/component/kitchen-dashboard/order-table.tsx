@@ -7,6 +7,7 @@ import styles from "./order-table.module.css";
 interface OrderTableProps {
   orders: ComputedOrder[];
   limit?: number;
+  forecast?: boolean;
 }
 
 function formatTime(t: number): string {
@@ -27,11 +28,11 @@ function formatUsage(order: ComputedOrder): string {
 // finished computing the moment it was recorded (see the scope note in
 // lib/kitchen-dashboard/types.ts), so there is no "pending/done" state to
 // show. Newest first.
-export default function OrderTable({ orders, limit = 25 }: OrderTableProps) {
+export default function OrderTable({ orders, limit = 25, forecast = false }: OrderTableProps) {
   const rows = [...orders].reverse().slice(0, limit);
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastReference : ""}`}>
       <div className={styles.head}>
         <h3 className={styles.title}>รายการ order ที่ประมวลผลแล้ว</h3>
         <span className={styles.subtitle}>ล่าสุด {rows.length} รายการ</span>

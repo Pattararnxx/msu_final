@@ -8,6 +8,19 @@
   border: 1px solid var(--b-100);
 }
 
+.forecastCard {
+  border-color: var(--forecast-accent);
+}
+
+.forecastRange {
+  padding: 6px 10px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--forecast-accent-soft);
+  color: var(--forecast-accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .head {
   display: flex;
   flex-wrap: wrap;
