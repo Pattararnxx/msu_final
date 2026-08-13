@@ -1,0 +1,303 @@
+.page {
+  /* /menu does not render AnnouncementBar. DashboardSidebar is fixed after
+     the latest shell pull, so keep its inherited offset at zero on this
+     route instead of leaving a phantom 40px strip above the board. */
+  --announcement-bar-height: 0px;
+  min-height: 100dvh;
+  background: var(--b-50);
+}
+
+.shell {
+  display: flex;
+  align-items: stretch;
+  min-height: 100dvh;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 14px;
+  margin-left: 272px;
+  padding: 20px 24px 40px;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--b-500);
+  font-size: 12px;
+}
+
+.breadcrumbs :global(img) {
+  opacity: 0.75;
+}
+
+.breadcrumbCurrent {
+  color: var(--b-700);
+  font-weight: 600;
+}
+
+.headingRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heading {
+  color: var(--b-900);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.headingMeta {
+  margin-top: 5px;
+  color: var(--b-600);
+}
+
+.boardToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--b-100);
+  border-bottom: 1px solid var(--b-100);
+}
+
+.search {
+  width: min(360px, 100%);
+}
+
+.toolbarMeta {
+  flex-shrink: 0;
+  color: var(--b-600);
+  font-size: 12px;
+}
+
+.toolbarLabel {
+  color: var(--b-500);
+}
+
+.boardMode {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--b-800);
+  font-weight: 600;
+}
+
+.resultCount {
+  padding-left: 10px;
+  border-left: 1px solid var(--b-200);
+  font-variant-numeric: tabular-nums;
+}
+
+.filterTabs {
+  margin-top: -2px;
+}
+
+.filterTabs :global(.mantine-Tabs-list) {
+  gap: 2px;
+  border-bottom-color: var(--b-200);
+}
+
+.filterTabs :global(.mantine-Tabs-tab) {
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 3px 3px 0 0;
+  color: var(--b-600);
+  font-size: 13px;
+}
+
+.filterTabs :global(.mantine-Tabs-tab:hover) {
+  background: var(--b-100);
+  color: var(--b-900);
+}
+
+.filterTabs :global(.mantine-Tabs-tab[data-active]) {
+  color: var(--b-900);
+  font-weight: 700;
+}
+
+.boardViewport {
+  min-width: 0;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+}
+
+.board {
+  display: grid;
+  gap: 12px;
+  min-width: max-content;
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  min-width: 240px;
+  min-height: 340px;
+  flex-direction: column;
+  border: 1px solid var(--b-100);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--b-100) 42%, var(--b-50));
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 7px 8px 7px 12px;
+  border-bottom: 1px solid var(--b-200);
+}
+
+.columnHeading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--b-800);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.columnDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--b-500);
+}
+
+.column[data-color="teal"] .columnDot {
+  background: var(--mantine-color-teal-6);
+}
+
+.column[data-color="orange"] .columnDot {
+  background: var(--mantine-color-orange-6);
+}
+
+.column[data-color="red"] .columnDot {
+  background: var(--mantine-color-red-6);
+}
+
+.column[data-color="blue"] .columnDot {
+  background: var(--mantine-color-blue-6);
+}
+
+.columnCount {
+  min-width: 20px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--b-200);
+  color: var(--b-700);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.columnBody {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.columnEmpty {
+  padding: 24px 12px;
+  color: var(--b-500);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.addCard {
+  justify-content: flex-start;
+  min-height: 36px;
+  margin-top: auto;
+  padding: 7px 8px;
+  color: var(--b-600);
+  font-size: 12px;
+}
+
+.addCard:hover {
+  background: var(--b-100);
+  color: var(--b-900);
+}
+
+.boardEmpty {
+  min-width: 240px;
+  padding: 36px 20px;
+  border: 1px dashed var(--b-300);
+  border-radius: 4px;
+  color: var(--b-600);
+  font-size: 13px;
+  text-align: center;
+}
+
+.emptyState {
+  padding: 48px 20px;
+  border: 1px solid var(--b-100);
+  border-radius: 4px;
+  background: var(--b-0);
+  color: var(--b-500);
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .page {
+    padding-top: 56px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 20px 20px 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    gap: 12px;
+    padding: 16px 16px 32px;
+  }
+
+  .headingRow,
+  .boardToolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .headingRow :global(.mantine-Button-root) {
+    align-self: flex-start;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .toolbarMeta {
+    justify-content: space-between;
+  }
+
+  .boardViewport {
+    overflow-x: visible;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .board {
+    grid-template-columns: 1fr !important;
+    min-width: 0;
+  }
+
+  .column {
+    min-width: 0;
+    min-height: 0;
+  }
+}
