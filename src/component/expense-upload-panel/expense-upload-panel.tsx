@@ -13,7 +13,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
-import type { FoodType, PaymentStatus } from "@/lib/expense/types";
+import type { PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
 
@@ -52,7 +52,12 @@ interface StagedEntry {
   draft: DraftLineItem;
 }
 
-const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
+const DOCUMENT_TYPES: DocumentType[] = [
+  "ใบเสร็จรับเงิน",
+  "สลิปโอนเงิน",
+  "ใบกำกับภาษี",
+  "อื่นๆ",
+];
 const CATEGORIES = [
   "วัตถุดิบ",
   "ค่าเช่าร้าน",
@@ -70,42 +75,42 @@ const PAYMENT_STATUSES: PaymentStatus[] = ["จ่ายแล้ว", "รอ�
 // what makes "upload a photo → fields fill themselves" demonstrable.
 const MOCK_EXTRACTIONS: Array<{
   vendor: string;
-  documentType: FoodType;
+  documentType: DocumentType;
   category: string;
   description: string;
   amountRange: [number, number];
 }> = [
   {
     vendor: "ตลาดสดเช้าสี่มุมเมือง",
-    documentType: "โจ๊ก",
+    documentType: "ใบเสร็จรับเงิน",
     category: "วัตถุดิบ",
     description: "ค่าวัตถุดิบสด",
     amountRange: [800, 4500],
   },
   {
     vendor: "ร้านกาแฟคั่วบ้านๆ",
-    documentType: "ข้าวต้ม",
+    documentType: "สลิปโอนเงิน",
     category: "วัตถุดิบ",
     description: "ค่าเมล็ดกาแฟและนมสด",
     amountRange: [500, 2000],
   },
   {
     vendor: "ร้านแก๊สหุงต้มบุญมี",
-    documentType: "ก๋วยจั๊บ",
+    documentType: "ใบเสร็จรับเงิน",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าแก๊สหุงต้ม",
     amountRange: [900, 1800],
   },
   {
     vendor: "ร้านข้าวสารบุญมี",
-    documentType: "ข้าวต้ม",
+    documentType: "ใบเสร็จรับเงิน",
     category: "วัตถุดิบ",
     description: "ค่าข้าวสารและเส้นก๋วยเตี๋ยว",
     amountRange: [1000, 3000],
   },
   {
     vendor: "บมจ. การไฟฟ้า",
-    documentType: "โจ๊ก",
+    documentType: "ใบเสร็จรับเงิน",
     category: "ค่าสาธารณูปโภค",
     description: "ค่าไฟฟ้าร้าน",
     amountRange: [1500, 4000],
@@ -419,6 +424,10 @@ export default function ExpenseUploadPanel({
                 </UnstyledButton>
               )}
 
+              {summaryText && (
+                <span className={styles.summary}>{summaryText}</span>
+              )}
+
               {/* Only this list scrolls — everything above (dropzone/add
                   buttons/manual-entry link) stays put so it's always
                   reachable no matter how many entries pile up. */}
@@ -509,7 +518,7 @@ export default function ExpenseUploadPanel({
                             onChange={(value) =>
                               value &&
                               updateDraft(entry.id, {
-                                documentType: value as FoodType,
+                                documentType: value as DocumentType,
                               })
                             }
                             checkIconPosition="right"
