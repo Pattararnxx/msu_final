@@ -15,7 +15,7 @@ import styles from "./chatbot.module.css";
 // The panel is kept mounted for the short close transition, then removed by
 // ChatbotShell. Its fixed right-edge placement is controlled by module styles.
 export default function Chatbot({ visible }: { visible: boolean }) {
-  const { close } = useChatbot();
+ const { close, consumePendingQuestion } = useChatbot();
   const { turns, pending, error, send } = useChatSession();
   const [draft, setDraft] = useState("");
   const [lastSubmitted, setLastSubmitted] = useState("");
