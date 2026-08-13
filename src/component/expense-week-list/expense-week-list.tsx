@@ -35,17 +35,21 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
   };
 
   if (groups.length === 0) {
-    return <div className={styles.empty}>ไม่มีรายการค่าใช้จ่ายในช่วงที่เลือก</div>;
+    return (
+      <div className={styles.empty}>ไม่มีรายการค่าใช้จ่ายในช่วงที่เลือก</div>
+    );
   }
 
   return (
     <Table.ScrollContainer minWidth={880} className={styles.scrollContainer}>
-      <Table verticalSpacing={10} horizontalSpacing="md" className={styles.table}>
+      <Table
+        verticalSpacing={10}
+        horizontalSpacing="md"
+        className={styles.table}
+      >
         <Table.Thead>
           <Table.Tr>
-            <Table.Th className={styles.checkboxCol}>
-              <Checkbox aria-label="เลือกทั้งหมด" size="xs" />
-            </Table.Th>
+            <Table.Th className={styles.checkboxCol}></Table.Th>
             <Table.Th>วันที่</Table.Th>
             <Table.Th>ประเภทเอกสาร</Table.Th>
             <Table.Th>ร้านค้า</Table.Th>
@@ -74,14 +78,18 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                         size="xs"
                         onClick={(event) => event.stopPropagation()}
                       />
-                      <span className={styles.groupLabel}>สัปดาห์ {group.rangeLabel}</span>
+                      <span className={styles.groupLabel}>
+                        สัปดาห์ {group.rangeLabel}
+                      </span>
                       <Badge size="sm" variant="light" color="gray" radius="sm">
                         {group.items.length} รายการ
                       </Badge>
                       <span className={styles.groupTotal}>
                         ยอดรวม ฿{formatCurrency(group.total)}
                       </span>
-                      <span className={isOpen ? styles.caretOpen : styles.caret}>
+                      <span
+                        className={isOpen ? styles.caretOpen : styles.caret}
+                      >
                         <Icon src="/icon/regular/caret-down.svg" size={16} />
                       </span>
                     </button>
@@ -92,21 +100,33 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                   group.items.map((item) => (
                     <Table.Tr key={item.id}>
                       <Table.Td>
-                        <Checkbox aria-label={`เลือก ${item.description}`} size="xs" />
+                        <Checkbox
+                          aria-label={`เลือก ${item.description}`}
+                          size="xs"
+                        />
                       </Table.Td>
                       <Table.Td className={styles.dateCell}>
                         {formatThaiDate(item.date)}
                       </Table.Td>
                       <Table.Td>
-                        <Badge size="sm" variant="outline" color="gray" radius="sm">
+                        <Badge
+                          size="sm"
+                          variant="outline"
+                          color="gray"
+                          radius="sm"
+                        >
                           {item.documentType}
                         </Badge>
                       </Table.Td>
-                      <Table.Td className={styles.vendorCell}>{item.vendor}</Table.Td>
+                      <Table.Td className={styles.vendorCell}>
+                        {item.vendor}
+                      </Table.Td>
                       <Table.Td className={styles.descriptionCell}>
                         {item.description}
                       </Table.Td>
-                      <Table.Td className={styles.payerCell}>{item.payer}</Table.Td>
+                      <Table.Td className={styles.payerCell}>
+                        {item.payer}
+                      </Table.Td>
                       <Table.Td>
                         <Badge
                           size="sm"
@@ -127,7 +147,10 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                           aria-label="ลบรายการ"
                           size="sm"
                         >
-                          <Icon src="/icon/regular/trash-simple.svg" size={16} />
+                          <Icon
+                            src="/icon/regular/trash-simple.svg"
+                            size={16}
+                          />
                         </ActionIcon>
                       </Table.Td>
                     </Table.Tr>

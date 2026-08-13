@@ -42,6 +42,17 @@
   text-align: center;
 }
 
+@media (max-width: 960px) {
+  // DashboardSidebar's mobile bar is position: fixed at this breakpoint
+  // (see dashboard-sidebar.module.css) so it stays pinned above the
+  // announcement banner instead of scrolling with it — this padding
+  // reserves its 56px height so the banner and shell start below it
+  // instead of hiding underneath it.
+  .page {
+    padding-top: 56px;
+  }
+}
+
 @media (max-width: 640px) {
   .content {
     padding: 16px 16px 32px;
