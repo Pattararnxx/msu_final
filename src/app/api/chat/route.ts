@@ -15,8 +15,8 @@ import {
   buildMockAnswer,
   getModel,
   hasApiKey,
-} from "@/lib/property/agent";
-import { propertyTools } from "@/lib/property/tools";
+} from "@/lib/marketing/agent";
+import { marketingTools } from "@/lib/marketing/tools";
 
 export const maxDuration = 60;
 
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
         model: getModel(),
         system: SYSTEM_PROMPT,
         messages: modelMessages,
-        tools: propertyTools,
+        tools: marketingTools,
         stopWhen: isStepCount(MAX_TOOL_STEPS),
       });
 
@@ -106,7 +106,7 @@ export async function POST(request: Request) {
     model: getModel(),
     system: SYSTEM_PROMPT,
     messages: modelMessages,
-    tools: propertyTools,
+    tools: marketingTools,
     stopWhen: isStepCount(MAX_TOOL_STEPS),
   });
 

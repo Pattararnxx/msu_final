@@ -1,10 +1,17 @@
-import { Box, Stack, Text, UnstyledButton } from "@mantine/core";
+import { Box, Group, Stack, Text, UnstyledButton } from "@mantine/core";
+import Icon from "@/component/icon/icon";
 import styles from "./chatbot.module.css";
 
 export const CHATBOT_SUGGESTIONS = [
-  "คอนโดแถวอโศก ราคาเท่าไหร่",
-  "ป่าตอง อีก 12 เดือนราคาจะเป็นยังไง",
-  "เทียบ อโศก กับ มีนบุรี",
+  "ช่วยคิดโปรโมชันจากเมนูขายดีของร้าน",
+  "ร่างโพสต์ Facebook ดันโจ๊กหมูให้หน่อย",
+  "จัดชุดอาหารเช้าเพิ่มยอดต่อบิลให้หน่อย",
+];
+
+const SUGGESTION_ICONS = [
+  "/icon/regular/megaphone.svg",
+  "/icon/regular/note-pencil.svg",
+  "/icon/regular/bowl-food.svg",
 ];
 
 interface ChatbotWelcomeProps {
@@ -15,12 +22,23 @@ export default function ChatbotWelcome({ onSelect }: ChatbotWelcomeProps) {
   return (
     <Box className={styles.welcome}>
       <Box className={styles.welcomeIntro}>
+        <span className={styles.welcomeMark} aria-hidden="true">
+          <Icon src="/icon/regular/sparkle.svg" size={18} />
+        </span>
         <Text component="h1" className={styles.welcomeTitle}>
-          แชทบอท
+          วางแผนการตลาดร้านให้พร้อมขาย
         </Text>
         <Text component="p" className={styles.welcomeDescription}>
-          ฉันสามารถช่วยตอบคำถามเกี่ยวกับราคา แนวโน้ม และทำเลได้
+          ฉันช่วยเลือกเมนูที่จะดัน คิดโปรโมชัน และร่างโพสต์ให้เข้ากับร้านได้
         </Text>
+      </Box>
+
+      <Box className={styles.dataHint}>
+        <Group gap={7} wrap="nowrap">
+          <Icon src="/icon/regular/database.svg" size={15} />
+          <Text component="span">ข้อมูลอ้างอิง: เมนู ราคา และยอดขายในระบบ</Text>
+        </Group>
+        <Text component="p">ทุกโปรโมชันเป็นร่าง ต้องอนุมัติก่อนใช้จริง</Text>
       </Box>
 
       <Box component="section" aria-labelledby="chatbot-suggestions-title">
@@ -28,15 +46,17 @@ export default function ChatbotWelcome({ onSelect }: ChatbotWelcomeProps) {
           ลองถาม
         </Text>
         <Stack gap={8} mt={8}>
-          {CHATBOT_SUGGESTIONS.map((suggestion) => (
+          {CHATBOT_SUGGESTIONS.map((suggestion, index) => (
             <UnstyledButton
               key={suggestion}
               className={styles.suggestion}
               onClick={() => onSelect(suggestion)}
             >
+              <Icon src={SUGGESTION_ICONS[index]} size={16} />
               <Text component="span" className={styles.suggestionText}>
                 {suggestion}
               </Text>
+              <Icon src="/icon/regular/arrow-right.svg" size={14} />
             </UnstyledButton>
           ))}
         </Stack>
