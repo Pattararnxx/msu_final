@@ -20,15 +20,31 @@
 
 ## Current prototype
 
-- `src/app/api/order-ocr/route.ts` — endpoint OCR ใบออร์เดอร์ด้วย Gemini รองรับ JPG,
-  PNG และ WebP ไม่เกิน 10 MB
-- `src/lib/order-ocr/schema.ts` — schema `restaurant.order.v1` สำหรับรายการเมนู,
-  modifiers, ยอดรวม และสถานะการตรวจทาน
+- `src/app/api/order-ocr/route.ts` — endpoint OCR ใบออร์เดอร์ด้วย Typhoon
+  รองรับ JPG และ PNG ไม่เกิน 10 MB, รับ `file` หนึ่งภาพหรือ `files` หลายภาพ
+  (สูงสุด 10 ภาพต่อ request) แล้วคืนฟิลด์ชุดเดียวกับ draft ใน upload panel
+- `src/lib/order-ocr/schema.ts` — schema `restaurant.order.v2` สำหรับผล OCR,
+  confidence, raw text และสถานะที่ต้อง human review
+- `src/component/expense-upload-panel/expense-upload-panel.tsx` — อัปโหลดหลายภาพ,
+  แสดงสถานะ OCR ต่อไฟล์, retry, แก้ไขผล และมีภาพตัวอย่างทั้งพิมพ์และลายมือที่อยู่ใน `/mock/`
 - `docs/Hackathon_MSU_2026_Restaurant_Operations.md` — product brief และบริบทการแข่งขัน
 - `.whipui/project-dna.json` — durable context สำหรับงานออกแบบและพัฒนาต่อ
 
-ปัจจุบันมีฐานของ OCR และ validation แล้ว ส่วนหน้ารวมหลายใบ ใบเสร็จ และการประมาณการ
-วัตถุดิบต้องต่อยอดจาก schema เดียวกัน โดยต้องเก็บที่มาของรายการและ assumptions ที่ใช้คำนวณ
+การใช้งาน OCR ต้องตั้งค่า `TYPHOON_OCR_API_KEY` ก่อน ระบบจะเรียก Typhoon OCR เพื่อถอด
+ข้อความ แล้วเรียก text model เพื่อจัดรูปเป็น `orderNumber`, `customerName`, `items`,
+`toppings`, `orderedAt`, `orderType`, ราคา และหมายเหตุที่ panel ใช้โดยตรง
+เลขออร์เดอร์เป็น unique identifier เพียงตัวเดียว ไม่มี workflow รายจ่ายหรือเลขใบเสร็จ
+ถ้าโพยลายมือไม่มีเลขออร์เดอร์ ระบบจะสร้างเลขออร์เดอร์ unique ให้ และถ้าไม่มีวันเวลา
+จะใช้ metadata ของไฟล์เป็นค่าเริ่มต้นพร้อมบังคับให้พนักงานตรวจทาน
+หากอ่านไม่ชัดหรือ confidence ต่ำกว่า 70% ปุ่มถัดไปจะยังไม่เปิดจนกว่าจะมีพนักงานกดตรวจแล้ว
+
+ตั้งค่าใน `.env.local`:
+
+```bash
+TYPHOON_OCR_API_KEY=your_opentyphoon_api_key
+TYPHOON_OCR_MODEL=typhoon-ocr
+TYPHOON_NORMALIZER_MODEL=typhoon-v2.5-30b-a3b-instruct
+```
 
 ## Getting Started
 
