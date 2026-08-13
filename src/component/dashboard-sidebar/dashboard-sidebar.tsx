@@ -48,7 +48,7 @@ interface UsageStat {
 // to-dos → primary nav → business-management nav) mirrors the reference
 // layout; icons are Phosphor, not baked-in art.
 const TODOS: TodoItem[] = [
-  { label: "เอกสารรอเซ็นวันนี้", count: 0, icon: "/icon/regular/pencil-simple.svg" },
+  { label: "งานที่ต้องทำ", count: 0, icon: "/icon/regular/pencil-simple.svg" },
   { label: "งานที่ต้องตรวจสอบ/จัดการ", count: 19, icon: "/icon/regular/list-checks.svg" },
 ];
 
@@ -139,8 +139,7 @@ function SidebarContent({ afterNavigate }: { afterNavigate?: () => void }) {
         <Stack gap={0} className={styles.businessInfo}>
           <span className={styles.businessName}>iEat</span>
           <Group gap={4} className={styles.businessPhone}>
-            <Icon src="/icon/regular/phone-list.svg" size={12} />
-            0897624784
+             58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม
           </Group>
         </Stack>
         <Icon src="/icon/regular/caret-down.svg" size={14} />
