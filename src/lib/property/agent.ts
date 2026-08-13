@@ -11,7 +11,8 @@ import {
 import { DATASET_COVERAGE } from "./tools";
 import type { PropertyType } from "./types";
 
-export const MODEL_ID = "deepseek-chat";
+export const DEFAULT_MODEL_ID = "deepseek-v4-flash";
+export const MODEL_ID = process.env.DEEPSEEK_MODEL?.trim() || DEFAULT_MODEL_ID;
 export const MAX_TOOL_STEPS = 6;
 
 export function hasApiKey(): boolean {

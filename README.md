@@ -13,6 +13,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ตั้งค่า: คัดลอก `.env.example` เป็น `.env.local` แล้วใส่ `DEEPSEEK_API_KEY`
 ถ้าไม่มีคีย์ endpoint ยังตอบได้จากเทมเพลตออฟไลน์ที่อ่านข้อมูลชุดเดียวกัน
 
+DeepSeek ใช้โมเดลที่กำหนดใน `DEEPSEEK_MODEL` (ค่าเริ่มต้นคือ `deepseek-v4-flash`)
+และเปลี่ยนได้โดยไม่ต้องแก้โค้ด
+
+ThaiBankSlip ถูกเตรียม integration ไว้ที่ `/api/integrations/thaibankslip`
+และลิงก์เอกสารคือ <https://thaibankslip.com/docs> แต่ตอนนี้ endpoint นี้คืนเฉพาะ
+สถานะการเตรียมระบบและยังไม่เรียกตรวจสลิปจริง เปิดใช้งานภายหลังเมื่อยืนยัน API
+endpoint, authentication และ payload จากผู้ให้บริการแล้ว
+
 สร้างข้อมูลใหม่ (เขียนทับ `src/data/`):
 
 ```bash
