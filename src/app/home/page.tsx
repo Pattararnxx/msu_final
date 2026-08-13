@@ -33,11 +33,7 @@ const Home = () => {
       <div className={styles.shell}>
         <DashboardSidebar />
 
-        <main
-          className={
-            uploadOpened ? `${styles.content} ${styles.contentSqueezed}` : styles.content
-          }
-        >
+        <main className={styles.content}>
           <ExpenseHeader
             businessName="โจ๊กป้าแดง"
             phone=" 58 สามแยกกาฬสินธุ์ ถ.ถีนานนท์ ต.ตลาด อ.เมือง จ.มหาสารคาม"

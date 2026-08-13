@@ -11,8 +11,6 @@ export interface ExpenseItem {
   id: string;
   /** ISO date, e.g. "2026-04-16" */
   date: string;
-  /** One or more dishes in the order — most are one, some are several */
-  foodItems: FoodType[];
   /**
    * The customer's name, when the order photo actually shows one.
    * Absent for table numbers / delivery-platform orders — the UI falls
@@ -22,5 +20,7 @@ export interface ExpenseItem {
   description: string;
   /** Time the order photo was uploaded, e.g. "07:42" */
   uploadedAt: string;
+  /** Staff member who uploaded the order photo, e.g. "แม่ครัวใหญ่ สมศรี" */
+  uploadedBy: string;
   amount: number;
 }

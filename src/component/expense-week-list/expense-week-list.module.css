@@ -82,7 +82,8 @@
   white-space: nowrap;
 }
 
-.customerNameCell {
+.customerNameCell,
+.uploadedByCell {
   max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;

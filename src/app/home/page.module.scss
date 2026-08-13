@@ -27,7 +27,6 @@
   margin-top: var(--announcement-bar-height);
   margin-left: 272px;
   padding: 24px 32px 48px;
-  transition: margin-right 260ms ease;
 }
 
 @media (max-width: 960px) {
@@ -38,22 +37,14 @@
   }
 }
 
-/* Applied by Home alongside ExpenseUploadPanel's own `opened` prop — the
-   panel is position: fixed (see expense-upload-panel.module.css), so it
-   no longer pushes .content over on its own the way an in-flow flex
-   sibling would; this reserves the matching space instead, in lockstep
-   with the panel's own 420px width and slide transition. */
-.contentSqueezed {
-  margin-right: 420px;
-}
-
-@media (max-width: 640px) {
-  .contentSqueezed {
-    /* The panel takes over the full screen below 640px instead of
-       pushing — nothing to reserve space for. */
-    margin-right: 0;
-  }
-}
+/* No .contentSqueezed here anymore — ExpenseUploadPanel (see
+   expense-upload-panel.module.css) is back to being a real sticky flex
+   sibling of .content inside .shell, so its own width: 0 → 420px
+   transition already pushes .content over through normal flex layout.
+   Adding a matching margin-right on top of that was double-reserving the
+   same space (real flex-driven squeeze + this margin stacked = ~840px of
+   pushback instead of 420px) — that's what was making the layout look
+   over-compressed. */
 
 .tabs {
   display: flex;

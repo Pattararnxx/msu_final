@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { ActionIcon, Badge, Checkbox, Group, Table } from "@mantine/core";
+import { ActionIcon, Badge, Checkbox, Table } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ExpenseWeekGroup } from "@/lib/expense/group-by-week";
 import { formatCurrency, formatThaiDate } from "@/lib/expense/group-by-week";
@@ -38,7 +38,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
           <Table.Tr>
             <Table.Th className={styles.checkboxCol}></Table.Th>
             <Table.Th>วันที่</Table.Th>
-            <Table.Th>รายการอาหาร</Table.Th>
+            <Table.Th>พนักงานที่อัปโหลด</Table.Th>
             <Table.Th>ชื่อผู้สั่ง</Table.Th>
             <Table.Th>รายละเอียด</Table.Th>
             <Table.Th>เวลาอัปโหลด</Table.Th>
@@ -94,15 +94,7 @@ export default function ExpenseWeekList({ groups }: ExpenseWeekListProps) {
                       <Table.Td className={styles.dateCell}>
                         {formatThaiDate(item.date)}
                       </Table.Td>
-                      <Table.Td>
-                        <Group gap={4} wrap="wrap">
-                          {item.foodItems.map((food) => (
-                            <Badge key={food} size="sm" variant="outline" color="gray" radius="sm">
-                              {food}
-                            </Badge>
-                          ))}
-                        </Group>
-                      </Table.Td>
+                      <Table.Td className={styles.uploadedByCell}>{item.uploadedBy}</Table.Td>
                       <Table.Td className={styles.customerNameCell}>
                         {item.customerName ? (
                           item.customerName
