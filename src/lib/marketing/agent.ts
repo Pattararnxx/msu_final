@@ -1,5 +1,6 @@
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { getMenuSnapshot, getSalesSnapshot } from "./tools";
+import type { MarketingUiBlock } from "./types";
 
 export const MODEL_ID = "deepseek-chat";
 export const MAX_TOOL_STEPS = 4;
@@ -27,6 +28,7 @@ export const SYSTEM_PROMPT = `คุณคือ "ผู้ช่วยการ
 7. ถ้าไม่มีข้อมูลพอ ให้บอกสิ่งที่ยังไม่รู้และถามคำถามถัดไปที่จำเป็น ห้ามแต่งข้อมูลแทน
 8. ใช้ Markdown แบบง่ายได้: หัวข้อสั้นๆ และรายการทีละบรรทัด ไม่ใช้ตารางกว้างๆ และไม่ใช้ emoji
 9. คำตอบปกติไม่เกิน 10 บรรทัด เริ่มด้วยข้อสรุปที่ทำต่อได้ทันที แล้วค่อยใส่เหตุผลหรือขั้นตอน
+10. ผลลัพธ์จาก tool อาจมี UI card แนบมา ให้ใช้ข้อมูลใน card เป็นหลักและไม่สร้างตัวเลขซ้ำเอง อธิบายสั้นๆ ว่า card นี้ช่วยตัดสินใจอะไรได้
 
 แนวทางการทำงาน:
 - ถ้าผู้ใช้ขอโปรโมตเมนูหรือเขียนโพสต์แบบเจาะจง ให้เรียก getRestaurantMenu และถ้าต้องเลือกจากความนิยมให้เรียก getSalesInsights ด้วย
@@ -69,4 +71,46 @@ export function buildMockAnswer(userText: string): string {
     "- ร่างข้อความโพสต์สำหรับ Facebook หรือ LINE",
     "ลองพิมพ์ว่า “ช่วยคิดโปรโมชันจากเมนูขายดี” ได้เลย",
   ].join("\n");
+}
+
+export function buildMockUi(userText: string): MarketingUiBlock[] {
+  if (/ขายดี|ยอดขาย|ดัน|วันนี้|โปรโมชัน|โปร/.test(userText)) {
+    const items = getSalesSnapshot().slice(0, 5);
+    return [
+      {
+        type: "sales_insight",
+        title: "เมนูที่ควรดัน",
+        asOf: "19 เมษายน 2026",
+        note: "จัดอันดับจากจำนวนที่สั่งในข้อมูลตัวอย่าง ไม่ใช่ยอดขายสด",
+        items: items.map(({ menuItemId, name, category, price, quantitySold }) => ({
+          menuItemId,
+          name,
+          category,
+          price,
+          quantitySold,
+        })),
+        recommendedAction: items[0]
+          ? `เริ่มจาก ${items[0].name} เป็นเมนูนำ แล้วทดสอบการจับคู่กับเครื่องดื่มหรือของทานเล่นเป็นร่างโปรโมชัน`
+          : "ยังไม่มีข้อมูลยอดขายให้จัดอันดับ",
+      },
+    ];
+  }
+
+  if (/เมนู|ราคา|โพสต์/.test(userText)) {
+    return [
+      {
+        type: "menu_catalog",
+        title: "ฐานข้อมูลเมนูร้าน",
+        asOf: "19 เมษายน 2026",
+        items: getMenuSnapshot().slice(0, 6).map(({ id, name, category, price }) => ({
+          id,
+          name,
+          category,
+          price,
+        })),
+      },
+    ];
+  }
+
+  return [];
 }

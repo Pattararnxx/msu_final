@@ -3,23 +3,22 @@ import { z } from "zod";
 import { MOCK_EXPENSES } from "@/lib/expense/mock-data";
 import type { FoodType } from "@/lib/expense/types";
 import { MOCK_MENU_ITEMS } from "@/lib/menu/mock-data";
+import type {
+  MarketingMenuItem,
+  MarketingSalesItem,
+  MarketingUiBlock,
+} from "./types";
 
 const DATASET_SOURCE = "เมนูและออร์เดอร์ตัวอย่างที่ร้านตั้งไว้ในระบบ";
 const DATASET_AS_OF = "19 เมษายน 2026";
 
 const foodTypeSchema = z.enum(["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"]);
 
-interface SalesRow {
-  menuItemId: string;
-  name: string;
+interface SalesRow extends MarketingSalesItem {
   category: FoodType;
-  price: number;
-  quantitySold: number;
-  revenue: number;
-  orderCount: number;
 }
 
-export function getMenuSnapshot(category?: FoodType) {
+export function getMenuSnapshot(category?: FoodType): MarketingMenuItem[] {
   return MOCK_MENU_ITEMS
     .filter((item) => !category || item.category === category)
     .map((item) => ({
@@ -96,12 +95,24 @@ export const marketingTools: ToolSet = {
     inputSchema: z.object({
       category: foodTypeSchema.optional().describe("Optional menu category to filter."),
     }),
-    execute: async ({ category }) => ({
-      found: getMenuSnapshot(category).length > 0,
-      asOf: DATASET_AS_OF,
-      source: DATASET_SOURCE,
-      items: getMenuSnapshot(category),
-    }),
+    execute: async ({ category }) => {
+      const items = getMenuSnapshot(category);
+      return {
+        found: items.length > 0,
+        asOf: DATASET_AS_OF,
+        source: DATASET_SOURCE,
+        items,
+        ui:
+          items.length > 0
+            ? ({
+                type: "menu_catalog",
+                title: "ฐานข้อมูลเมนูร้าน",
+                asOf: DATASET_AS_OF,
+                items: items.map(({ id, name, category, price }) => ({ id, name, category, price })),
+              } satisfies MarketingUiBlock)
+            : undefined,
+      };
+    },
   }),
 
   getSalesInsights: tool({
@@ -131,6 +142,23 @@ export const marketingTools: ToolSet = {
         note: "เป็นยอดจากข้อมูลตัวอย่างในระบบ ไม่ใช่ยอดขายสดจาก POS",
         topItems: rows.slice(0, topN),
         categoryTotals,
+        ui:
+          rows.length > 0
+            ? ({
+                type: "sales_insight",
+                title: "เมนูที่ควรดัน",
+                asOf: DATASET_AS_OF,
+                note: "จัดอันดับจากจำนวนที่สั่งในข้อมูลตัวอย่าง ไม่ใช่ยอดขายสด",
+                items: rows.slice(0, topN).map(({ menuItemId, name, category, price, quantitySold }) => ({
+                  menuItemId,
+                  name,
+                  category,
+                  price,
+                  quantitySold,
+                })),
+                recommendedAction: `เริ่มจาก ${rows[0].name} เป็นเมนูนำ แล้วทดสอบการจับคู่กับเครื่องดื่มหรือของทานเล่นเป็นร่างโปรโมชัน`,
+              } satisfies MarketingUiBlock)
+            : undefined,
       };
     },
   }),
@@ -151,7 +179,18 @@ export const marketingTools: ToolSet = {
           message: "มีเมนูบางรายการที่ไม่พบใน catalogue ร้าน ให้เรียก getRestaurantMenu ก่อน",
         };
       }
-      return { found: true, asOf: DATASET_AS_OF, source: DATASET_SOURCE, ...bundle };
+      return {
+        found: true,
+        asOf: DATASET_AS_OF,
+        source: DATASET_SOURCE,
+        ...bundle,
+        ui: {
+          type: "bundle_draft",
+          title: "ร่างชุดโปรโมชัน",
+          asOf: DATASET_AS_OF,
+          ...bundle,
+        } satisfies MarketingUiBlock,
+      };
     },
   }),
 };

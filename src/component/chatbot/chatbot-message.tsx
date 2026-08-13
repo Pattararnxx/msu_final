@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import { Box, Group, Text } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ChatTurn } from "./use-chat-session";
+import MarketingUiBlocks from "./marketing-ui-blocks";
 import styles from "./chatbot.module.css";
 
 function renderInlineText(text: string): ReactNode[] {
@@ -58,9 +59,10 @@ function renderAssistantText(text: string) {
 
 interface ChatbotMessageProps {
   turn: ChatTurn;
+  onAsk?: (question: string) => void;
 }
 
-export default function ChatbotMessage({ turn }: ChatbotMessageProps) {
+export default function ChatbotMessage({ turn, onAsk }: ChatbotMessageProps) {
   const isUser = turn.role === "user";
   const toolLabels: Record<string, string> = {
     getRestaurantMenu: "catalogue เมนู",
@@ -95,6 +97,7 @@ export default function ChatbotMessage({ turn }: ChatbotMessageProps) {
       <Text component="div" className={styles.messageText}>
         {isUser ? turn.text : renderAssistantText(turn.text)}
       </Text>
+      {!isUser && <MarketingUiBlocks blocks={turn.ui} onAsk={onAsk} />}
     </Box>
   );
 }

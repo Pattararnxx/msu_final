@@ -107,7 +107,9 @@ export default function Chatbot({ visible }: { visible: boolean }) {
             <ChatbotWelcome onSelect={submit} />
           )}
 
-          {turns.map((turn) => <ChatbotMessage key={turn.id} turn={turn} />)}
+          {turns.map((turn) => (
+            <ChatbotMessage key={turn.id} turn={turn} onAsk={submit} />
+          ))}
 
           {pending && <ChatbotLoading />}
 
