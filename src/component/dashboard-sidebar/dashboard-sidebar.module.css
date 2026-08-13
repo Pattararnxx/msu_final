@@ -3,12 +3,20 @@
   flex-direction: column;
   flex-shrink: 0;
   width: 272px;
-  height: 100dvh;
+  height: 100vh;
+
   position: sticky;
   top: 0;
-  overflow: hidden;
+
   background: var(--b-0);
   border-right: 1px solid var(--b-100);
+}
+
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 12px 20px;
 }
 
 .businessCard {

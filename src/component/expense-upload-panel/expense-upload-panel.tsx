@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import Accordion, { type AccordionItem } from "@/component/accordion/accordion";
-import type { DocumentType, PaymentStatus } from "@/lib/expense/types";
+import type { FoodType, PaymentStatus } from "@/lib/expense/types";
 import { formatCurrency } from "@/lib/expense/group-by-week";
 import styles from "./expense-upload-panel.module.css";
 
@@ -34,7 +34,7 @@ interface PickedFile {
 interface DraftLineItem {
   fileId: string;
   date: string;
-  documentType: DocumentType;
+  documentType: FoodType;
   vendor: string;
   description: string;
   category: string;
@@ -43,12 +43,7 @@ interface DraftLineItem {
   amount: number | "";
 }
 
-const DOCUMENT_TYPES: DocumentType[] = [
-  "สลิปโอนเงิน",
-  "ใบเสร็จรับเงิน",
-  "ใบกำกับภาษี",
-  "อื่นๆ",
-];
+const DOCUMENT_TYPES: FoodType[] = ["ข้าวต้ม", "โจ๊ก", "ก๋วยจั๊บ", "อื่นๆ"];
 const CATEGORIES = [
   "วัตถุดิบ",
   "ค่าเช่าร้าน",
@@ -190,12 +185,12 @@ export default function ExpenseUploadPanel({ opened, onClose }: ExpenseUploadPan
             onChange={(event) => updateItem(item.fileId, { date: event.currentTarget.value })}
           />
           <Select
-            label="ประเภทเอกสาร"
+            label="ประเภทอาหาร"
             size="sm"
             data={DOCUMENT_TYPES}
             value={item.documentType}
             onChange={(value) =>
-              value && updateItem(item.fileId, { documentType: value as DocumentType })
+              value && updateItem(item.fileId, { documentType: value as FoodType })
             }
             checkIconPosition="right"
           />

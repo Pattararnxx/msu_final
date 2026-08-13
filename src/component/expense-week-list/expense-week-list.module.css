@@ -32,10 +32,14 @@
 
 .groupRow {
   background: var(--b-50);
+  /* No divider under the week header — sits flush against the order rows
+     below it instead of reading as its own framed block. */
+  border-bottom: none !important;
 }
 
 .groupCell {
   padding: 0 !important;
+  border-bottom: none !important;
 }
 
 .groupHeader {
@@ -74,15 +78,20 @@
 }
 
 .dateCell,
-.payerCell {
+.uploadedAtCell {
   white-space: nowrap;
 }
 
-.vendorCell {
-  max-width: 220px;
+.customerNameCell {
+  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.unknownName {
+  color: var(--b-400);
+  font-style: italic;
 }
 
 .descriptionCell {
