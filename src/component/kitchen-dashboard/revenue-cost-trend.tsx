@@ -8,12 +8,16 @@ import {
   bucketOrdersByTime,
   type TrendGranularity,
 } from "@/lib/kitchen-dashboard/engine";
-import { CHART_CATEGORICAL } from "@/lib/kitchen-dashboard/chart-colors";
+import {
+  CHART_CATEGORICAL,
+  FORECAST_CATEGORICAL,
+} from "@/lib/kitchen-dashboard/chart-colors";
 import type { ComputedOrder } from "@/lib/kitchen-dashboard/types";
 import styles from "./revenue-cost-trend.module.css";
 
 interface RevenueCostTrendProps {
   orders: ComputedOrder[];
+  forecast?: boolean;
 }
 
 const GRANULARITY_OPTIONS: { label: string; value: TrendGranularity }[] = [
@@ -23,34 +27,40 @@ const GRANULARITY_OPTIONS: { label: string; value: TrendGranularity }[] = [
 ];
 
 function formatBucketLabel(t: number, granularity: TrendGranularity): string {
-  const d = new Date(t);
-  if (granularity === "day") return `${d.getDate()}/${d.getMonth() + 1}`;
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mm = String(d.getMinutes()).padStart(2, "0");
-  return granularity === "hour" ? `${hh}:00` : `${hh}:${mm}`;
+  const date = new Date(t);
+  if (granularity === "day") {
+    return `${date.getDate()}/${date.getMonth() + 1}`;
+  }
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return granularity === "hour" ? `${hours}:00` : `${hours}:${minutes}`;
 }
 
-// Revenue vs. ingredient cost, live: every tick that adds a confirmed order
-// re-buckets straight from `orders` — profit is the visible gap between
-// the two lines, not a separately reconciled number.
-export default function RevenueCostTrend({ orders }: RevenueCostTrendProps) {
-  const [granularity, setGranularity] = useState<TrendGranularity>("minute");
+export default function RevenueCostTrend({
+  orders,
+  forecast = false,
+}: RevenueCostTrendProps) {
+  const [granularity, setGranularity] = useState<TrendGranularity>(
+    forecast ? "day" : "minute",
+  );
+  const colors = forecast ? FORECAST_CATEGORICAL : CHART_CATEGORICAL;
 
   const chartData = useMemo(() => {
-    const buckets = bucketOrdersByTime(orders, granularity);
-    return buckets.map((b) => ({
-      label: formatBucketLabel(b.t, granularity),
-      ยอดขาย: Math.round(b.revenue),
-      ต้นทุนวัตถุดิบ: Math.round(b.cost),
+    const buckets = bucketOrdersByTime(orders, forecast ? "day" : granularity);
+    return buckets.map((bucket) => ({
+      label: formatBucketLabel(bucket.t, forecast ? "day" : granularity),
+      รายได้: Math.round(bucket.revenue),
+      ต้นทุนวัตถุดิบ: Math.round(bucket.cost),
     }));
-  }, [orders, granularity]);
+  }, [orders, granularity, forecast]);
 
   const totals = useMemo(
     () =>
       orders.reduce(
-        (acc, o) => {
-          acc.revenue += o.revenue;
-          acc.cost += o.cost;
+        (acc, order) => {
+          acc.revenue += order.revenue;
+          acc.cost += order.cost;
           return acc;
         },
         { revenue: 0, cost: 0 },
@@ -61,7 +71,7 @@ export default function RevenueCostTrend({ orders }: RevenueCostTrendProps) {
   const marginPct = totals.revenue > 0 ? Math.round((profit / totals.revenue) * 100) : 0;
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <div className={styles.head}>
         <div className={styles.headText}>
           <h3 className={styles.title}>รายได้เทียบต้นทุนวัตถุดิบ</h3>
@@ -69,38 +79,37 @@ export default function RevenueCostTrend({ orders }: RevenueCostTrendProps) {
             กำไรขั้นต้นสะสม ฿{formatCurrency(profit)} ({marginPct}%)
           </span>
         </div>
-        <SegmentedControl
-          size="xs"
-          value={granularity}
-          onChange={(v) => setGranularity(v as TrendGranularity)}
-          data={GRANULARITY_OPTIONS}
-        />
+        {forecast ? (
+          <span className={styles.forecastRange}>คาดการณ์ 7 วัน</span>
+        ) : (
+          <SegmentedControl
+            size="xs"
+            value={granularity}
+            onChange={(value) => setGranularity(value as TrendGranularity)}
+            data={GRANULARITY_OPTIONS}
+          />
+        )}
       </div>
 
-      {/* >0, not >1 — "วัน" granularity legitimately collapses to a single
-          bucket for the length of this session (every order so far is
-          "today"), and that single real point should still render instead
-          of falling back to a placeholder. Dots turn on for sparse data
-          so a lone point isn't an invisible zero-length line. */}
       {chartData.length > 0 ? (
         <LineChart
           h={220}
           data={chartData}
           dataKey="label"
           series={[
-            { name: "ยอดขาย", color: CHART_CATEGORICAL[0] },
-            { name: "ต้นทุนวัตถุดิบ", color: CHART_CATEGORICAL[1] },
+            { name: "ต้นทุนวัตถุดิบ", color: colors[0] },
+            { name: "รายได้", color: colors[1] },
           ]}
           curveType="monotone"
           strokeWidth={2}
-          withDots={chartData.length <= 20}
+          withDots={forecast || chartData.length <= 20}
           withLegend
           legendProps={{ verticalAlign: "top", height: 32 }}
           gridAxis="y"
-          valueFormatter={(v) => `฿${formatCurrency(v)}`}
+          valueFormatter={(value) => `฿${formatCurrency(value)}`}
         />
       ) : (
-        <p className={styles.empty}>กำลังรอข้อมูลออร์เดอร์…</p>
+        <p className={styles.empty}>กำลังรอข้อมูล order...</p>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import styles from "./margin-ranking.module.css";
 
 interface MarginRankingProps {
   stats: MenuMarginStat[];
+  forecast?: boolean;
 }
 
 // Margin is a good/bad judgment (not "series 4"), so status color applies
@@ -66,13 +67,13 @@ function RankList({ title, items }: { title: string; items: MenuMarginStat[] }) 
 // Ranked from live per-dish margin (profit ÷ จำนวนที่ขาย จาก order จริง) —
 // not a count of completed tasks. Splits the sold menu into a top and
 // bottom half so no dish appears in both lists.
-export default function MarginRanking({ stats }: MarginRankingProps) {
+export default function MarginRanking({ stats, forecast = false }: MarginRankingProps) {
   const half = Math.min(5, Math.max(1, Math.floor(stats.length / 2)));
   const top = stats.slice(0, half);
   const bottom = stats.slice(-half).reverse();
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <h3 className={styles.title}>เมนูทำกำไรสูงสุด / ต่ำสุด</h3>
       <span className={styles.subtitle}>จัดอันดับจาก margin ต่อจานแบบสด</span>
       <div className={styles.grid}>

@@ -8,6 +8,10 @@
   border: 1px solid var(--b-100);
 }
 
+.forecastReference {
+  border-color: var(--b-200);
+}
+
 .head {
   display: flex;
   flex-wrap: wrap;

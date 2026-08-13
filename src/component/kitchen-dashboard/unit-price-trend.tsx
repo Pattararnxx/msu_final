@@ -10,6 +10,7 @@ import styles from "./unit-price-trend.module.css";
 
 interface UnitPriceTrendProps {
   unitPriceHistory: Map<string, UnitPricePoint[]>;
+  forecast?: boolean;
 }
 
 const INGREDIENT_OPTIONS = INGREDIENTS.map((i) => ({ value: i.id, label: i.name }));
@@ -22,7 +23,10 @@ function formatTime(t: number): string {
 // One line per ingredient, picked with the selector rather than shown all
 // at once — a dozen-plus overlapping price lines would be unreadable, and
 // only one ingredient's cost moves at a time when a supplier update lands.
-export default function UnitPriceTrend({ unitPriceHistory }: UnitPriceTrendProps) {
+export default function UnitPriceTrend({
+  unitPriceHistory,
+  forecast = false,
+}: UnitPriceTrendProps) {
   const [ingredientId, setIngredientId] = useState(INGREDIENTS[0].id);
 
   // Memoized so the `?? []` fallback doesn't hand useMemo below a fresh
@@ -48,7 +52,7 @@ export default function UnitPriceTrend({ unitPriceHistory }: UnitPriceTrendProps
   const delta = currentPrice - startPrice;
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <div className={styles.head}>
         <div className={styles.headText}>
           <h3 className={styles.title}>ราคาต่อหน่วยวัตถุดิบ</h3>

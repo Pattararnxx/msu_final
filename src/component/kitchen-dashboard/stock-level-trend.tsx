@@ -8,6 +8,7 @@ import styles from "./stock-level-trend.module.css";
 
 interface StockLevelTrendProps {
   history: StockValuePoint[];
+  forecast?: boolean;
 }
 
 const MAX_POINTS = 60;
@@ -21,7 +22,7 @@ function formatTime(t: number): string {
 // cost), so the line only moves when an order actually deducts something.
 // Thinned to the most recent MAX_POINTS so the line stays legible over a
 // long session instead of turning into a bar-per-order chart.
-export default function StockLevelTrend({ history }: StockLevelTrendProps) {
+export default function StockLevelTrend({ history, forecast = false }: StockLevelTrendProps) {
   const chartData = useMemo(() => {
     const points =
       history.length > MAX_POINTS
@@ -41,7 +42,7 @@ export default function StockLevelTrend({ history }: StockLevelTrendProps) {
     initial > 0 ? Math.round(((initial - current) / initial) * 100) : 0;
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <div className={styles.headText}>
         <h3 className={styles.title}>มูลค่าวัตถุดิบคงเหลือใน stock</h3>
         <span className={styles.subtitle}>

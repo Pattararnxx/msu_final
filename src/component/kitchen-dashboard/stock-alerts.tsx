@@ -7,6 +7,7 @@ import styles from "./stock-alerts.module.css";
 
 interface StockAlertsProps {
   alerts: StockAlert[];
+  forecast?: boolean;
 }
 
 const SEVERITY_ICON: Record<StockAlert["severity"], string> = {
@@ -22,9 +23,9 @@ const SEVERITY_WORD: Record<StockAlert["severity"], string> = {
 // Every row here is (stock ตั้งต้น − ผลรวมที่ order ใช้ไปสะสม) < threshold —
 // a computed number recalculated on every order, never a hand-set
 // "ใกล้หมด/หมดแล้ว" flag.
-export default function StockAlerts({ alerts }: StockAlertsProps) {
+export default function StockAlerts({ alerts, forecast = false }: StockAlertsProps) {
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <h3 className={styles.title}>วัตถุดิบใกล้หมด</h3>
       <span className={styles.subtitle}>คำนวณจากสต็อกตั้งต้น − ยอดใช้สะสม</span>
 

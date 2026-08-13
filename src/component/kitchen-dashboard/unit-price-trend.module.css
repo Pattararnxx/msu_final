@@ -8,6 +8,10 @@
   border: 1px solid var(--b-100);
 }
 
+.forecastCard {
+  border-color: var(--forecast-accent);
+}
+
 .head {
   display: flex;
   flex-wrap: wrap;

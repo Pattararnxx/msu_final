@@ -8,6 +8,10 @@
   border: 1px solid var(--b-100);
 }
 
+.forecastCard {
+  border-color: var(--forecast-accent);
+}
+
 .title {
   margin: 0;
   color: var(--b-900);

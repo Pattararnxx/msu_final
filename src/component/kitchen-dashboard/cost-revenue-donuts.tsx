@@ -2,7 +2,10 @@
 
 import { DonutChart } from "@mantine/charts";
 import { formatCurrency } from "@/lib/expense/group-by-week";
-import { CHART_CATEGORICAL } from "@/lib/kitchen-dashboard/chart-colors";
+import {
+  DONUT_CATEGORICAL,
+  FORECAST_CATEGORICAL,
+} from "@/lib/kitchen-dashboard/chart-colors";
 import styles from "./cost-revenue-donuts.module.css";
 
 export interface CategoryDatum {
@@ -14,22 +17,28 @@ interface DonutCardProps {
   title: string;
   subtitle: string;
   data: CategoryDatum[];
+  forecast?: boolean;
 }
 
 // 4–5 categories from real order/usage data (not a task-status count), so
 // the categorical palette applies as-is. Series-count ladder for 4+ slots
 // requires direct labels — the legend row below shows both the value and
 // the share, not just a swatch, to satisfy that.
-function DonutCard({ title, subtitle, data }: DonutCardProps) {
+function DonutCard({ title, subtitle, data, forecast = false }: DonutCardProps) {
   const total = data.reduce((sum, d) => sum + d.value, 0);
+  const colors = forecast
+    ? [
+        ...FORECAST_CATEGORICAL,
+      ]
+    : DONUT_CATEGORICAL;
   const chartData = data.map((d, i) => ({
     name: d.category,
     value: Math.round(d.value * 100) / 100,
-    color: CHART_CATEGORICAL[i % CHART_CATEGORICAL.length],
+    color: colors[i % colors.length],
   }));
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${forecast ? styles.forecastCard : ""}`}>
       <div className={styles.head}>
         <h3 className={styles.title}>{title}</h3>
         <span className={styles.subtitle}>{subtitle}</span>
@@ -76,11 +85,13 @@ function DonutCard({ title, subtitle, data }: DonutCardProps) {
 interface CostRevenueDonutsProps {
   costByCategory: CategoryDatum[];
   revenueByCategory: CategoryDatum[];
+  forecast?: boolean;
 }
 
 export default function CostRevenueDonuts({
   costByCategory,
   revenueByCategory,
+  forecast = false,
 }: CostRevenueDonutsProps) {
   return (
     <div className={styles.grid}>
@@ -88,11 +99,13 @@ export default function CostRevenueDonuts({
         title="สัดส่วนต้นทุนวัตถุดิบ"
         subtitle="แยกตามประเภทวัตถุดิบ"
         data={costByCategory}
+        forecast={forecast}
       />
       <DonutCard
         title="สัดส่วนรายได้"
         subtitle="แยกตามหมวดเมนู"
         data={revenueByCategory}
+        forecast={forecast}
       />
     </div>
   );

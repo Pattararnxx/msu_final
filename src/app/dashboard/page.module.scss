@@ -77,6 +77,24 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
+.headActions{
+  display: flex;
+  gap:10px;
+  align-items:center;
+}
+
+.forecastContext {
+  flex-basis: 100%;
+  color: var(--forecast-accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.forecastButton {
+  --button-bg: var(--forecast-accent);
+  --button-hover: var(--forecast-accent-strong);
+}
 
 @media (max-width: 960px) {
   .trendRow,

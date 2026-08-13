@@ -19,6 +19,22 @@ export const CHART_CATEGORICAL = [
   "#833e21", // 4 dark rust/brown
 ] as const;
 
+// Cool forecast palette: visually separates estimates from the warm live
+// dashboard while keeping enough contrast between donut segments.
+export const FORECAST_CATEGORICAL = [
+  "#4f6fd8",
+  "#7a58b5",
+  "#2f9b8f",
+  "#8ca84b",
+] as const;
+
+export const DONUT_CATEGORICAL = [
+  "#2f7f8f",
+  "#d97745",
+  "#6d5bb5",
+  "#8aa64a",
+] as const;
+
 export const CHART_STATUS = {
   good: "#0ca30c",
   warning: "#fab219",

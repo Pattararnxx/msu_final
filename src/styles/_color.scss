@@ -103,4 +103,11 @@
   /* Signed-delta TEXT color (not a mark/series color) — safe to put
      directly on a number, unlike the categorical/status hues above. */
   --chart-delta-good-text: #006300;
+
+  /* Forecast surfaces and accents — intentionally cool so estimates are
+     visually distinct from the warm, live operational palette. */
+  --forecast-accent: #4f6fd8;
+  --forecast-accent-strong: #334da5;
+  --forecast-accent-soft: #dfe6ff;
+  --forecast-accent-muted: #8ca84b;
 }
