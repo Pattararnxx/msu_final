@@ -7,13 +7,18 @@
    (.inner, held at a constant 420px) while .panel's own width animates
    0 → 420px — same visual clip, but it can never register as a scroll
    container the way an overflow value can, which ruled it out as a
-   second possible cause of the sticky-not-following-scroll report. */
+   second possible cause of the sticky-not-following-scroll report.
+   top/height read --announcement-bar-height (same variable
+   DashboardSidebar's fixed offset uses, see globals.scss) so the panel
+   starts below the fixed yellow AnnouncementBar instead of sticking to
+   the literal viewport top, where the banner's higher z-index would
+   paint over its header. */
 .panel {
   flex-shrink: 0;
   width: 0;
-  height: 100dvh;
+  height: calc(100dvh - var(--announcement-bar-height));
   position: sticky;
-  top: 0;
+  top: var(--announcement-bar-height);
   clip-path: inset(0);
   background: var(--b-0);
   border-left: 1px solid var(--b-100);

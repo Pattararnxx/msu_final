@@ -108,5 +108,10 @@ export interface ExpenseItem {
   /** Time the order photo was uploaded, e.g. "07:42". */
   uploadedAt: string;
   uploadedBy: string;
+  /** Order/receipt number as it would appear on the slip, e.g. "OR-014". */
+  orderNumber: string;
+  orderType: OrderType;
+  /** Line items backing `amount` — `amount` is always Σ qty × unitPrice, never a separately hand-set number. */
+  items: OrderLineItem[];
   amount: number;
 }

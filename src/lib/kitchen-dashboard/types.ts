@@ -45,6 +45,14 @@ export interface MenuItem {
   /** Sale price in บาท — from the shop's own price list, never AI-guessed. */
   price: number;
   recipe: RecipeLine[];
+  /**
+   * Stock placeholder photo (public/thai_food, Unsplash-credited — see
+   * that folder's metadata.json) standing in for real dish photography,
+   * matched by visual/thematic similarity, not an actual photo of this
+   * shop's own cooking. Absent where nothing in the set was a reasonable
+   * match — the UI shows an honest empty state rather than a wrong photo.
+   */
+  imageUrl?: string;
 }
 
 export interface OrderLine {
