@@ -190,6 +190,10 @@
   border-radius: var(--mantine-radius-sm);
   background: var(--b-50);
   color: var(--b-600);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  transition: color 150ms ease;
 }
 
 /* One card per staged entry — fields sit directly below the thumbnail/
@@ -247,20 +251,48 @@
 .fileRowRemove {
   display: flex;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--mantine-radius-md);
   color: var(--b-500);
-  transition: color 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .fileRowRemove:hover {
+  .entryCardRemove:hover {
     color: var(--b-800);
+    background: var(--b-50);
   }
 }
 
-.summary {
-  color: var(--b-500);
-  font-size: 12px;
-  text-align: center;
+.pdfPreview {
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--b-50);
+  color: var(--b-700);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.manualCardLabel {
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.autoFillNote {
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--primary-50);
+  color: var(--primary-800);
+  font-size: 11px;
+  line-height: 1.4;
 }
 
 /* Step 2 — confirm */
@@ -342,14 +374,12 @@
   font-size: 15px;
 }
 
-/* Below 640px there's no room to squeeze main content further, so the
-   panel takes over the full screen instead of pushing — fixed + slide
-   transform rather than the desktop's width-push animation. */
+/* Below 640px there's no room to squeeze main content, so the panel just
+   takes the full screen instead — already fixed + transform above, this
+   only needs to widen it to match. */
 @media (max-width: 640px) {
   .panel {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
+    top: 0;
     width: 100vw;
     transform: translateX(100%);
     transition: transform 260ms ease;

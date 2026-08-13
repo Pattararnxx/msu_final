@@ -1,13 +1,20 @@
+/* position: fixed rather than sticky — sticky only stays pinned when
+   every ancestor between here and the viewport has overflow: visible,
+   which is fragile and has repeatedly failed to hold in this layout.
+   Fixed is unconditional: it always tracks the viewport regardless of
+   ancestor overflow. Taking it out of flex flow this way means .content
+   has to reserve the matching space itself — see the margin-left in
+   page.module.scss. */
 .sidebar {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   width: 272px;
-  height: 100vh;
-
-  position: sticky;
-  top: 0;
-
+  position: fixed;
+  top: var(--announcement-bar-height);
+  left: 0;
+  height: calc(100dvh - var(--announcement-bar-height));
+  z-index: 10;
   background: var(--b-0);
   border-right: 1px solid var(--b-100);
 }

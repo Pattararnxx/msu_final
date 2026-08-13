@@ -41,7 +41,7 @@ export default function ExpenseSummaryCards({
 
       <div className={styles.card}>
         <div className={styles.cardHead}>
-          <span className={styles.label}>ค่าใช้จ่ายเดือนนี้</span>
+          <span className={styles.label}>รายได้เดือนนี้</span>
           <Select
             data={[monthLabel]}
             defaultValue={monthLabel}
@@ -57,7 +57,7 @@ export default function ExpenseSummaryCards({
 
       <div className={styles.card}>
         <div className={styles.cardHead}>
-          <span className={styles.label}>ค่าใช้จ่ายปีนี้</span>
+          <span className={styles.label}>รายได้รวมปีนี้</span>
           <span className={styles.yearTag}>{yearLabel}</span>
         </div>
         <span className={styles.value}>฿{formatCurrency(expenseThisYear)}</span>
