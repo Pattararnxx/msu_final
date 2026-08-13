@@ -10,8 +10,8 @@ export default function ChatbotLoading() {
           <Icon src="/icon/regular/sparkle.svg" size={14} />
         </Box>
         <Box>
-          <Text className={styles.loadingTitle}>กำลังค้นหาข้อมูล</Text>
-          <Text className={styles.loadingDescription}>กำลังวิเคราะห์คำถามของคุณ</Text>
+          <Text className={styles.loadingTitle}>กำลังเตรียมคำแนะนำ</Text>
+          <Text className={styles.loadingDescription}>กำลังดูเมนูและยอดขายที่เกี่ยวข้อง</Text>
         </Box>
         <span className={styles.loadingDots} aria-hidden="true">
           <i />

@@ -13,10 +13,12 @@ import {
   MODEL_ID,
   SYSTEM_PROMPT,
   buildMockAnswer,
+  buildMockUi,
   getModel,
   hasApiKey,
-} from "@/lib/property/agent";
-import { propertyTools } from "@/lib/property/tools";
+} from "@/lib/marketing/agent";
+import { marketingTools } from "@/lib/marketing/tools";
+import type { MarketingUiBlock } from "@/lib/marketing/types";
 
 export const maxDuration = 60;
 
@@ -24,6 +26,22 @@ interface ChatRequestBody {
   messages?: UIMessage[];
   /** Set false to get one JSON blob instead of a stream — used by scripts/chat.ts and curl. */
   stream?: boolean;
+}
+
+function collectUiBlocks(
+  steps: ReadonlyArray<{
+    toolResults: ReadonlyArray<{ output?: unknown }>;
+  }>,
+): MarketingUiBlock[] {
+  return steps.flatMap((step) =>
+    step.toolResults.flatMap((result) => {
+      const output = result.output;
+      if (!output || typeof output !== "object" || !("ui" in output)) return [];
+
+      const ui = (output as { ui?: unknown }).ui;
+      return ui && typeof ui === "object" && "type" in ui ? [ui as MarketingUiBlock] : [];
+    }),
+  );
 }
 
 function lastUserText(messages: UIMessage[]): string {
@@ -56,7 +74,7 @@ export async function POST(request: Request) {
   if (!hasApiKey()) {
     const text = buildMockAnswer(lastUserText(messages));
     if (!wantsStream) {
-      return Response.json({ mode: "offline", model: null, text, toolCalls: [], steps: 0 });
+      return Response.json({ mode: "offline", model: null, text, toolCalls: [], steps: 0, ui: buildMockUi(lastUserText(messages)) });
     }
     return new Response(text, {
       headers: { "content-type": "text/plain; charset=utf-8", "x-chat-mode": "offline" },
@@ -71,7 +89,7 @@ export async function POST(request: Request) {
         model: getModel(),
         system: SYSTEM_PROMPT,
         messages: modelMessages,
-        tools: propertyTools,
+        tools: marketingTools,
         stopWhen: isStepCount(MAX_TOOL_STEPS),
       });
 
@@ -86,6 +104,7 @@ export async function POST(request: Request) {
         toolCalls,
         steps: result.steps.length,
         usage: result.usage,
+        ui: collectUiBlocks(result.steps),
       });
     } catch (error) {
       return Response.json(
@@ -95,6 +114,7 @@ export async function POST(request: Request) {
           text: buildMockAnswer(lastUserText(messages)),
           toolCalls: [],
           steps: 0,
+          ui: buildMockUi(lastUserText(messages)),
           providerError: error instanceof Error ? error.message : String(error),
         },
         { status: 200 },
@@ -106,7 +126,7 @@ export async function POST(request: Request) {
     model: getModel(),
     system: SYSTEM_PROMPT,
     messages: modelMessages,
-    tools: propertyTools,
+    tools: marketingTools,
     stopWhen: isStepCount(MAX_TOOL_STEPS),
   });
 

@@ -143,7 +143,7 @@ export default function Navbar() {
             onClick={toggleChatbot}
             aria-expanded={chatbotOpened}
           >
-            ดาวน์โหลด
+            ผู้ช่วยการตลาด
           </Button>
           <Burger
             opened={drawerOpened}
@@ -190,7 +190,7 @@ export default function Navbar() {
                 toggleChatbot();
               }}
             >
-              ดาวน์โหลด
+              ผู้ช่วยการตลาด
             </Button>
           </Group>
         </ScrollArea.Autosize>

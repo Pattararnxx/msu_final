@@ -238,6 +238,22 @@
     "dataContract": "Panel draft and OCR response share camelCase fields via src/lib/expense/types.ts. The unique orderNumber is the only document identifier; the contract contains no expense or receipt-number fields. Mock rows retain menu lineItems for sales aggregation and add structured topping quantities/prices for order review.",
     "accessibility": "visible labels, role=alert for upload/OCR errors, keyboard-accessible dropzone, icon buttons labelled, reduced-motion spinner fallback"
   },
+  "menuBoardSurface": {
+    "mode": "operate",
+    "oneThingToRemember": "Menu items are scanned as board cards first; details open in a Jira-like right panel without changing the existing menu CRUD flow.",
+    "composition": {
+      "board": "dynamic columns from menu categories present in the catalogue; selected category filter narrows to one column",
+      "card": "40px category-tinted thumbnail, two-line dish name, price, id, option count, optional best-seller badge",
+      "panel": "compact item header with 72px thumbnail, metadata, ingredients/options sections, sales chart, and existing edit/delete actions",
+      "layoutRepair": "because DashboardSidebar is fixed after the latest pull, menu content reserves 272px on desktop; SidebarShell is a full-width flex item"
+    },
+    "panelScrollScope": "Intentionally unchanged in this task; keep the current panel scroll implementation until the teammate's pull lands.",
+    "responsive": {
+      "desktop": "board columns stay horizontal and may scroll within the board viewport when the right detail panel is open",
+      "tablet": "fixed desktop rail is replaced by the existing mobile bar at 960px",
+      "mobile": "board columns stack, thumbnails stay compact, detail panel becomes full width"
+    }
+  },
   "uxRules": [
     "Dropdown trigger is a <button> (not a link) with aria-expanded; closes on outside click and Escape.",
     "Mobile menu toggle uses aria-expanded + aria-controls + sr-only label; body scroll locks while open.",

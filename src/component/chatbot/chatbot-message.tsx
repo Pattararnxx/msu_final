@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import { Box, Group, Text } from "@mantine/core";
 import Icon from "@/component/icon/icon";
 import type { ChatTurn } from "./use-chat-session";
+import MarketingUiBlocks from "./marketing-ui-blocks";
 import styles from "./chatbot.module.css";
 
 function renderInlineText(text: string): ReactNode[] {
@@ -58,13 +59,25 @@ function renderAssistantText(text: string) {
 
 interface ChatbotMessageProps {
   turn: ChatTurn;
+  onAsk?: (question: string) => void;
 }
 
-export default function ChatbotMessage({ turn }: ChatbotMessageProps) {
+export default function ChatbotMessage({ turn, onAsk }: ChatbotMessageProps) {
   const isUser = turn.role === "user";
+  const toolLabels: Record<string, string> = {
+    getRestaurantMenu: "catalogue เมนู",
+    getSalesInsights: "ยอดขายในระบบ",
+    calculateBundlePrice: "คำนวณชุดโปร",
+  };
 
   return (
     <Box className={isUser ? styles.userMessage : styles.assistantMessage}>
+      {!isUser && (
+        <Group gap={6} wrap="nowrap" className={styles.assistantMeta}>
+          <Icon src="/icon/regular/megaphone.svg" size={13} />
+          <Text component="span">ผู้ช่วยการตลาด</Text>
+        </Group>
+      )}
       {!isUser && turn.toolCalls.length > 0 && (
         <Box className={styles.sourceBlock}>
           <Group gap={6} wrap="nowrap" className={styles.sourceLabel}>
@@ -74,7 +87,7 @@ export default function ChatbotMessage({ turn }: ChatbotMessageProps) {
           <Group gap={6} mt={7} wrap="wrap">
             {turn.toolCalls.map((call, index) => (
               <Text key={`${turn.id}-${index}`} component="span" className={styles.toolChip}>
-                {call.toolName}
+                {toolLabels[call.toolName] ?? call.toolName}
               </Text>
             ))}
           </Group>
@@ -84,6 +97,7 @@ export default function ChatbotMessage({ turn }: ChatbotMessageProps) {
       <Text component="div" className={styles.messageText}>
         {isUser ? turn.text : renderAssistantText(turn.text)}
       </Text>
+      {!isUser && <MarketingUiBlocks blocks={turn.ui} onAsk={onAsk} />}
     </Box>
   );
 }
