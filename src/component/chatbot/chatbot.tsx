@@ -15,7 +15,7 @@ import styles from "./chatbot.module.css";
 // The panel is kept mounted for the short close transition, then removed by
 // ChatbotShell. Its fixed right-edge placement is controlled by module styles.
 export default function Chatbot({ visible }: { visible: boolean }) {
-  const { close } = useChatbot();
+ const { close, consumePendingQuestion } = useChatbot();
   const { turns, pending, error, send } = useChatSession();
   const [draft, setDraft] = useState("");
   const [lastSubmitted, setLastSubmitted] = useState("");
@@ -41,6 +41,15 @@ export default function Chatbot({ visible }: { visible: boolean }) {
     void send(normalized);
     setDraft("");
   };
+
+  // A question asked from outside the panel (e.g. the home page's "ถาม AI"
+  // search mode) is queued via askQuestion() and opens this panel; on mount
+  // we pick it up and fire it as the first turn.
+  useEffect(() => {
+    const question = consumePendingQuestion();
+    if (question) submit(question);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box

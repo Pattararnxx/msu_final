@@ -18,3 +18,35 @@
 .input {
   height: 40px;
 }
+
+.aiToggle,
+.aiToggleActive {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 12px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.aiToggle {
+  /* background: var(--black-50); */
+  color: var(--yellow-600);
+  
+}
+
+.aiToggleActive {
+  background: var(--primary-50);
+  color: var(--primary-800);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aiToggle:hover {
+    background: var(--black-100);
+  }
+}
