@@ -8,7 +8,7 @@ import styles from "./order-ocr-workspace.module.css";
 
 type EditableItem = OrderItem;
 
-const ACCEPTED_TYPES = "image/jpeg,image/png,image/webp";
+const ACCEPTED_TYPES = "image/jpeg,image/png";
 
 function formatConfidence(value: number) {
   return `${Math.round(value * 100)}%`;
@@ -52,7 +52,7 @@ export default function OrderOcrWorkspace() {
   const selectFile = useCallback((nextFile: File | undefined) => {
     if (!nextFile) return;
     if (!ACCEPTED_TYPES.split(",").includes(nextFile.type)) {
-      setError("รองรับเฉพาะ JPG, PNG หรือ WebP");
+      setError("รองรับเฉพาะ JPG หรือ PNG");
       return;
     }
     if (nextFile.size > 10 * 1024 * 1024) {
@@ -146,7 +146,7 @@ export default function OrderOcrWorkspace() {
                 <span className={styles.uploadIcon}><Icon src="/icon/regular/upload-simple.svg" size={26} /></span>
                 <strong>ลากไฟล์มาวางที่นี่</strong>
                 <span>หรือคลิกเพื่อเลือกภาพจากเครื่อง</span>
-                <small>JPG, PNG, WebP · สูงสุด 10 MB</small>
+                <small>JPG, PNG · สูงสุด 10 MB</small>
               </>
             )}
           </button>

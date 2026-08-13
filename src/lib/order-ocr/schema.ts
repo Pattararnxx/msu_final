@@ -60,7 +60,7 @@ export interface OrderPayload extends ExtractionResult {
   captured_at: string;
   source: {
     type: "handwritten_order_ocr";
-    provider: "google_gemini";
+    provider: "opentyphoon";
     model: string;
     filename: string;
     mime_type: string;
@@ -69,11 +69,11 @@ export interface OrderPayload extends ExtractionResult {
 }
 
 /**
- * Google Gemini's generateContent endpoint accepts a JSON-schema subset.
- * Keep this explicit rather than deriving it from Zod so the API contract is
+ * The Typhoon normalizer receives this JSON-schema subset in its prompt.
+ * Keep it explicit rather than deriving it from Zod so the API contract is
  * easy to inspect and stable across Zod upgrades.
  */
-export const geminiExtractionSchema = {
+export const orderExtractionJsonSchema = {
   type: "object",
   properties: {
     order: {

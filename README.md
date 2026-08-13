@@ -20,8 +20,8 @@
 
 ## Current prototype
 
-- `src/app/api/order-ocr/route.ts` — endpoint OCR ใบออร์เดอร์ด้วย Gemini รองรับ JPG,
-  PNG และ WebP ไม่เกิน 10 MB
+- `src/app/api/order-ocr/route.ts` — endpoint OCR ใบออร์เดอร์ด้วย Typhoon OCR รองรับ JPG
+  และ PNG ไม่เกิน 10 MB
 - `src/lib/order-ocr/schema.ts` — schema `restaurant.order.v1` สำหรับรายการเมนู,
   modifiers, ยอดรวม และสถานะการตรวจทาน
 - `docs/Hackathon_MSU_2026_Restaurant_Operations.md` — product brief และบริบทการแข่งขัน
@@ -35,14 +35,16 @@
 ## Handwritten order OCR
 
 หน้า `/` รองรับการอัปโหลดภาพใบออร์เดอร์ลายมือจริง แล้วเรียก `POST /api/order-ocr`
-เพื่อส่งภาพไปยัง Gemini Vision และคืน JSON ที่ validate ด้วย Zod ก่อนแสดงผล
+เพื่อส่งภาพไปยัง Typhoon OCR จากนั้นให้ Typhoon text model แปลง Markdown เป็น JSON
+ที่ validate ด้วย Zod ก่อนแสดงผล
 รายการที่ confidence ต่ำจะต้องกดตรวจยืนยันก่อนนำ payload ไปใช้ต่อ
 
 ตั้งค่าใน `.env.local`:
 
 ```bash
-GEMINI_API_KEY=your_google_gemini_api_key
-GEMINI_OCR_MODEL=gemini-2.5-flash
+TYPHOON_OCR_API_KEY=your_opentyphoon_api_key
+TYPHOON_OCR_MODEL=typhoon-ocr
+TYPHOON_NORMALIZER_MODEL=typhoon-v2.5-30b-a3b-instruct
 ```
 
 Payload หลักใช้ schema version `restaurant.order.v1`:
@@ -55,8 +57,8 @@ Payload หลักใช้ schema version `restaurant.order.v1`:
   "captured_at": "2026-08-13T00:00:00.000Z",
   "source": {
     "type": "handwritten_order_ocr",
-    "provider": "google_gemini",
-    "model": "gemini-2.5-flash",
+    "provider": "opentyphoon",
+    "model": "typhoon-ocr + typhoon-v2.5-30b-a3b-instruct",
     "filename": "order.jpg",
     "mime_type": "image/jpeg",
     "size_bytes": 123456
@@ -95,9 +97,10 @@ Payload หลักใช้ schema version `restaurant.order.v1`:
 }
 ```
 
-DeepSeek V4 ใช้เป็นตัวอ่านภาพโดยตรงไม่ได้ใน flow นี้ เพราะเป็น text-only; หากต้องการใช้ร่วมกัน ให้ต่อเป็นขั้น normalize/ตรวจ JSON หลัง Gemini OCR
+Typhoon OCR ใช้เป็นตัวอ่านภาพโดยตรงและคืนข้อความแบบ Markdown จากนั้น Typhoon text model
+จะจัดโครงสร้างเป็น `restaurant.order.v1` แล้วตรวจซ้ำด้วย Zod
 
-(`ภาพ → Gemini Vision OCR → DeepSeek ตรวจ/normalize → JSON`).
+(`ภาพ → Typhoon OCR → Typhoon text normalizer → JSON`).
 
 First, run the development server:
 
